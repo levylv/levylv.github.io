@@ -45,10 +45,10 @@ index_with_subtitle: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   home: /
-  #categories: /categories
-  #about: /about/
+  categories: /categories
   archives: /archives
   tags: /tags
+  about: /about/
   #sitemap: /sitemap.xml
   #commonweal: /404.html
 
@@ -155,7 +155,7 @@ social_icons:
   # Icon Mappings.
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
   GitHub: github
-  知乎:
+  知乎: zhihu
 
 
 
@@ -208,6 +208,13 @@ sidebar:
   # Scroll percent label in b2t button
   scrollpercent: false
 
+back2top:
+  # 是否启用点击返回顶部按钮
+  enable: true
+  # 是否在侧边栏显示点击返回顶部按钮
+  sidebar: false
+  # 是否在返回顶部按钮显示已滚动百分比
+  scrollpercent: false
 
 # Blog rolls
 #links_title: Links
@@ -302,9 +309,7 @@ highlight_theme: night bright
 # MathJax Support
 mathjax:
   enable: true
-  per_page: true
   cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
-  #cdn: http://mathjax.josephjctang.com/MathJax.js?config=TeX-MML-AM_HTMLorMML
 
 # Han Support docs: https://hanzi.pro/
 han: false
@@ -318,11 +323,11 @@ han: false
 # Duoshuo ShortName
 #duoshuo_shortname:
 
-## Disqus
-#disqus:
-#  enable: true
-#  shortname: levylv
-#  count: true
+# Disqus
+disqus:
+  enable: true
+  shortname: levylv-2
+  count: true
 
 # Hypercomments
 #hypercomments_id:
@@ -638,3 +643,8 @@ images: images
 
 # Theme version
 version: 5.1.1
+
+# 最新文章
+recent_posts_title: 最新文章
+recent_posts_layout: block
+recent_posts: true
