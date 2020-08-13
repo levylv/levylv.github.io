@@ -2,7 +2,7 @@
 title: 多进程，多线程以及spark的executor等概念
 date: 2018-11-07 22:06:02
 tags: 并发
-categories: [编程开发,Spark]
+categories: [大数据,Spark]
 ---
 
 在spark中，

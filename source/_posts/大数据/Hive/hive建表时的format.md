@@ -1,7 +1,7 @@
 ---
 title: hive建表时的format
 date: 2018-05-30 18:13:30
-categories: [编程开发,Hive]
+categories: [大数据,Hive]
 ---
 
 hive建表时有三种指定，举例如下：

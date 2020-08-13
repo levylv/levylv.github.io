@@ -1,7 +1,7 @@
 ---
 title: Spark笔记
 date: 2018-10-18 22:06:02
-categories: [编程开发,Spark]
+categories: [大数据,Spark]
 ---
 
 

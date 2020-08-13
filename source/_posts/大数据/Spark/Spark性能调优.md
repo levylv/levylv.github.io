@@ -1,7 +1,7 @@
 ---
 title: Spark调优以及各名词深刻理解
 date: 2018-11-28 22:06:02
-categories: [编程开发,Spark]
+categories: [大数据,Spark]
 ---
 
 ### **Spark资源优化：**

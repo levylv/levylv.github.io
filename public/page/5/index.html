@@ -310,7 +310,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/05/机器学习/Xgboost和LightGBM调参/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/深度学习/Dead ReLu问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -329,7 +329,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/05/机器学习/Xgboost和LightGBM调参/" itemprop="url">XGBoost和LightGBM调参</a></h1>
+                <a class="post-title-link" href="/2019/05/16/深度学习/Dead ReLu问题/" itemprop="url">Dead ReLu问题</a></h1>
         
 
         <div class="post-meta">
@@ -341,8 +341,350 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-05T19:28:44+08:00">
-                2018-12-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-16T19:28:44+08:00">
+                2019-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/16/深度学习/Dead ReLu问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/16/深度学习/Dead ReLu问题/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/05/16/深度学习/Dead ReLu问题/" class="leancloud_visitors" data-flag-title="Dead ReLu问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          原因很简单，是因为函数的负数区间值为0，导数为0，导致权重不更新。
+但实际上，真要出现永久dead还是很严苛的：
+
+所用训练样本x在该神经元的输入值都是 &lt; 0
+一般都是网络第一层，前面没有隐藏层。因为如果有隐藏层，隐藏层不死的话，隐藏层输出值还是会变，同样的x, 输入到该层还是有可能被激活。
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/16/深度学习/Dead ReLu问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei Lyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Levy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/" itemprop="url">引用，浅拷贝和深拷贝</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-06T22:06:02+08:00">
+                2019-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程开发/" itemprop="url" rel="index">
+                    <span itemprop="name">编程开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程开发/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/" class="leancloud_visitors" data-flag-title="引用，浅拷贝和深拷贝">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          引用变量名是别名，没有开辟新的内存，指向同一块内存
+浅拷贝：一般出现在array-like对象中，如list等。
+虽然开辟了一块新的内存，但是对象中的每一个元素都是指向原对象的每个元素的地址。例如：
+a = [1,2,[1,2,3]]
+b =copy.copy(a)
+id(a[2]) == id(b
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/29/机器学习/CART与普通决策树的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wei Lyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Levy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/29/机器学习/CART与普通决策树的区别/" itemprop="url">CART与普通决策树的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T19:28:44+08:00">
+                2019-04-29
               </time>
             
 
@@ -382,8 +724,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/05/机器学习/Xgboost和LightGBM调参/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/05/机器学习/Xgboost和LightGBM调参/" itemprop="commentCount"></span>
+                <a href="/2019/04/29/机器学习/CART与普通决策树的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/29/机器学习/CART与普通决策树的区别/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -391,7 +733,7 @@
 
           
           
-             <span id="/2018/12/05/机器学习/Xgboost和LightGBM调参/" class="leancloud_visitors" data-flag-title="XGBoost和LightGBM调参">
+             <span id="/2019/04/29/机器学习/CART与普通决策树的区别/" class="leancloud_visitors" data-flag-title="CART与普通决策树的区别">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -421,15 +763,16 @@
       
         
           
-          有个应用上的重大区别：
+          CART可以说是最常用的数，gbdt,xgboost等等…
+归纳一下其与普通决策树（ID3，C4.5）的区别：
 
-Xgboost只处理数值特征，因此Xgboost无法直接处理离散特征(categorical feature)，需要数据预处理，要么labelEncoder转换为数值特征，当做连续值处理，要么one-hot编码，当做离散值处理。
-
-LightGBM则有对离散特征的单独处理，
+既可以分类，也可以回归。在分类时使用基尼系数，在回归时使用平方误差。
+只划分左右子树，也就是生成一个二叉树。普通决策树生成多个子树
+特征在被选择后，在接下来的树中还能被继续使用。普通决策
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/12/05/机器学习/Xgboost和LightGBM调参/#more" rel="contents">
+            <a class="btn" href="/2019/04/29/机器学习/CART与普通决策树的区别/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -475,7 +818,7 @@ LightGBM则有对离散特征的单独处理，
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/28/编程开发/Spark/Spark性能调优/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/24/机器学习/类别不均衡问题的调参/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -494,7 +837,7 @@ LightGBM则有对离散特征的单独处理，
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/28/编程开发/Spark/Spark性能调优/" itemprop="url">Spark调优以及各名词深刻理解</a></h1>
+                <a class="post-title-link" href="/2019/04/24/机器学习/类别不均衡问题的调参/" itemprop="url">类别不均衡问题的调参</a></h1>
         
 
         <div class="post-meta">
@@ -506,190 +849,8 @@ LightGBM则有对离散特征的单独处理，
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-28T22:06:02+08:00">
-                2018-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/" itemprop="url" rel="index">
-                    <span itemprop="name">编程开发</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/28/编程开发/Spark/Spark性能调优/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/28/编程开发/Spark/Spark性能调优/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/11/28/编程开发/Spark/Spark性能调优/" class="leancloud_visitors" data-flag-title="Spark调优以及各名词深刻理解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          Spark资源优化：队列是根据Fair调度分配资源的。
-静态资源分配方式的问题： 
-
-stage非对称
-Task非对称-数据倾斜
-执行时间随意性
-
-所以需要根据任务动态分配资源。例如：
-Executor资源量相关：
-spark.dynamicAllocation.minExecutors
-spark
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/28/编程开发/Spark/Spark性能调优/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/21/机器学习/关于特征归一化的一些理解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wei Lyu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Levy's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/21/机器学习/关于特征归一化的一些理解/" itemprop="url">关于特征归一化的一些理解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T19:28:44+08:00">
-                2018-11-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-24T19:28:44+08:00">
+                2019-04-24
               </time>
             
 
@@ -729,8 +890,8 @@ spark
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/21/机器学习/关于特征归一化的一些理解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/21/机器学习/关于特征归一化的一些理解/" itemprop="commentCount"></span>
+                <a href="/2019/04/24/机器学习/类别不均衡问题的调参/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/24/机器学习/类别不均衡问题的调参/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -738,7 +899,7 @@ spark
 
           
           
-             <span id="/2018/11/21/机器学习/关于特征归一化的一些理解/" class="leancloud_visitors" data-flag-title="关于特征归一化的一些理解">
+             <span id="/2019/04/24/机器学习/类别不均衡问题的调参/" class="leancloud_visitors" data-flag-title="类别不均衡问题的调参">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -768,15 +929,24 @@ spark
       
         
           
-          归一化会加快梯度下降法的收敛速度了
-这个是显然的，不多说了。
-但是这里需要注意的是，像LR这种单纯的梯度下降法求解，只是增加收敛速度罢了，并不会让解更加精确，因为最终这个最优解的系数值是和特征值比例成反比的。
-归一化有可能会提升算法精度
-注意，这里是可能，因为就像前文所有，对于LR，是不会提升精度的
+          对于类别不均衡问题，处理方法有：
+
+正样本过采样
+
+负样本降采样
+
+调整阈值
+
+
+主要是这三种，实际算法处理过程往往是这样的：
+
+先对负样本进行降采样or正样本过采样来提取训练样本，以保证模型的AUC尽量高。
+
+过采样or降采样之后模型输出的概率已经失去原本的意义，所以在测试集上如果看其他评价指标如
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/21/机器学习/关于特征归一化的一些理解/#more" rel="contents">
+            <a class="btn" href="/2019/04/24/机器学习/类别不均衡问题的调参/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -822,7 +992,7 @@ spark
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/19/编程开发/Java/Java泛型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/编程开发/Python/import及__init__.py/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -841,7 +1011,7 @@ spark
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/19/编程开发/Java/Java泛型/" itemprop="url">Java泛型</a></h1>
+                <a class="post-title-link" href="/2019/03/07/编程开发/Python/import及__init__.py/" itemprop="url">import及__init__.py</a></h1>
         
 
         <div class="post-meta">
@@ -853,8 +1023,8 @@ spark
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T18:13:30+08:00">
-                2018-11-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T22:06:02+08:00">
+                2019-03-07
               </time>
             
 
@@ -887,8 +1057,8 @@ spark
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/编程开发/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -905,8 +1075,8 @@ spark
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/19/编程开发/Java/Java泛型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/19/编程开发/Java/Java泛型/" itemprop="commentCount"></span>
+                <a href="/2019/03/07/编程开发/Python/import及__init__.py/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/07/编程开发/Python/import及__init__.py/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -914,7 +1084,7 @@ spark
 
           
           
-             <span id="/2018/11/19/编程开发/Java/Java泛型/" class="leancloud_visitors" data-flag-title="Java泛型">
+             <span id="/2019/03/07/编程开发/Python/import及__init__.py/" class="leancloud_visitors" data-flag-title="import及__init__.py">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -944,11 +1114,11 @@ spark
       
         
           
-          123456789List stringArrayList = new ArrayList();List integerArrayList = new ArrayList();Class classStringArrayList = stringArrayList.getClass();Class 
+          import注意事项:1234from package1 import module1from package1.module2 import function1from package2 import class1from package2.subpackage1.module5 import f
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/19/编程开发/Java/Java泛型/#more" rel="contents">
+            <a class="btn" href="/2019/03/07/编程开发/Python/import及__init__.py/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -994,7 +1164,7 @@ spark
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/编程开发/Shell/shell $1,$#等/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/15/编程开发/Shell/shell交互式及登录式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -1013,7 +1183,7 @@ spark
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/11/编程开发/Shell/shell $1,$#等/" itemprop="url">shell中的$1,$#等</a></h1>
+                <a class="post-title-link" href="/2019/02/15/编程开发/Shell/shell交互式及登录式/" itemprop="url">shell交互式及登录式</a></h1>
         
 
         <div class="post-meta">
@@ -1025,8 +1195,8 @@ spark
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-11T18:13:30+08:00">
-                2018-11-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-15T18:13:30+08:00">
+                2019-02-15
               </time>
             
 
@@ -1077,8 +1247,8 @@ spark
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/11/编程开发/Shell/shell $1,$#等/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/11/编程开发/Shell/shell $1,$#等/" itemprop="commentCount"></span>
+                <a href="/2019/02/15/编程开发/Shell/shell交互式及登录式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/15/编程开发/Shell/shell交互式及登录式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1086,7 +1256,7 @@ spark
 
           
           
-             <span id="/2018/11/11/编程开发/Shell/shell $1,$#等/" class="leancloud_visitors" data-flag-title="shell中的$1,$#等">
+             <span id="/2019/02/15/编程开发/Shell/shell交互式及登录式/" class="leancloud_visitors" data-flag-title="shell交互式及登录式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1116,16 +1286,19 @@ spark
       
         
           
-          $$Shell本身的PID（ProcessID）
-$!Shell最后运行的后台Process的PID
-$?最后运行的命令的结束代码（返回值）
-$-使用Set命令设定的Flag一览
-$*所有参数列表。如”$*”用「”」括起来的情况、以”$1 $2 … $n”的形式输出所有参数。
-$@所有参数列表。如”
+          登录式和非登录式区别：
+“登陆shell”通常指的是：（/etc/profile,~/.bash_profile, ~/.bashrc,/etc/bashrc）
+
+用户通过输入用户名/密码（或证书认证）后启动的shell；
+
+通过带有-l|—login参数的bash命令启动的shell。
+
+
+例如，
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/11/编程开发/Shell/shell $1,$#等/#more" rel="contents">
+            <a class="btn" href="/2019/02/15/编程开发/Shell/shell交互式及登录式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1171,7 +1344,7 @@ $@所有参数列表。如”
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/07/编程开发/Spark/多进程，多线程以及spark的executor等概念/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/15/编程开发/Shell/父子shell和父子进程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -1190,7 +1363,7 @@ $@所有参数列表。如”
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/07/编程开发/Spark/多进程，多线程以及spark的executor等概念/" itemprop="url">多进程，多线程以及spark的executor等概念</a></h1>
+                <a class="post-title-link" href="/2019/02/15/编程开发/Shell/父子shell和父子进程/" itemprop="url">父子shell和父子进程</a></h1>
         
 
         <div class="post-meta">
@@ -1202,186 +1375,8 @@ $@所有参数列表。如”
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-07T22:06:02+08:00">
-                2018-11-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/" itemprop="url" rel="index">
-                    <span itemprop="name">编程开发</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/07/编程开发/Spark/多进程，多线程以及spark的executor等概念/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/07/编程开发/Spark/多进程，多线程以及spark的executor等概念/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/11/07/编程开发/Spark/多进程，多线程以及spark的executor等概念/" class="leancloud_visitors" data-flag-title="多进程，多线程以及spark的executor等概念">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          在spark中，
-
-worker就是集群里可执行的机器，一个worker可以有多个executor。
-一个executor就是CPU，一个CPU可以有多个核。
-一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。
-
-关于CP
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/07/编程开发/Spark/多进程，多线程以及spark的executor等概念/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/编程开发/Shell/Shell多进程并发以及并发数控制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wei Lyu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Levy's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/05/编程开发/Shell/Shell多进程并发以及并发数控制/" itemprop="url">Linux Shell多进程并发以及并发数控制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T18:13:30+08:00">
-                2018-11-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-15T18:13:30+08:00">
+                2019-02-15
               </time>
             
 
@@ -1432,8 +1427,8 @@ worker就是集群里可执行的机器，一个worker可以有多个executor。
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/05/编程开发/Shell/Shell多进程并发以及并发数控制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/05/编程开发/Shell/Shell多进程并发以及并发数控制/" itemprop="commentCount"></span>
+                <a href="/2019/02/15/编程开发/Shell/父子shell和父子进程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/15/编程开发/Shell/父子shell和父子进程/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1441,7 +1436,7 @@ worker就是集群里可执行的机器，一个worker可以有多个executor。
 
           
           
-             <span id="/2018/11/05/编程开发/Shell/Shell多进程并发以及并发数控制/" class="leancloud_visitors" data-flag-title="Linux Shell多进程并发以及并发数控制">
+             <span id="/2019/02/15/编程开发/Shell/父子shell和父子进程/" class="leancloud_visitors" data-flag-title="父子shell和父子进程">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1471,13 +1466,16 @@ worker就是集群里可执行的机器，一个worker可以有多个executor。
       
         
           
-          利用命名管道：和文件描述符绑定，利用FIFO，数据滞留的特性，控制并发数。
-https://blog.csdn.net/yeweiouyang/article/details/52512522
+          首先，shell也是一个进程！
+举个例子：
+在某个shell下(该shell也是一个进程，id为1)，执行一个脚本文件，同时便会生成一个非交互子shell（进程id为2），然后该脚本文件的每一行可执行程序，又会生成新的子进程id如3，4，5，6等等
+父子shell中的变量问题：
 
-          
+普通自定义变量不会
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/05/编程开发/Shell/Shell多进程并发以及并发数控制/#more" rel="contents">
+            <a class="btn" href="/2019/02/15/编程开发/Shell/父子shell和父子进程/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1523,7 +1521,7 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/编程开发/Shell/关于nuhup与&/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/15/编程开发/Shell/sudo与su/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -1542,7 +1540,7 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/02/编程开发/Shell/关于nuhup与&/" itemprop="url">关于nuhup与&</a></h1>
+                <a class="post-title-link" href="/2019/02/15/编程开发/Shell/sudo与su/" itemprop="url">sudo与su</a></h1>
         
 
         <div class="post-meta">
@@ -1554,8 +1552,8 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-02T18:13:30+08:00">
-                2018-11-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-15T18:13:30+08:00">
+                2019-02-15
               </time>
             
 
@@ -1606,8 +1604,8 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/02/编程开发/Shell/关于nuhup与&/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/02/编程开发/Shell/关于nuhup与&/" itemprop="commentCount"></span>
+                <a href="/2019/02/15/编程开发/Shell/sudo与su/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/15/编程开发/Shell/sudo与su/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1615,7 +1613,7 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
 
           
           
-             <span id="/2018/11/02/编程开发/Shell/关于nuhup与&/" class="leancloud_visitors" data-flag-title="关于nuhup与&">
+             <span id="/2019/02/15/编程开发/Shell/sudo与su/" class="leancloud_visitors" data-flag-title="sudo与su">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1645,17 +1643,12 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
       
         
           
-          https://www.jianshu.com/p/747e0d5021a2
-
-如果后台&amp;开了多个子进程，关闭父进程，子进程变成孤儿进程，继续运行。
-
-如果后台&amp;开了多个子进程，关闭终端，进程全部结束。
-
-如果后台&amp;开了多个字进程，但是用了nohup，关闭终端，子进程继续运行
+          sudo -u user单纯以某用户身份运行命令，并不切换环境，需要输入当前用户密码，。sudo的各类权限在/etc/sudoers配置
+su 则切换到某用户的环境下，需要输入某用户的密码。这里注意一定要加 su -  ，只有这样才会生成login shell加载/etc/profile和~/.ba
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/02/编程开发/Shell/关于nuhup与&/#more" rel="contents">
+            <a class="btn" href="/2019/02/15/编程开发/Shell/sudo与su/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1701,7 +1694,7 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/编程开发/Shell/关于sh,source,exec/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/02/编程开发/Python/python2和3切换注意事项/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -1720,7 +1713,7 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/02/编程开发/Shell/关于sh,source,exec/" itemprop="url">关于sh,source,exec</a></h1>
+                <a class="post-title-link" href="/2019/02/02/编程开发/Python/python2和3切换注意事项/" itemprop="url">python2和3切换注意事项</a></h1>
         
 
         <div class="post-meta">
@@ -1732,8 +1725,8 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-02T18:13:30+08:00">
-                2018-11-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-02T22:06:02+08:00">
+                2019-02-02
               </time>
             
 
@@ -1766,8 +1759,8 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/Shell/" itemprop="url" rel="index">
-                    <span itemprop="name">Shell</span>
+                  <a href="/categories/编程开发/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -1784,8 +1777,8 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/02/编程开发/Shell/关于sh,source,exec/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/02/编程开发/Shell/关于sh,source,exec/" itemprop="commentCount"></span>
+                <a href="/2019/02/02/编程开发/Python/python2和3切换注意事项/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/02/编程开发/Python/python2和3切换注意事项/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1793,7 +1786,7 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
 
           
           
-             <span id="/2018/11/02/编程开发/Shell/关于sh,source,exec/" class="leancloud_visitors" data-flag-title="关于sh,source,exec">
+             <span id="/2019/02/02/编程开发/Python/python2和3切换注意事项/" class="leancloud_visitors" data-flag-title="python2和3切换注意事项">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1823,14 +1816,16 @@ https://blog.csdn.net/yeweiouyang/article/details/52512522
       
         
           
-          source相当于把文件中的命令按顺序在当前shell执行一次
-sh则会另起一个子shell，export的环境变量不能返回到父shell
-https://www.jianshu.com/p/dd7956aec097
-
           
+除法问题。
+12345678910# python2&gt;&gt;&gt; 3/21&gt;&gt;&gt; 3/2.01.5# python3&gt;&gt;&gt; 3/21.5&gt;&gt;&gt; 3//21.5
+
+
+  解决方法：from future import division
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/02/编程开发/Shell/关于sh,source,exec/#more" rel="contents">
+            <a class="btn" href="/2019/02/02/编程开发/Python/python2和3切换注意事项/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1876,7 +1871,7 @@ https://www.jianshu.com/p/dd7956aec097
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/18/编程开发/Spark/Spark笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/机器学习/关于特征值分布不均匀的问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wei Lyu">
@@ -1895,7 +1890,7 @@ https://www.jianshu.com/p/dd7956aec097
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/18/编程开发/Spark/Spark笔记/" itemprop="url">Spark笔记</a></h1>
+                <a class="post-title-link" href="/2018/12/06/机器学习/关于特征值分布不均匀的问题/" itemprop="url">关于特征值分布不均匀的问题</a></h1>
         
 
         <div class="post-meta">
@@ -1907,8 +1902,8 @@ https://www.jianshu.com/p/dd7956aec097
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-18T22:06:02+08:00">
-                2018-10-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T19:28:44+08:00">
+                2018-12-06
               </time>
             
 
@@ -1930,19 +1925,8 @@ https://www.jianshu.com/p/dd7956aec097
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/" itemprop="url" rel="index">
-                    <span itemprop="name">编程开发</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程开发/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
                   </a>
                 </span>
 
@@ -1959,8 +1943,8 @@ https://www.jianshu.com/p/dd7956aec097
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/10/18/编程开发/Spark/Spark笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/18/编程开发/Spark/Spark笔记/" itemprop="commentCount"></span>
+                <a href="/2018/12/06/机器学习/关于特征值分布不均匀的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/06/机器学习/关于特征值分布不均匀的问题/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1968,7 +1952,7 @@ https://www.jianshu.com/p/dd7956aec097
 
           
           
-             <span id="/2018/10/18/编程开发/Spark/Spark笔记/" class="leancloud_visitors" data-flag-title="Spark笔记">
+             <span id="/2018/12/06/机器学习/关于特征值分布不均匀的问题/" class="leancloud_visitors" data-flag-title="关于特征值分布不均匀的问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1998,13 +1982,15 @@ https://www.jianshu.com/p/dd7956aec097
       
         
           
-          
-如何手动分区：分两种情况，创建 RDD 时和通过转换操作得到新 RDD 时。
-对于前者，在调用 textFile 和 parallelize 方法时候手动指定分区个数即可。例如 sc.parallelize(Array(1, 2, 3, 5, 6), 2) 指定创建得到的 RDD 分区个数为 2。
+          之前city_id作为特征后导致模型预测结果差异很大这一点，一直让我耿耿于怀，仔细思考后，其实可以这样解释：
+
+首先特征属性不对，我应该将其设为离散特征，做OHE处理，再放入模型训练。
+
+特征值分布不均匀，事实上不会影响该特征值的选择，假如该特征值确实区分了样本，即使树的左右子节点样本数量相差很大，
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/18/编程开发/Spark/Spark笔记/#more" rel="contents">
+            <a class="btn" href="/2018/12/06/机器学习/关于特征值分布不均匀的问题/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2045,7 +2031,7 @@ https://www.jianshu.com/p/dd7956aec097
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2088,7 +2074,7 @@ https://www.jianshu.com/p/dd7956aec097
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-count">76</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2099,7 +2085,7 @@ https://www.jianshu.com/p/dd7956aec097
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2110,7 +2096,7 @@ https://www.jianshu.com/p/dd7956aec097
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2160,23 +2146,23 @@ https://www.jianshu.com/p/dd7956aec097
             
             
             <li>
-                <a href="/2020/07/20/数学/伪多项式时间复杂度/" title="伪多项式时间复杂度" target="_blank">伪多项式时间复杂度</a>
+                <a href="/2020/08/13/大数据/Spark/Spark中的UDF/" title="Spark中的UDF" target="_blank">Spark中的UDF</a>
             </li>
             
             <li>
-                <a href="/2020/07/20/数学/时间序列中随机过程/" title="时间序列中的随机过程" target="_blank">时间序列中的随机过程</a>
+                <a href="/2020/07/29/ML框架/Tensorflow和Pytorch的比较/" title="Tensorflow和Pytorch的比较" target="_blank">Tensorflow和Pytorch的比较</a>
             </li>
             
             <li>
-                <a href="/2020/06/22/数学/计算复杂度公式/" title="计算复杂度通用公式" target="_blank">计算复杂度通用公式</a>
+                <a href="/2020/07/28/深度学习/ML2020笔记-Transformer/" title target="_blank"></a>
             </li>
             
             <li>
-                <a href="/2020/06/20/Web开发/前端开发环境配置/" title="前端开发环境配置" target="_blank">前端开发环境配置</a>
+                <a href="/2020/07/28/深度学习/ML2020笔记-基于RNN的生成模型和Attention/" title target="_blank"></a>
             </li>
             
             <li>
-                <a href="/2020/06/05/编程开发/Github代理加速/" title="Github代理加速" target="_blank">Github代理加速</a>
+                <a href="/2020/07/27/深度学习/ML2020笔记-ELMO、BERT和GPT/" title target="_blank"></a>
             </li>
             
         </ul>

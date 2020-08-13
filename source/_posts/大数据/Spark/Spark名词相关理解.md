@@ -1,7 +1,7 @@
 ---
 title: Spark名词相关理解
 date: 2020-03-05 22:06:02
-categories: [编程开发,Spark]
+categories: [大数据,Spark]
 ---
 
 ## 关于partition和task
