@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="除法问题。 12345678910# python2&amp;gt;&amp;gt;&amp;gt; 3/21&amp;gt;&amp;gt;&amp;gt; 3/2.01.5# python3&amp;gt;&amp;gt;&amp;gt; 3/21.5&amp;gt;&amp;gt;&amp;gt; 3//21.5     解决方法：from future import division  unicode string. python2默认是ASCII码的字符串，UNICODE字符串则">
+<meta name="description" content="除法问题。 12345678910# python2&amp;gt;&amp;gt;&amp;gt; 3/21&amp;gt;&amp;gt;&amp;gt; 3/2.01.5# python3&amp;gt;&amp;gt;&amp;gt; 3/21.5&amp;gt;&amp;gt;&amp;gt; 3//21.5     解决方法：from future import division  字符串编码不同：  python2字符串分为str类型和unicode类型  str：非unic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python2和3切换注意事项">
 <meta property="og:url" content="http://yoursite.com/2019/02/02/编程开发/Python/python2和3切换注意事项/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
-<meta property="og:description" content="除法问题。 12345678910# python2&amp;gt;&amp;gt;&amp;gt; 3/21&amp;gt;&amp;gt;&amp;gt; 3/2.01.5# python3&amp;gt;&amp;gt;&amp;gt; 3/21.5&amp;gt;&amp;gt;&amp;gt; 3//21.5     解决方法：from future import division  unicode string. python2默认是ASCII码的字符串，UNICODE字符串则">
+<meta property="og:description" content="除法问题。 12345678910# python2&amp;gt;&amp;gt;&amp;gt; 3/21&amp;gt;&amp;gt;&amp;gt; 3/2.01.5# python3&amp;gt;&amp;gt;&amp;gt; 3/21.5&amp;gt;&amp;gt;&amp;gt; 3//21.5     解决方法：from future import division  字符串编码不同：  python2字符串分为str类型和unicode类型  str：非unic">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-23T15:22:46.873Z">
+<meta property="og:updated_time" content="2020-10-22T10:12:09.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python2和3切换注意事项">
-<meta name="twitter:description" content="除法问题。 12345678910# python2&amp;gt;&amp;gt;&amp;gt; 3/21&amp;gt;&amp;gt;&amp;gt; 3/2.01.5# python3&amp;gt;&amp;gt;&amp;gt; 3/21.5&amp;gt;&amp;gt;&amp;gt; 3//21.5     解决方法：from future import division  unicode string. python2默认是ASCII码的字符串，UNICODE字符串则">
+<meta name="twitter:description" content="除法问题。 12345678910# python2&amp;gt;&amp;gt;&amp;gt; 3/21&amp;gt;&amp;gt;&amp;gt; 3/2.01.5# python3&amp;gt;&amp;gt;&amp;gt; 3/21.5&amp;gt;&amp;gt;&amp;gt; 3//21.5     解决方法：from future import division  字符串编码不同：  python2字符串分为str类型和unicode类型  str：非unic">
 
 
 
@@ -434,10 +434,24 @@
 </ul>
 <p>  <strong>解决方法</strong>：from <strong>future</strong> import division</p>
 <ul>
-<li><p>unicode string. python2默认是ASCII码的字符串，UNICODE字符串则是另一种表示, 就是unicode和ascii没统一：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>str = <span class="string">"我爱北京天安门"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str   <span class="comment">#本身是UNICODE编码的字符，只能转成底层的ASCII的二进制形式来表示</span></span><br><span class="line"><span class="string">'\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str = <span class="string">u"我爱北京天安门"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str  <span class="comment">#指定这是一个UNICODE编码的字符，就用底层的UNICODE的二进制形式来表示</span></span><br><span class="line"><span class="string">u'\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8'</span></span><br></pre></td></tr></table></figure>
-<p>而python3底层统一用utf-8来表示。</p>
-<p><strong>解决方法</strong>：其实只是存储方式的不同，print什么的都不影响。</p>
+<li><p>字符串编码不同：</p>
+<ul>
+<li><p>python2字符串分为str类型和unicode类型</p>
+<ul>
+<li>str：非unicode形式，以各种编码方式用字节存储(gbk, ascii, utf-8, utf-16等)</li>
+<li>Unicode：unicode形式</li>
+</ul>
+<p>默认就是str类型，除非指定u”字符串”，才是unicode类型。相对来说不合理，在代码中涉及到中文的时候(用str类型)就会遇到编码和解码问题，中间有各种隐式的转换，程序可能报错，因为python2的默认编码为ascii，sys.getdefaultencoding()</p>
+</li>
+<li><p>pyhont3字符串分为str类型和bytes类型</p>
+<ul>
+<li>str：unicode形式</li>
+<li>bytes：非unicode形式，以各种编码方式用字节存储(gbk, ascii, utf-8, utf-16等)</li>
+</ul>
+<p>这样更加合理一点，我们平时用到的就是str类型，用最通用的Unicode来表示，只在底层存储时候转成相应编码方式。</p>
+</li>
+</ul>
+<p><strong>解决方法</strong>：文件头部指定编码utf-8，sys.setdefaultencoding为utf-8。</p>
 </li>
 <li><p>map,filter等。python2返回结果是list，python3返回一个可迭代对象，需要list()才行</p>
 </li>
@@ -516,8 +530,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/15/编程开发/Shell/sudo与su/" rel="prev" title="sudo与su">
-                sudo与su <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/15/编程开发/Shell/父子shell和父子进程/" rel="prev" title="父子shell和父子进程">
+                父子shell和父子进程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -586,7 +600,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -608,7 +622,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -658,23 +672,23 @@
             
             
             <li>
-                <a href="/2020/08/13/大数据/Spark/Spark中的UDF/" title="Spark中的UDF" target="_blank">Spark中的UDF</a>
+                <a href="/2020/10/28/ML框架/Tf一些常用方法记录/" title="Tensorflow一些常用方法记录" target="_blank">Tensorflow一些常用方法记录</a>
             </li>
             
             <li>
-                <a href="/2020/07/29/ML框架/Tensorflow和Pytorch的比较/" title="Tensorflow和Pytorch的比较" target="_blank">Tensorflow和Pytorch的比较</a>
+                <a href="/2020/10/22/编程开发/Python/关于python2的编码问题/" title="关于python2的编码问题" target="_blank">关于python2的编码问题</a>
             </li>
             
             <li>
-                <a href="/2020/07/28/深度学习/ML2020笔记-Transformer/" title target="_blank"></a>
+                <a href="/2020/10/09/编程开发/Python/下划线用法/" title="下划线用法" target="_blank">下划线用法</a>
             </li>
             
             <li>
-                <a href="/2020/07/28/深度学习/ML2020笔记-基于RNN的生成模型和Attention/" title target="_blank"></a>
+                <a href="/2020/09/27/深度学习/ML2020笔记-Transformer/" title target="_blank"></a>
             </li>
             
             <li>
-                <a href="/2020/07/27/深度学习/ML2020笔记-ELMO、BERT和GPT/" title target="_blank"></a>
+                <a href="/2020/09/27/深度学习/ML2020笔记-基于RNN的生成模型和Attention/" title target="_blank"></a>
             </li>
             
         </ul>
