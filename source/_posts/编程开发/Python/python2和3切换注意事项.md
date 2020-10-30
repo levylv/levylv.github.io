@@ -25,20 +25,23 @@ categories: [编程开发,Python]
 
   **解决方法**：from __future__ import division
 
-- unicode string. python2默认是ASCII码的字符串，UNICODE字符串则是另一种表示, 就是unicode和ascii没统一：
+- 字符串编码不同：
 
-  ```python
-  >>> str = "我爱北京天安门"
-  >>> str   #本身是UNICODE编码的字符，只能转成底层的ASCII的二进制形式来表示
-  '\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8'
-  >>> str = u"我爱北京天安门"
-  >>> str  #指定这是一个UNICODE编码的字符，就用底层的UNICODE的二进制形式来表示
-  u'\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8'
-  ```
+  - python2字符串分为str类型和unicode类型
 
-  而python3底层统一用utf-8来表示。
+    - str：非unicode形式，以各种编码方式用字节存储(gbk, ascii, utf-8, utf-16等)
+    - Unicode：unicode形式
 
-  **解决方法**：其实只是存储方式的不同，print什么的都不影响。
+    默认就是str类型，除非指定u"字符串"，才是unicode类型。相对来说不合理，在代码中涉及到中文的时候(用str类型)就会遇到编码和解码问题，中间有各种隐式的转换，程序可能报错，因为python2的默认编码为ascii，sys.getdefaultencoding()
+
+  - pyhont3字符串分为str类型和bytes类型
+
+    - str：unicode形式
+    - bytes：非unicode形式，以各种编码方式用字节存储(gbk, ascii, utf-8, utf-16等)
+
+    这样更加合理一点，我们平时用到的就是str类型，用最通用的Unicode来表示，只在底层存储时候转成相应编码方式。
+
+  **解决方法**：文件头部指定编码utf-8，sys.setdefaultencoding为utf-8。
 
 - map,filter等。python2返回结果是list，python3返回一个可迭代对象，需要list()才行
 
