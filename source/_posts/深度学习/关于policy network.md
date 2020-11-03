@@ -18,7 +18,7 @@ categories: [深度学习,强化学习]
 $$
 L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}
 $$
-其实你仔细一看，发现对比正常loss function - $\sum p(x) log{\hat{p}(x)}\$，无非就是把真实label的概率换成f(a, s)$罢了。这样的loss function其实本质上就是等价于 最大化评价指标$f(a, s)$，推到过程如下：
+其实你仔细一看，发现对比正常loss function - $\sum p(x) log{\hat{p}(x)}\$，无非就是把真实label的概率换成$f(a, s)$罢了。这样的loss function其实本质上就是等价于 最大化评价指标$f(a, s)$，推到过程如下：
 
 <img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e3apzp5j312u0ju0xf.jpg" alt="image-20201030152538474" style="zoom:50%;" />
 
