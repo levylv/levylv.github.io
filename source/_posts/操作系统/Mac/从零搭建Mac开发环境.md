@@ -295,4 +295,33 @@ categories: [操作系统,Mac]
    
    ```
 
-   
+10. tmux配置, ~/.tmux.conf
+
+    ```shell
+    setw -g mode-keys vi
+    new-session -n $HOST
+    set-option -g status-interval 1
+    set-option -g automatic-rename on
+    #set-option -g automatic-rename-format '#(basename "#{pane_current_path}")'
+    
+    #select last window
+    bind-key C-l select-window -l
+    
+    #up
+    bind-key k select-pane -U
+    #down
+    bind-key j select-pane -D
+    #left
+    bind-key h select-pane -L
+    #right
+    bind-key l select-pane -R
+    
+    # resize pane
+    bind -r ^k resizep -U 1 # upward (prefix Ctrl+k)
+    bind -r ^j resizep -D 1 # downward (prefix Ctrl+j)
+    bind -r ^h resizep -L 1 # to the left (prefix Ctrl+h)
+    bind -r ^l resizep -R 1 # to the right (prefix Ctrl+l)
+    bind % split-window -h -c "#{pane_current_path}"
+    ```
+
+    
