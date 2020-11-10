@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="前阵子电脑mac进水，搞了台备机，重新安装了各类软件搭建开发环境，特此记录…以防万一… 软件包 Chrome  搜狗输入法  pycharm（2020.1）  模板：Editor -&amp;gt; File and code Templates  -&amp;gt; Python Script： 1234#!/usr/bin/env python# -*- coding: utf-8 -*-# @Author:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-27T03:19:37.514Z">
+<meta property="og:updated_time" content="2020-11-10T11:54:24.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零搭建Mac开发环境">
 <meta name="twitter:description" content="前阵子电脑mac进水，搞了台备机，重新安装了各类软件搭建开发环境，特此记录…以防万一… 软件包 Chrome  搜狗输入法  pycharm（2020.1）  模板：Editor -&amp;gt; File and code Templates  -&amp;gt; Python Script： 1234#!/usr/bin/env python# -*- coding: utf-8 -*-# @Author:">
@@ -519,6 +519,9 @@
 <li><p>~/.bash_profile配置:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">alias</span></span></span><br><span class="line">alias ll='ls -lF'</span><br><span class="line">alias vi='mvim'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> iterm2</span></span><br><span class="line">export CLICOLOR=1</span><br><span class="line">export LSCOLOR=Gxfxaxdxcxegedabagacad</span><br><span class="line">export PS1='\[\e[01;33m\][\[\e[01;36m\]\u\[\e[01;33m\]@\[\e[01;35m\]\h\[\e[01;33m\]] \[\e[01;36m\]\w \[\e[01;32m\]\$\[\033[00m\] ' #显示全部路径名</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> JAVAHOME</span></span><br><span class="line">export JAVA_HOME=$(/usr/libexec/java_home)</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Maven</span></span><br><span class="line">export MAVEN_HOME=/usr/local/apache-maven-3.6.3</span><br><span class="line">export PATH=$PATH:$MAVEN_HOME/bin</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> bash shell</span></span><br><span class="line">export BASH_SILENCE_DEPRECATION_WARNING=1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> &gt;&gt;&gt; conda initialize &gt;&gt;&gt;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> !! Contents within this block are managed by <span class="string">'conda init'</span> !!</span></span><br><span class="line">__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2&gt; /dev/null)"</span><br><span class="line">if [ $? -eq 0 ]; then</span><br><span class="line">    eval "$__conda_setup"</span><br><span class="line">else</span><br><span class="line">    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then</span><br><span class="line">        . "/opt/anaconda3/etc/profile.d/conda.sh"</span><br><span class="line">    else</span><br><span class="line">        export PATH="/opt/anaconda3/bin:$PATH"</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line">unset __conda_setup</span><br><span class="line"><span class="meta">#</span><span class="bash"> &lt;&lt;&lt; conda initialize &lt;&lt;&lt;</span></span><br><span class="line">export PATH=/opt/anaconda3/bin:$PATH</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>tmux配置, ~/.tmux.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">setw -g mode-keys vi</span><br><span class="line">new-session -n $HOST</span><br><span class="line">set-option -g status-interval 1</span><br><span class="line">set-option -g automatic-rename on</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">set</span>-option -g automatic-rename-format <span class="string">'#(basename "#&#123;pane_current_path&#125;")'</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">select last window</span></span><br><span class="line">bind-key C-l select-window -l</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">up</span></span><br><span class="line">bind-key k select-pane -U</span><br><span class="line"><span class="meta">#</span><span class="bash">down</span></span><br><span class="line">bind-key j select-pane -D</span><br><span class="line"><span class="meta">#</span><span class="bash">left</span></span><br><span class="line">bind-key h select-pane -L</span><br><span class="line"><span class="meta">#</span><span class="bash">right</span></span><br><span class="line">bind-key l select-pane -R</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> resize pane</span></span><br><span class="line">bind -r ^k resizep -U 1 # upward (prefix Ctrl+k)</span><br><span class="line">bind -r ^j resizep -D 1 # downward (prefix Ctrl+j)</span><br><span class="line">bind -r ^h resizep -L 1 # to the left (prefix Ctrl+h)</span><br><span class="line">bind -r ^l resizep -R 1 # to the right (prefix Ctrl+l)</span><br><span class="line">bind % split-window -h -c "#&#123;pane_current_path&#125;"</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 
       
@@ -582,7 +585,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/20/Web开发/前端开发环境配置/" rel="prev" title="前端开发环境配置">
+              <a href="/2020/06/20/前端开发/前端开发环境配置/" rel="prev" title="前端开发环境配置">
                 前端开发环境配置 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -661,7 +664,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-count">86</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -672,7 +675,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -733,23 +736,23 @@
             
             
             <li>
-                <a href="/2020/11/02/深度学习/NAS系列文章解读/" title="NAS系列文章解读" target="_blank">NAS系列文章解读</a>
+                <a href="/2020/11/10/编程开发/后端技术栈/" title="后端技术栈" target="_blank">后端技术栈</a>
             </li>
             
             <li>
-                <a href="/2020/10/30/深度学习/关于policy network/" title="关于Policy Network" target="_blank">关于Policy Network</a>
+                <a href="/2020/11/10/大数据/Databus/Databus学习笔记/" title="Databus学习笔记" target="_blank">Databus学习笔记</a>
             </li>
             
             <li>
-                <a href="/2020/10/28/ML框架/Tf一些常用方法记录/" title="Tensorflow一些常用方法记录" target="_blank">Tensorflow一些常用方法记录</a>
+                <a href="/2020/11/10/大数据/Flink/Flink学习笔记/" title="Flink学习笔记" target="_blank">Flink学习笔记</a>
             </li>
             
             <li>
-                <a href="/2020/10/22/编程开发/Python/关于python2的编码问题/" title="关于python2的编码问题" target="_blank">关于python2的编码问题</a>
+                <a href="/2020/11/10/大数据/Hive/hdfs文件理解/" title="hdfs文件理解" target="_blank">hdfs文件理解</a>
             </li>
             
             <li>
-                <a href="/2020/10/09/编程开发/Python/下划线用法/" title="下划线用法" target="_blank">下划线用法</a>
+                <a href="/2020/11/10/大数据/Kafka/Kafka学习笔记/" title="Spark学习笔记" target="_blank">Spark学习笔记</a>
             </li>
             
         </ul>
