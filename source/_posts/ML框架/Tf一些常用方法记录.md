@@ -58,3 +58,35 @@ print sess.run(temp2)
 ```
 
 tf.gather只能对低维度进行操作，gather_nd可以进行高维度的操作。和gather相比，没有了axis参数，如果indices的维度和params的维度等价，他是直接获取一个具体值(之后组合成向量)。
+
+
+
+### tf.expand_dims和tf.squeeze
+
+- tf.expand_dims(input, axis=None)，就是在对应的axis上加个1的维度，这样可以让tensorflow的元素乘和元素加运算可以用上broadcast机制。
+- broadcast机制：满足下面两个条件即可进行元素复制。
+  - 从后往前维度相同
+  - 遇到不同的话，必须有一个维度为1.
+  - 举例：
+    - a.shape = (4,1,3,3), b.shape(1,3), a+b = (4,1,3,3)
+    - a.shape = (4,1,1,3), b.shape(3,1), a+b = (4,1,3,3)
+
+- tf.squeeze则相反，去掉维度为1的维度。
+
+
+
+### tf.split()
+
+将矩阵的某一维度切分为一个list。
+
+- 'value' is a tensor with shape [5, 30]
+- split0, split1, split2 = tf.split(value, [4, 15, 11], 1)
+- tf.shape(split0)  # [5, 4]
+- tf.shape(split1)  # [5, 15]
+- tf.shape(split2)  # [5, 11]
+
+
+
+### tf.add_n()
+
+将input list里的tensor按元素相加，和普通相加没什么区别，只是可以加个operation name
