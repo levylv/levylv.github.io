@@ -1,36 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Cuda、Tensorflow、Pytorch版本匹配</title>
-    <url>/2020/02/10/ML%E6%A1%86%E6%9E%B6/Cuda%E3%80%81Tensorflow%E3%80%81Pytorch%E7%89%88%E6%9C%AC%E5%8C%B9%E9%85%8D/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="Tensorflow和Cuda、Cudnn版本对应关系"><a href="#Tensorflow和Cuda、Cudnn版本对应关系" class="headerlink" title="Tensorflow和Cuda、Cudnn版本对应关系"></a>Tensorflow和Cuda、Cudnn版本对应关系</h4><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh6yeb38cmj315y0u0h0c.jpg" alt="image-20200728202135462" style="zoom:50%;"></p>
-<p>所以Cuda 10.0以上版本，就需要tensorflow 1.13.1以上</p>
-<h4 id="Pytorch和Cuda版本对应关系"><a href="#Pytorch和Cuda版本对应关系" class="headerlink" title="Pytorch和Cuda版本对应关系"></a>Pytorch和Cuda版本对应关系</h4><p><a href="https://pytorch.org/get-started/previous-versions/" target="_blank" rel="noopener">https://pytorch.org/get-started/previous-versions/</a></p>
-<p>一般就Cuda 10.0的话，pytorch得是1.0.0以上</p>
-]]></content>
-      <categories>
-        <category>ML框架</category>
-      </categories>
-      <tags>
-        <tag>Tensorflow</tag>
-        <tag>Pytorch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Tensorflow中有关Graph和Session的几个问题</title>
-    <url>/2017/07/15/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%AD%E6%9C%89%E5%85%B3Graph%E5%92%8CSession%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>晚上在写一个简单的cnn时遇到了一个编译错误，代码检查了半天没找到问题。。最后鬼使神差地把全局变量初始化语句改了一下，竟然编译通过了。。研究了一下原因，应该是默认graph的问题。于是，再加上之前的默认session，我把tensorflow中默认graph和默认session几个注意点总结一下。</p>
-<h1 id="默认Session问题"><a href="#默认Session问题" class="headerlink" title="默认Session问题"></a>默认Session问题</h1><ul>
-<li>session创建后，如果没有指定graph，则该session会调用默认的graph。</li>
-<li>调用默认graph的话，session创建语句可以在文件任意位置。因为即使session放在前文，后文里若是定义了新的graph节点，这些节点也会加到默认graph中，接下来调用该session时，调用的也是新的默认graph。</li>
-<li>如果以<code>sess = tf.Session()</code>创建session，则该session不会作为下文的默认session，需要以<code>with</code>语句开头调用该session后，才作为下文的默认session。如果以<code>sess = tf.InteractiveSession()</code>创建session, 则该session即是下文的默认session。<strong>默认session的好处是可以直接使用<code>operation.run()</code>或<code>tensor.eval()</code>, 无需指定session来run</strong>。</li>
-<li><code>with</code>语句有个好处是，该代码块结束后，session会自动<code>close</code>。</li>
+    <title>Tensorflow一些常用方法记录</title>
+    <url>/2020/10/28/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="tf-stack"><a href="#tf-stack" class="headerlink" title="tf.stack"></a>tf.stack</h3><p>tf.stack(values, axis=0, name=”stack”):</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = tf.constant([<span class="number">1</span>, <span class="number">4</span>])</span><br><span class="line">y = tf.constant([<span class="number">2</span>, <span class="number">5</span>])</span><br><span class="line">z = tf.constant([<span class="number">3</span>, <span class="number">6</span>])</span><br><span class="line">tf.stack([x, y, z])  <span class="comment"># [[1, 4], [2, 5], [3, 6]] (Pack along first dim.)</span></span><br><span class="line">tf.stack([x, y, z], axis=<span class="number">1</span>)  <span class="comment"># [[1, 2, 3], [4, 5, 6]]</span></span><br></pre></td></tr></table></figure>
+<p>本质是把一个长度为N的list，list里的元素有自己的shape：</p>
+<ul>
+<li>axis = 0，则变为（N，shape[0], shape[1], …）</li>
+<li>axis = 1，则变为（shape[0], N, shape[1], …）</li>
 </ul>
-<h1 id="默认Graph问题"><a href="#默认Graph问题" class="headerlink" title="默认Graph问题"></a>默认Graph问题</h1><ul>
-<li>如果不指定graph，创建的新节点都会加入到默认graph中。注意，该graph是一个<strong>全局默认graph</strong>,也就说如果你定义了一个函数，这个函数里增加了一些节点，那么，每次调用这个函数，都会在默认graph中增加新节点！因此，如果想要定义类来实现算法，那么以防这种情况，建议将所有的节点操作放在类的初始化<code>__init__</code>方法中，这样对于每个实例，初始化也只会执行一次而已。</li>
-<li>有个要特别注意的节点操作<code>tf.global_variables_intializer()</code>。该项操作读取的是<strong>当前默认graph中</strong>的variable，如果在前文中定义就会出现问题！举个例子，我在前文中定义<code>init_var = tf.global_variables_intializer()</code>，然后中间加入新的variable, 最后再执行<code>init_var.run()</code>，这样就会出现编译错误信息<code>Attempting to use uninitialized value beta1_power</code>！也就是我今天遇到的编译问题！我们只能重新执行<code>tf.global_variables_intializer().run()</code>才行！</li>
+<p>常见用法有：</p>
+<p>如果元素为长度为M的list</p>
+<ul>
+<li>Axis =0,  其实就相当于横着concate</li>
+<li>Axis =1，相当于把元素看为列向量，然后竖着concate</li>
 </ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实上面说了那么多问题，其实只要规范好代码就可以避免上述问题。所谓的规范就是，session创建和variable初始化这两个步骤，都在graph定义完成后再执行！</p>
+<h3 id="tf-gather和tf-gather-nd"><a href="#tf-gather和tf-gather-nd" class="headerlink" title="tf.gather和tf.gather_nd"></a>tf.gather和tf.gather_nd</h3><p>tf.gather(params, indices, validate_indices=None, name=None, axis=0):</p>
+<p>对于params,就是你的输入，axis就是你进行操作的维度，默认为0(对于tf.gather,只能对于给定的axis操作),indices就是你想获取的axis维度上的值，来看一个例子，可以更佳清楚的了解函数是如何使用的：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">temp = tf.range(<span class="number">0</span>,<span class="number">10</span>)*<span class="number">10</span> + tf.constant(<span class="number">1</span>,shape=[<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">temp2 = tf.gather(temp,[<span class="number">1</span>,<span class="number">5</span>,<span class="number">9</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(temp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(temp2)</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line"></span><br><span class="line">[ <span class="number">1</span> <span class="number">11</span> <span class="number">21</span> <span class="number">31</span> <span class="number">41</span> <span class="number">51</span> <span class="number">61</span> <span class="number">71</span> <span class="number">81</span> <span class="number">91</span>]</span><br><span class="line"></span><br><span class="line">[<span class="number">11</span> <span class="number">51</span> <span class="number">91</span>]</span><br></pre></td></tr></table></figure>
+<p>tf.gather只能对低维度进行操作，gather_nd可以进行高维度的操作。和gather相比，没有了axis参数，如果indices的维度和params的维度等价，他是直接获取一个具体值(之后组合成向量)。</p>
+<h3 id="tf-expand-dims和tf-squeeze"><a href="#tf-expand-dims和tf-squeeze" class="headerlink" title="tf.expand_dims和tf.squeeze"></a>tf.expand_dims和tf.squeeze</h3><ul>
+<li>tf.expand_dims(input, axis=None)，就是在对应的axis上加个1的维度，这样可以让tensorflow的元素乘和元素加运算可以用上broadcast机制。</li>
+<li><p>broadcast机制：满足下面两个条件即可进行元素复制。</p>
+<ul>
+<li>从后往前维度相同</li>
+<li>遇到不同的话，必须有一个维度为1.</li>
+<li>举例：<ul>
+<li>a.shape = (4,1,3,3), b.shape(1,3), a+b = (4,1,3,3)</li>
+<li>a.shape = (4,1,1,3), b.shape(3,1), a+b = (4,1,3,3)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>tf.squeeze则相反，去掉维度为1的维度。</p>
+</li>
+</ul>
+<h3 id="tf-split"><a href="#tf-split" class="headerlink" title="tf.split()"></a>tf.split()</h3><p>将矩阵的某一维度切分为一个list。</p>
+<ul>
+<li>‘value’ is a tensor with shape [5, 30]</li>
+<li>split0, split1, split2 = tf.split(value, [4, 15, 11], 1)</li>
+<li>tf.shape(split0)  # [5, 4]</li>
+<li>tf.shape(split1)  # [5, 15]</li>
+<li>tf.shape(split2)  # [5, 11]</li>
+</ul>
+<h3 id="tf-add-n"><a href="#tf-add-n" class="headerlink" title="tf.add_n()"></a>tf.add_n()</h3><p>将input list里的tensor按元素相加，和普通相加没什么区别，只是可以加个operation name</p>
 ]]></content>
       <categories>
         <category>ML框架</category>
@@ -105,19 +119,43 @@
       </tags>
   </entry>
   <entry>
-    <title>RSA加密算法</title>
-    <url>/2016/04/21/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天在了解公钥加密算法的时候看到了RSA加密算法，在理解其原理后觉得算法思想很是巧妙，感触颇深。</p>
-<ul>
-<li>不对称加密比对称加密算法好在能够在防止中间人攻击的情况下，减少系统的算法数。</li>
-<li>不对称加密要想完全防止中间人攻击，需要防止中间人伪造公钥，因此有一个国际数字证书认证机构，叫做 CA，会对每个提供 SSL 加密访问（https）的网站的公钥作一个签名认证。用户的浏览器事先内置了 CA 的公钥，每次收到目标网站传来的公钥，就用 CA 的公钥检验一下目标网站的公钥是否可靠。如果验证不通过，浏览器会发出警告。尤其是银行这样的网站，要注意其数字证书是否可靠。</li>
-</ul>
-<a id="more"></a>
-<p>详细算法原理，看<a href="https://zh.wikipedia.org/wiki/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">维基百科</a>。<br>其算法核心思想还是利用大数质因数分解的困难性和复杂性，若是有人能发明一种快速质因数分解算法，那RSA加密就要无容身之地喽，但这个难度估计就是证明数学上那些有关质数的猜想了。。。</p>
+    <title>Cuda、Tensorflow、Pytorch版本匹配</title>
+    <url>/2020/02/10/ML%E6%A1%86%E6%9E%B6/Cuda%E3%80%81Tensorflow%E3%80%81Pytorch%E7%89%88%E6%9C%AC%E5%8C%B9%E9%85%8D/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="Tensorflow和Cuda、Cudnn版本对应关系"><a href="#Tensorflow和Cuda、Cudnn版本对应关系" class="headerlink" title="Tensorflow和Cuda、Cudnn版本对应关系"></a>Tensorflow和Cuda、Cudnn版本对应关系</h4><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh6yeb38cmj315y0u0h0c.jpg" alt="image-20200728202135462" style="zoom:50%;"></p>
+<p>所以Cuda 10.0以上版本，就需要tensorflow 1.13.1以上</p>
+<h4 id="Pytorch和Cuda版本对应关系"><a href="#Pytorch和Cuda版本对应关系" class="headerlink" title="Pytorch和Cuda版本对应关系"></a>Pytorch和Cuda版本对应关系</h4><p><a href="https://pytorch.org/get-started/previous-versions/" target="_blank" rel="noopener">https://pytorch.org/get-started/previous-versions/</a></p>
+<p>一般就Cuda 10.0的话，pytorch得是1.0.0以上</p>
 ]]></content>
       <categories>
-        <category>信息安全</category>
+        <category>ML框架</category>
       </categories>
+      <tags>
+        <tag>Tensorflow</tag>
+        <tag>Pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tensorflow中有关Graph和Session的几个问题</title>
+    <url>/2017/07/15/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%AD%E6%9C%89%E5%85%B3Graph%E5%92%8CSession%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>晚上在写一个简单的cnn时遇到了一个编译错误，代码检查了半天没找到问题。。最后鬼使神差地把全局变量初始化语句改了一下，竟然编译通过了。。研究了一下原因，应该是默认graph的问题。于是，再加上之前的默认session，我把tensorflow中默认graph和默认session几个注意点总结一下。</p>
+<h1 id="默认Session问题"><a href="#默认Session问题" class="headerlink" title="默认Session问题"></a>默认Session问题</h1><ul>
+<li>session创建后，如果没有指定graph，则该session会调用默认的graph。</li>
+<li>调用默认graph的话，session创建语句可以在文件任意位置。因为即使session放在前文，后文里若是定义了新的graph节点，这些节点也会加到默认graph中，接下来调用该session时，调用的也是新的默认graph。</li>
+<li>如果以<code>sess = tf.Session()</code>创建session，则该session不会作为下文的默认session，需要以<code>with</code>语句开头调用该session后，才作为下文的默认session。如果以<code>sess = tf.InteractiveSession()</code>创建session, 则该session即是下文的默认session。<strong>默认session的好处是可以直接使用<code>operation.run()</code>或<code>tensor.eval()</code>, 无需指定session来run</strong>。</li>
+<li><code>with</code>语句有个好处是，该代码块结束后，session会自动<code>close</code>。</li>
+</ul>
+<h1 id="默认Graph问题"><a href="#默认Graph问题" class="headerlink" title="默认Graph问题"></a>默认Graph问题</h1><ul>
+<li>如果不指定graph，创建的新节点都会加入到默认graph中。注意，该graph是一个<strong>全局默认graph</strong>,也就说如果你定义了一个函数，这个函数里增加了一些节点，那么，每次调用这个函数，都会在默认graph中增加新节点！因此，如果想要定义类来实现算法，那么以防这种情况，建议将所有的节点操作放在类的初始化<code>__init__</code>方法中，这样对于每个实例，初始化也只会执行一次而已。</li>
+<li>有个要特别注意的节点操作<code>tf.global_variables_intializer()</code>。该项操作读取的是<strong>当前默认graph中</strong>的variable，如果在前文中定义就会出现问题！举个例子，我在前文中定义<code>init_var = tf.global_variables_intializer()</code>，然后中间加入新的variable, 最后再执行<code>init_var.run()</code>，这样就会出现编译错误信息<code>Attempting to use uninitialized value beta1_power</code>！也就是我今天遇到的编译问题！我们只能重新执行<code>tf.global_variables_intializer().run()</code>才行！</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实上面说了那么多问题，其实只要规范好代码就可以避免上述问题。所谓的规范就是，session创建和variable初始化这两个步骤，都在graph定义完成后再执行！</p>
+]]></content>
+      <categories>
+        <category>ML框架</category>
+      </categories>
+      <tags>
+        <tag>Tensorflow</tag>
+      </tags>
   </entry>
   <entry>
     <title>Tensorflow中的变量作用域和名称作用域</title>
@@ -156,6 +194,46 @@
       </categories>
       <tags>
         <tag>Tensorflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RSA加密算法</title>
+    <url>/2016/04/21/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天在了解公钥加密算法的时候看到了RSA加密算法，在理解其原理后觉得算法思想很是巧妙，感触颇深。</p>
+<ul>
+<li>不对称加密比对称加密算法好在能够在防止中间人攻击的情况下，减少系统的算法数。</li>
+<li>不对称加密要想完全防止中间人攻击，需要防止中间人伪造公钥，因此有一个国际数字证书认证机构，叫做 CA，会对每个提供 SSL 加密访问（https）的网站的公钥作一个签名认证。用户的浏览器事先内置了 CA 的公钥，每次收到目标网站传来的公钥，就用 CA 的公钥检验一下目标网站的公钥是否可靠。如果验证不通过，浏览器会发出警告。尤其是银行这样的网站，要注意其数字证书是否可靠。</li>
+</ul>
+<a id="more"></a>
+<p>详细算法原理，看<a href="https://zh.wikipedia.org/wiki/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">维基百科</a>。<br>其算法核心思想还是利用大数质因数分解的困难性和复杂性，若是有人能发明一种快速质因数分解算法，那RSA加密就要无容身之地喽，但这个难度估计就是证明数学上那些有关质数的猜想了。。。</p>
+]]></content>
+      <categories>
+        <category>信息安全</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端开发环境配置</title>
+    <url>/2020/06/20/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Step-1-VS-code"><a href="#Step-1-VS-code" class="headerlink" title="Step 1 - VS code"></a>Step 1 - VS code</h2><ul>
+<li>汉化插件: chinese simplied language</li>
+<li>格式化代码：Prettier</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 修改settings.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"diffEditor.ignoreTrimWhitespace"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"editor.suggestSelection"</span>: <span class="string">"first"</span>,</span><br><span class="line">  // "eslint.codeActionsOnSave": true,</span><br><span class="line">  "eslint.validate": [</span><br><span class="line">    "javascript",</span><br><span class="line">    "javascriptreact",</span><br><span class="line">    "typescript",</span><br><span class="line">    <span class="string">"typescriptreact"</span></span><br><span class="line">  ],</span><br><span class="line">  "javascript.implicitProjectConfig.experimentalDecorators": true,</span><br><span class="line">  "terminal.integrated.rendererType": "dom",</span><br><span class="line">  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",</span><br><span class="line">  "window.zoomLevel": 1,</span><br><span class="line">  "workbench.colorTheme": "Visual Studio Dark",</span><br><span class="line">  "workbench.iconTheme": "material-icon-theme",</span><br><span class="line">  "[json]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "vscode.json-language-features"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[html]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "HookyQR.beautify"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[javascript]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "HookyQR.beautify"</span><br><span class="line">  &#125;,</span><br><span class="line">  "javascript.updateImportsOnFileMove.enabled": "always",</span><br><span class="line">  "files.exclude": &#123;</span><br><span class="line">    "**/.classpath": true,</span><br><span class="line">    "**/.project": true,</span><br><span class="line">    "**/.settings": true,</span><br><span class="line">    "**/.factorypath": true</span><br><span class="line">  &#125;,</span><br><span class="line">  "files.associations": &#123;</span><br><span class="line">    "*.py": "python"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[less]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[typescriptreact]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "powermode.enabled": true,</span><br><span class="line">  "powermode.presets": "flames",</span><br><span class="line">  "[javascriptreact]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[typescript]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "typescript.updateImportsOnFileMove.enabled": "always",</span><br><span class="line">  //   "editor.codeActionsOnSave": &#123;</span><br><span class="line">  //     "source.fixAll.eslint": true</span><br><span class="line">  //   &#125;,</span><br><span class="line">  "editor.formatOnSave": true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 配置文件, prettier.config.js or .prettierrc.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  // 一行最多 100 字符</span><br><span class="line">  printWidth: 100,</span><br><span class="line">  // 使用 4 个空格缩进</span><br><span class="line">  tabWidth: 2,</span><br><span class="line">  // 不使用缩进符，而使用空格</span><br><span class="line">  useTabs: false,</span><br><span class="line">  // 行尾需要有分号</span><br><span class="line">  semi: true,</span><br><span class="line">  // 使用单引号</span><br><span class="line">  singleQuote: true,</span><br><span class="line">  // 对象的 key 仅在必要时用引号</span><br><span class="line">  quoteProps: 'as-needed',</span><br><span class="line">  // jsx 不使用单引号，而使用双引号</span><br><span class="line">  jsxSingleQuote: false,</span><br><span class="line">  // 末尾不需要逗号</span><br><span class="line">  trailingComma: 'none',</span><br><span class="line">  // 大括号内的首尾需要空格</span><br><span class="line">  bracketSpacing: true,</span><br><span class="line">  // jsx 标签的反尖括号需要换行</span><br><span class="line">  jsxBracketSameLine: false,</span><br><span class="line">  // 箭头函数，只有一个参数的时候，也需要括号</span><br><span class="line">  arrowParens: 'always',</span><br><span class="line">  // parser: "babylon",</span><br><span class="line">  // 每个文件格式化的范围是文件的全部内容</span><br><span class="line">  rangeStart: 0,</span><br><span class="line">  rangeEnd: Infinity,</span><br><span class="line">  // 不需要写文件开头的 @prettier</span><br><span class="line">  requirePragma: false,</span><br><span class="line">  // 不需要自动在文件开头插入 @prettier</span><br><span class="line">  insertPragma: false,</span><br><span class="line">  // 根据显示样式决定 html 要不要折行</span><br><span class="line">  htmlWhitespaceSensitivity: 'css',</span><br><span class="line">  // 换行符使用 lf</span><br><span class="line">  endOfLine: 'lf'</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>代码检查: ESLint</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 配置文件 .eslintrc.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"extends"</span>: <span class="string">"react-app"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 忽略文件 .eslintignore</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>括号高亮: Bracket Pair Colorizer</p>
+</li>
+</ul>
+<h2 id="Step-2-yarn"><a href="#Step-2-yarn" class="headerlink" title="Step 2 - yarn"></a>Step 2 - yarn</h2><p>Facebook开发的yarn, 类似JAVA的maven管理工具，比npm更好一点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 安装yarn </span><br><span class="line">npm i -g yarn</span><br><span class="line"># 安装项目所有依赖</span><br><span class="line">yarn</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Web开发</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -456,28 +534,274 @@
       </tags>
   </entry>
   <entry>
-    <title>前端开发环境配置</title>
-    <url>/2020/06/20/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Step-1-VS-code"><a href="#Step-1-VS-code" class="headerlink" title="Step 1 - VS code"></a>Step 1 - VS code</h2><ul>
-<li>汉化插件: chinese simplied language</li>
-<li>格式化代码：Prettier</li>
-</ul>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 修改settings.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"diffEditor.ignoreTrimWhitespace"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"editor.suggestSelection"</span>: <span class="string">"first"</span>,</span><br><span class="line">  // "eslint.codeActionsOnSave": true,</span><br><span class="line">  "eslint.validate": [</span><br><span class="line">    "javascript",</span><br><span class="line">    "javascriptreact",</span><br><span class="line">    "typescript",</span><br><span class="line">    <span class="string">"typescriptreact"</span></span><br><span class="line">  ],</span><br><span class="line">  "javascript.implicitProjectConfig.experimentalDecorators": true,</span><br><span class="line">  "terminal.integrated.rendererType": "dom",</span><br><span class="line">  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",</span><br><span class="line">  "window.zoomLevel": 1,</span><br><span class="line">  "workbench.colorTheme": "Visual Studio Dark",</span><br><span class="line">  "workbench.iconTheme": "material-icon-theme",</span><br><span class="line">  "[json]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "vscode.json-language-features"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[html]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "HookyQR.beautify"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[javascript]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "HookyQR.beautify"</span><br><span class="line">  &#125;,</span><br><span class="line">  "javascript.updateImportsOnFileMove.enabled": "always",</span><br><span class="line">  "files.exclude": &#123;</span><br><span class="line">    "**/.classpath": true,</span><br><span class="line">    "**/.project": true,</span><br><span class="line">    "**/.settings": true,</span><br><span class="line">    "**/.factorypath": true</span><br><span class="line">  &#125;,</span><br><span class="line">  "files.associations": &#123;</span><br><span class="line">    "*.py": "python"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[less]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[typescriptreact]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "powermode.enabled": true,</span><br><span class="line">  "powermode.presets": "flames",</span><br><span class="line">  "[javascriptreact]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "[typescript]": &#123;</span><br><span class="line">    "editor.defaultFormatter": "esbenp.prettier-vscode"</span><br><span class="line">  &#125;,</span><br><span class="line">  "typescript.updateImportsOnFileMove.enabled": "always",</span><br><span class="line">  //   "editor.codeActionsOnSave": &#123;</span><br><span class="line">  //     "source.fixAll.eslint": true</span><br><span class="line">  //   &#125;,</span><br><span class="line">  "editor.formatOnSave": true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 配置文件, prettier.config.js or .prettierrc.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  // 一行最多 100 字符</span><br><span class="line">  printWidth: 100,</span><br><span class="line">  // 使用 4 个空格缩进</span><br><span class="line">  tabWidth: 2,</span><br><span class="line">  // 不使用缩进符，而使用空格</span><br><span class="line">  useTabs: false,</span><br><span class="line">  // 行尾需要有分号</span><br><span class="line">  semi: true,</span><br><span class="line">  // 使用单引号</span><br><span class="line">  singleQuote: true,</span><br><span class="line">  // 对象的 key 仅在必要时用引号</span><br><span class="line">  quoteProps: 'as-needed',</span><br><span class="line">  // jsx 不使用单引号，而使用双引号</span><br><span class="line">  jsxSingleQuote: false,</span><br><span class="line">  // 末尾不需要逗号</span><br><span class="line">  trailingComma: 'none',</span><br><span class="line">  // 大括号内的首尾需要空格</span><br><span class="line">  bracketSpacing: true,</span><br><span class="line">  // jsx 标签的反尖括号需要换行</span><br><span class="line">  jsxBracketSameLine: false,</span><br><span class="line">  // 箭头函数，只有一个参数的时候，也需要括号</span><br><span class="line">  arrowParens: 'always',</span><br><span class="line">  // parser: "babylon",</span><br><span class="line">  // 每个文件格式化的范围是文件的全部内容</span><br><span class="line">  rangeStart: 0,</span><br><span class="line">  rangeEnd: Infinity,</span><br><span class="line">  // 不需要写文件开头的 @prettier</span><br><span class="line">  requirePragma: false,</span><br><span class="line">  // 不需要自动在文件开头插入 @prettier</span><br><span class="line">  insertPragma: false,</span><br><span class="line">  // 根据显示样式决定 html 要不要折行</span><br><span class="line">  htmlWhitespaceSensitivity: 'css',</span><br><span class="line">  // 换行符使用 lf</span><br><span class="line">  endOfLine: 'lf'</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    <title>XGBoost和LightGBM调参</title>
+    <url>/2018/12/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Xgboost%E5%92%8CLightGBM%E8%B0%83%E5%8F%82/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>有个应用上的重大区别：</p>
 <ul>
-<li><p>代码检查: ESLint</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 配置文件 .eslintrc.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"extends"</span>: <span class="string">"react-app"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 忽略文件 .eslintignore</span><br></pre></td></tr></table></figure>
+<li><p>Xgboost只处理数值特征，因此Xgboost无法直接处理离散特征(categorical feature)，需要数据预处理，要么labelEncoder转换为数值特征，当做连续值处理，要么one-hot编码，当做离散值处理。</p>
 </li>
-<li><p>括号高亮: Bracket Pair Colorizer</p>
+<li><p>LightGBM则有对离散特征的单独处理，需要首先利用labelEncoder转换为数值，然后会利用<a href="http://link.zhihu.com/?target=https%3A//www.researchgate.net/publication/242580910_On_Grouping_for_Maximum_Homogeneity" target="_blank" rel="noopener">On Grouping for Maximum Homogeneity</a>提到的算法找到最优值，是从2^(n-1)-1个分区划分中选出最优optimal split，而不像OHE一样是n个划分，因此效果优于OHE。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgz8kjolj30hp0b7dhl.jpg" alt="image-20200605155935227"></p>
 </li>
 </ul>
-<h2 id="Step-2-yarn"><a href="#Step-2-yarn" class="headerlink" title="Step 2 - yarn"></a>Step 2 - yarn</h2><p>Facebook开发的yarn, 类似JAVA的maven管理工具，比npm更好一点：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 安装yarn </span><br><span class="line">npm i -g yarn</span><br><span class="line"># 安装项目所有依赖</span><br><span class="line">yarn</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Web开发</category>
+        <category>机器学习</category>
       </categories>
       <tags>
-        <tag>前端</tag>
+        <tag>XGBoost</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CART与普通决策树的区别</title>
+    <url>/2019/04/29/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CART%E4%B8%8E%E6%99%AE%E9%80%9A%E5%86%B3%E7%AD%96%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>CART可以说是最常用的数，gbdt,xgboost等等…</p>
+<p>归纳一下其与普通决策树（ID3，C4.5）的区别：</p>
+<ul>
+<li>既可以分类，也可以回归。在分类时使用基尼系数，在回归时使用平方误差。</li>
+<li>只划分左右子树，也就是生成一个二叉树。普通决策树生成多个子树</li>
+<li>特征在被选择后，在接下来的树中还能被继续使用。普通决策树只使用特征一次。</li>
+<li>连续特征，n个值，从n-1个中间值中选择；离散特征，n个值，有$2^{(n-1)} - 1$个选择可能(通常是one hot编码)。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>CART</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XGBoost调参</title>
+    <url>/2018/06/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/xgboost%E8%B0%83%E5%8F%82/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li><p>选择较高的<strong>学习速率(learning rate)</strong>。一般情况下，学习速率的值为0.1。但是，对于不同的问题，理想的学习速率有时候会在0.05到0.3之间波动。选择<strong>对应于此学习速率的理想决策树数量</strong>。XGBoost有一个很有用的函数“cv”，这个函数可以在每一次迭代中使用交叉验证，并返回理想的决策树数量。</p>
+</li>
+<li><p>对于给定的学习速率和决策树数量，进行<strong>决策树特定参数调优</strong>(max_depth, min_child_weight, gamma, subsample, colsample_bytree)。在确定一棵树的过程中，我们可以选择不同的参数，待会儿我会举例说明。</p>
+</li>
+<li><p>xgboost的<strong>正则化参数</strong>的调优。(lambda, alpha)。这些参数可以降低模型的复杂度，从而提高模型的表现。</p>
+</li>
+<li><p>降低学习速率，确定理想参数。</p>
+</li>
+</ul>
+<p>xgboost第n颗树的第n层的分裂准则：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgd9bwxhj30ns0c7dj5.jpg" alt="image-20200605153827635"></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>XGBoost</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于模型选型</title>
+    <url>/2019/05/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E5%9E%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>模型可以分为高偏差/低方差和低偏差/高方差两种。前者一般指简单的模型，如生成式模型(NB)，后者一般指复杂模型，如判别式模型之类的。</p>
+<p>在学习曲线上来看：</p>
+<p>高偏差/低方差：训练样本很少的情况下就可以达到渐进线(低方差)，但是偏差较高，持续增加样本也没用。所以小样本的情况，建议用该类模型。</p>
+<p>低偏差/高方差：训练样本很少时，容易过拟合，无法达到渐进线。当训练样本变多时，训练曲线和测试曲线达到渐进线，此时偏差又低，所以该模型适合大样本情况。</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于PCA和SVD分解</title>
+    <url>/2020/04/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8EPCA%E5%92%8CSVD%E5%88%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于特征值分布不均匀的问题</title>
+    <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E5%B8%83%E4%B8%8D%E5%9D%87%E5%8C%80%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前city_id作为特征后导致模型预测结果差异很大这一点，一直让我耿耿于怀，仔细思考后，其实可以这样解释：</p>
+<ul>
+<li><p>首先特征属性不对，我应该将其设为离散特征，做OHE处理，再放入模型训练。</p>
+</li>
+<li><p>特征值分布不均匀，事实上不会影响该特征值的选择，假如该特征值确实区分了样本，即使树的左右子节点样本数量相差很大，也是照样划分啊！</p>
+</li>
+<li><p>之前的结果很大一部分原因，还是类别分布不均匀导致的！杭州的值普遍大且样本多，宁波的值普遍小且样本少，导致结果值偏大，这就类似与分类问题正样本少，负样本多，导致结果偏向于为负。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于特征工程</title>
+    <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>特征工程和模型选择是提升算法的两类途径。</p>
+<ul>
+<li>特征工程：数据清洗，(降维)，特征选择，特征组合。</li>
+<li>特征组合变换好坏都有，一方面能提高模型的表达能力，另一方面有可能引起过拟合，增加冗余特征，降低模型解释力。<ul>
+<li>特征变换还可以是将连续特征转换为离散特征。</li>
+</ul>
+</li>
+<li>模型的选择和特征工程是耦合的。因为不同模型对特征工程的需求不一样。<ul>
+<li>树模型不需要归一化处理，不需要特征选择，因为这些模型都能做到。</li>
+<li>神经网络则不需要特征组合变换。</li>
+<li>广义线性模型的效果则对数据清洗，特征选择，特征组合很敏感。这就是为啥计算广告领域后续衍生了FM,FFM等等</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于特征归一化的一些理解</title>
+    <url>/2018/11/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>归一化会加快梯度下降法的收敛速度了</strong></p>
+<p>这个是显然的，不多说了。</p>
+<p>但是这里需要注意的是，像LR这种单纯的梯度下降法求解，只是增加收敛速度罢了，并不会让解更加精确，因为最终这个最优解的系数值是和特征值比例成反比的。</p>
+<p><strong>归一化有可能会提升算法精度</strong></p>
+<p>注意，这里是可能，因为就像前文所有，对于LR，是不会提升精度的，但是归一化对某些模型也是会提升精度的：</p>
+<ul>
+<li>对于KNN(跟梯度下降法无法)，需要计算欧式距离，如果不归一化，那么欧式距离就主要取决于大的特征值，从而影响精度。</li>
+<li>对于有L1,L2正则的算法，如果不做归一化，那么系数值会受到特征值大小的影响，从而导致值小的特征对应的系数大，从而导致该特征受到影响。</li>
+</ul>
+<p>树模型不需要归一化。。。</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>损失函数之交叉熵和MSE</title>
+    <url>/2019/11/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B9%8B%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8CMSE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一般神经网络都是用交叉熵，回归问题用MSE，分类问题用交叉熵。</p>
+<p>网友分析了一下，发现MSE对梯度有个不友好的地方，有时候误差越大，梯度越小，而交叉熵是正比的。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgeotc0dj30kb0e0wh3.jpg" alt="image-20200605153953308"></p>
+<p>MSE : $A^2 * (1-A)$</p>
+<p>cross entropy : A</p>
+<p>另外，一般推动神经网络BP算法的时候，用的都是MSE，如果用cross entry和softmax的话，会比较复杂一点。</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>支持向量机</title>
+    <url>/2016/05/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前上了斯坦福大学Andrew Ng的机器学习课程后，以为自己的支持向量机SVM有了一番了解，只是在logistic regression上做一点改进，另外还有核函数加入拓展数据特征，然后今天看了详细的支持向量机推导过程后，才发现之前自己的理解很肤浅。</p>
+<p><a href="http://taop.marchtea.com/07.02.svm.html" target="_blank" rel="noopener">这篇文章</a>详细介绍了支持向量机的概念及求解，对于更深入的SMO算法以及损耗分析，需要去看《支持向量机导论》这本书。</p>
+<p>支持向量机被称为最好的监督学习分类器，我认为原因有下：</p>
+<ul>
+<li><p>不像logistic regression一样有$h(x)$这个logistic函数，而是</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+g(z) = 
+\begin{cases}
+1, &z \geq 0 \\\
+-1, &z < 0
+\end{cases}
+\end{equation}</script></li>
+<li><p>它的分类原理使得不同类别的间隔达到了最大。</p>
+</li>
+<li><p>对于线性不可分的情况，可以将本来的特征无限拓展到高维， 也就是系数$w$可以无限高维度，但我们却可以在求解过程中不需要知道具体维度，只要用核函数就可以求解！</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>SVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>特征是否越多越好？</title>
+    <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E6%98%AF%E5%90%A6%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>树模型对冗余特征鲁棒性强，树模型有特征选择能力。</p>
+<p>但树模型没有特征交叉组合的能力，神经网络有…</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhcf1i1mj30o70800uh.jpg" alt="image-20200605161214027"></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最大熵与最大似然估计</title>
+    <url>/2020/05/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%80%E5%A4%A7%E7%86%B5%E4%B8%8E%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>生成模型和判别模型的直观解释</title>
+    <url>/2019/11/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://www.cnblogs.com/tenosdoit/p/3721074.html" target="_blank" rel="noopener">https://www.cnblogs.com/tenosdoit/p/3721074.html</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>伪多项式时间复杂度</title>
+    <url>/2020/07/20/%E6%95%B0%E5%AD%A6/%E4%BC%AA%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>背包问题是典型的NPC问题，用动规求解的话，其复杂度为$O(mn)$，m为物品个数，n为背包大小。所以你可能奇怪，为什么这个复杂度看着明明是多项式时间，但为什么是NP问题？</p>
+<p>这里就涉及到了伪多项式时间复杂度这个概念，请参考<a href="https://www.zhihu.com/question/20013122/answer/44460397" target="_blank" rel="noopener">知乎回答</a>。</p>
+<p>一句话归纳：</p>
+<blockquote>
+<p>​    如果时间复杂度和输入数据的本身数值大小有关(传统公式里输入数据只代表规模，例如n个int整数)，那就是伪时间复杂度。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>类别不均衡问题的调参</title>
+    <url>/2019/04/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%9D%87%E8%A1%A1%E9%97%AE%E9%A2%98%E7%9A%84%E8%B0%83%E5%8F%82/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>对于类别不均衡问题，处理方法有：</p>
+<ul>
+<li><p>正样本过采样</p>
+</li>
+<li><p>负样本降采样</p>
+</li>
+<li><p>调整阈值</p>
+</li>
+</ul>
+<p>主要是这三种，实际算法处理过程往往是这样的：</p>
+<ul>
+<li><p>先对负样本进行降采样or正样本过采样来提取训练样本，以保证模型的AUC尽量高。</p>
+</li>
+<li><p>过采样or降采样之后模型输出的概率已经失去原本的意义，所以在测试集上如果看其他评价指标如交叉熵，那loss是很大的，当然不影响AUC。所以，我们需要对输出概率再做调整，恢复到真正实际的概率值。</p>
+</li>
+</ul>
+<p>实际样例：</p>
+<p>CTR预估模型之GBDT+LR：对负样本进行以w频率进行降采样，然后对预测概率值重新调整：（AUC只保序，通过calibration校正概率阈值）</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgxszy1tj30fx02z3z3.jpg" alt="image-20200605155725174"></p>
+<p>Xgboost:设置了scale_pos_weight参数，该参数的合理值= 负样本数/正样本数，该参数的意义是让正样本梯度（也就是loss）的权重值变大，也就是更加关注正样本的loss,有点类似于正样本的过采样。scale_pos_weight只适用于AUC，也就是只适用于将样本进行二分类，最终概率值并非真实概率值。</p>
+<p>关于Weighted LR中正样本过采样还是正样本梯度加权重这两种方式：</p>
+<blockquote>
+<p>这两种训练方法得到的结果是不一样的，比如要抽样10倍，对于第一种方法，就是把一条样本重复10倍，这样优化的过程中，每遇到一条这个样本，就会用梯度更新一下参数，然后用更新后的参数再去计算下一条样本上的梯度，如果逐步计算并更新梯度10次；但对于第二种方法，则是一次性更新了单条梯度乘以10这么多的梯度，是一种一次到位的做法。</p>
+<p>直观一些来讲，第一种方法更像是给予一条样本10倍的关注，愿意花更多时间和精力来对待这条样本，是一种更细致的方法，第二种则比较粗暴了，不愿意花太多功夫，直接给你10倍权重。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
       </tags>
   </entry>
   <entry>
@@ -547,25 +871,29 @@
       </categories>
   </entry>
   <entry>
-    <title>可导和可微</title>
-    <url>/2019/08/26/%E6%95%B0%E5%AD%A6/%E5%8F%AF%E5%AF%BC%E5%92%8C%E5%8F%AF%E5%BE%AE/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一般可导指可偏导，可微指可全微分，也就是各个方向都可偏导，存在一个与其相切的平面。</p>
-<p>处处偏导又不一定可微，参考圆锥体。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhqevzrfj30l10g3jy9.jpg" alt="image-20200605162544872"></p>
+    <title>内积、叉积和外积</title>
+    <url>/2021/01/08/%E6%95%B0%E5%AD%A6/%E5%86%85%E7%A7%AF%E3%80%81%E5%8F%89%E7%A7%AF%E5%92%8C%E5%A4%96%E7%A7%AF/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h3><p>首先介绍点积(dot product)，点积是一种接受两个等长的数字序列（通常是坐标向量）、返回单个数字的代数运算。</p>
+<p>而内积(inner product)就是两个笛卡尔坐标向量的点积。</p>
+<p>符号：$a \cdot b $</p>
+<h3 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h3><p>叉积(cross product)，又称向量积(vector product)。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeeg3kivj31c405q3zj.jpg" alt="image-20210108170711278"></p>
+<h3 id="外积"><a href="#外积" class="headerlink" title="外积"></a>外积</h3><p>首先介绍张量积(tensor product)，记为$\otimes$，可以应用于不同的上下文中如<a href="https://zh.wikipedia.org/wiki/向量" target="_blank" rel="noopener">向量</a>、<a href="https://zh.wikipedia.org/wiki/矩阵" target="_blank" rel="noopener">矩阵</a>、<a href="https://zh.wikipedia.org/wiki/张量" target="_blank" rel="noopener">张量</a>、<a href="https://zh.wikipedia.org/wiki/向量空间" target="_blank" rel="noopener">向量空间</a>、<a href="https://zh.wikipedia.org/wiki/代数" target="_blank" rel="noopener">代数</a>、<a href="https://zh.wikipedia.org/wiki/拓扑向量空间" target="_blank" rel="noopener">拓扑向量空间</a>和<a href="https://zh.wikipedia.org/wiki/模" target="_blank" rel="noopener">模</a> ，表示最一般的双线性运算。</p>
+<p>在矩阵中就是克罗内克积(Kronecker product)：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeihxb8aj30eu05uglq.jpg" alt="image-20210108171101862" style="zoom:50%;"></p>
+<p>在向量中就是外积(outer product)：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeivje1ej30nu068mxq.jpg" alt="image-20210108171128823" style="zoom:50%;"></p>
 ]]></content>
       <categories>
         <category>数学</category>
       </categories>
   </entry>
   <entry>
-    <title>伪多项式时间复杂度</title>
-    <url>/2020/07/20/%E6%95%B0%E5%AD%A6/%E4%BC%AA%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>背包问题是典型的NPC问题，用动规求解的话，其复杂度为$O(mn)$，m为物品个数，n为背包大小。所以你可能奇怪，为什么这个复杂度看着明明是多项式时间，但为什么是NP问题？</p>
-<p>这里就涉及到了伪多项式时间复杂度这个概念，请参考<a href="https://www.zhihu.com/question/20013122/answer/44460397" target="_blank" rel="noopener">知乎回答</a>。</p>
-<p>一句话归纳：</p>
-<blockquote>
-<p>​    如果时间复杂度和输入数据的本身数值大小有关(传统公式里输入数据只代表规模，例如n个int整数)，那就是伪时间复杂度。</p>
-</blockquote>
+    <title>可导和可微</title>
+    <url>/2019/08/26/%E6%95%B0%E5%AD%A6/%E5%8F%AF%E5%AF%BC%E5%92%8C%E5%8F%AF%E5%BE%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一般可导指可偏导，可微指可全微分，也就是各个方向都可偏导，存在一个与其相切的平面。</p>
+<p>处处偏导又不一定可微，参考圆锥体。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhqevzrfj30l10g3jy9.jpg" alt="image-20200605162544872"></p>
 ]]></content>
       <categories>
         <category>数学</category>
@@ -611,50 +939,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Tensorflow一些常用方法记录</title>
-    <url>/2020/10/28/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="tf-stack"><a href="#tf-stack" class="headerlink" title="tf.stack"></a>tf.stack</h3><p>tf.stack(values, axis=0, name=”stack”):</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = tf.constant([<span class="number">1</span>, <span class="number">4</span>])</span><br><span class="line">y = tf.constant([<span class="number">2</span>, <span class="number">5</span>])</span><br><span class="line">z = tf.constant([<span class="number">3</span>, <span class="number">6</span>])</span><br><span class="line">tf.stack([x, y, z])  <span class="comment"># [[1, 4], [2, 5], [3, 6]] (Pack along first dim.)</span></span><br><span class="line">tf.stack([x, y, z], axis=<span class="number">1</span>)  <span class="comment"># [[1, 2, 3], [4, 5, 6]]</span></span><br></pre></td></tr></table></figure>
-<p>本质是把一个长度为N的list，list里的元素有自己的shape：</p>
-<ul>
-<li>axis = 0，则变为（N，shape[0], shape[1], …）</li>
-<li>axis = 1，则变为（shape[0], N, shape[1], …）</li>
-</ul>
-<p>常见用法有：</p>
-<p>如果元素为长度为M的list</p>
-<ul>
-<li>Axis =0,  其实就相当于横着concate</li>
-<li>Axis =1，相当于把元素看为列向量，然后竖着concate</li>
-</ul>
-<h3 id="tf-gather和tf-gather-nd"><a href="#tf-gather和tf-gather-nd" class="headerlink" title="tf.gather和tf.gather_nd"></a>tf.gather和tf.gather_nd</h3><p>tf.gather(params, indices, validate_indices=None, name=None, axis=0):</p>
-<p>对于params,就是你的输入，axis就是你进行操作的维度，默认为0(对于tf.gather,只能对于给定的axis操作),indices就是你想获取的axis维度上的值，来看一个例子，可以更佳清楚的了解函数是如何使用的：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">temp = tf.range(<span class="number">0</span>,<span class="number">10</span>)*<span class="number">10</span> + tf.constant(<span class="number">1</span>,shape=[<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">temp2 = tf.gather(temp,[<span class="number">1</span>,<span class="number">5</span>,<span class="number">9</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(temp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(temp2)</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line"></span><br><span class="line">[ <span class="number">1</span> <span class="number">11</span> <span class="number">21</span> <span class="number">31</span> <span class="number">41</span> <span class="number">51</span> <span class="number">61</span> <span class="number">71</span> <span class="number">81</span> <span class="number">91</span>]</span><br><span class="line"></span><br><span class="line">[<span class="number">11</span> <span class="number">51</span> <span class="number">91</span>]</span><br></pre></td></tr></table></figure>
-<p>tf.gather只能对低维度进行操作，gather_nd可以进行高维度的操作。和gather相比，没有了axis参数，如果indices的维度和params的维度等价，他是直接获取一个具体值(之后组合成向量)。</p>
-]]></content>
-      <categories>
-        <category>ML框架</category>
-      </categories>
-      <tags>
-        <tag>Tensorflow</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算复杂度通用公式</title>
-    <url>/2020/06/22/%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%85%AC%E5%BC%8F/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>计算复杂度的计算存在一个通用公式，对于$T(n) = a<em>T(n / b) + c </em> n^k$ 这种，复杂度为：</p>
-<p>如果$k &gt; log_b(a)$，则$T(n) = O(n^k)$</p>
-<p>如果$k &lt; log_b(a)$，则$T(n) = O(n^{log_b(a)})$</p>
-<p>如果$k = log_b(a)$，则$T(n) = O(n^klog(n))$</p>
-<blockquote>
-<p>一个例子：</p>
-<p>$T(n) = 25*T(n/5) + n^2$, 则$T(n) = n^2log(n)$</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>时间序列中的随机过程</title>
     <url>/2020/07/20/%E6%95%B0%E5%AD%A6/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E4%B8%AD%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>哎，心累，上个月mac电脑进水导致硬盘坏了，写好的4-5篇博客全部丢失了，包含写好的一系列时间序列文章。懒得再码一遍了，我就贴一下之前的参考博客和课程吧。</p>
@@ -674,215 +958,19 @@
       </tags>
   </entry>
   <entry>
-    <title>CART与普通决策树的区别</title>
-    <url>/2019/04/29/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CART%E4%B8%8E%E6%99%AE%E9%80%9A%E5%86%B3%E7%AD%96%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>CART可以说是最常用的数，gbdt,xgboost等等…</p>
-<p>归纳一下其与普通决策树（ID3，C4.5）的区别：</p>
-<ul>
-<li>既可以分类，也可以回归。在分类时使用基尼系数，在回归时使用平方误差。</li>
-<li>只划分左右子树，也就是生成一个二叉树。普通决策树生成多个子树</li>
-<li>特征在被选择后，在接下来的树中还能被继续使用。普通决策树只使用特征一次。</li>
-<li>连续特征，n个值，从n-1个中间值中选择；离散特征，n个值，有$2^{(n-1)} - 1$个选择可能(通常是one hot编码)。</li>
-</ul>
+    <title>计算复杂度通用公式</title>
+    <url>/2020/06/22/%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%85%AC%E5%BC%8F/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>计算复杂度的计算存在一个通用公式，对于$T(n) = a<em>T(n / b) + c </em> n^k$ 这种，复杂度为：</p>
+<p>如果$k &gt; log_b(a)$，则$T(n) = O(n^k)$</p>
+<p>如果$k &lt; log_b(a)$，则$T(n) = O(n^{log_b(a)})$</p>
+<p>如果$k = log_b(a)$，则$T(n) = O(n^klog(n))$</p>
+<blockquote>
+<p>一个例子：</p>
+<p>$T(n) = 25*T(n/5) + n^2$, 则$T(n) = n^2log(n)$</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>CART</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XGBoost和LightGBM调参</title>
-    <url>/2018/12/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Xgboost%E5%92%8CLightGBM%E8%B0%83%E5%8F%82/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>有个应用上的重大区别：</p>
-<ul>
-<li><p>Xgboost只处理数值特征，因此Xgboost无法直接处理离散特征(categorical feature)，需要数据预处理，要么labelEncoder转换为数值特征，当做连续值处理，要么one-hot编码，当做离散值处理。</p>
-</li>
-<li><p>LightGBM则有对离散特征的单独处理，需要首先利用labelEncoder转换为数值，然后会利用<a href="http://link.zhihu.com/?target=https%3A//www.researchgate.net/publication/242580910_On_Grouping_for_Maximum_Homogeneity" target="_blank" rel="noopener">On Grouping for Maximum Homogeneity</a>提到的算法找到最优值，是从2^(n-1)-1个分区划分中选出最优optimal split，而不像OHE一样是n个划分，因此效果优于OHE。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgz8kjolj30hp0b7dhl.jpg" alt="image-20200605155935227"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>XGBoost</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XGBoost调参</title>
-    <url>/2018/06/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/xgboost%E8%B0%83%E5%8F%82/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li><p>选择较高的<strong>学习速率(learning rate)</strong>。一般情况下，学习速率的值为0.1。但是，对于不同的问题，理想的学习速率有时候会在0.05到0.3之间波动。选择<strong>对应于此学习速率的理想决策树数量</strong>。XGBoost有一个很有用的函数“cv”，这个函数可以在每一次迭代中使用交叉验证，并返回理想的决策树数量。</p>
-</li>
-<li><p>对于给定的学习速率和决策树数量，进行<strong>决策树特定参数调优</strong>(max_depth, min_child_weight, gamma, subsample, colsample_bytree)。在确定一棵树的过程中，我们可以选择不同的参数，待会儿我会举例说明。</p>
-</li>
-<li><p>xgboost的<strong>正则化参数</strong>的调优。(lambda, alpha)。这些参数可以降低模型的复杂度，从而提高模型的表现。</p>
-</li>
-<li><p>降低学习速率，确定理想参数。</p>
-</li>
-</ul>
-<p>xgboost第n颗树的第n层的分裂准则：</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgd9bwxhj30ns0c7dj5.jpg" alt="image-20200605153827635"></p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>XGBoost</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于PCA和SVD分解</title>
-    <url>/2020/04/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8EPCA%E5%92%8CSVD%E5%88%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于特征值分布不均匀的问题</title>
-    <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E5%B8%83%E4%B8%8D%E5%9D%87%E5%8C%80%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前city_id作为特征后导致模型预测结果差异很大这一点，一直让我耿耿于怀，仔细思考后，其实可以这样解释：</p>
-<ul>
-<li><p>首先特征属性不对，我应该将其设为离散特征，做OHE处理，再放入模型训练。</p>
-</li>
-<li><p>特征值分布不均匀，事实上不会影响该特征值的选择，假如该特征值确实区分了样本，即使树的左右子节点样本数量相差很大，也是照样划分啊！</p>
-</li>
-<li><p>之前的结果很大一部分原因，还是类别分布不均匀导致的！杭州的值普遍大且样本多，宁波的值普遍小且样本少，导致结果值偏大，这就类似与分类问题正样本少，负样本多，导致结果偏向于为负。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>特征工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于模型选型</title>
-    <url>/2019/05/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E5%9E%8B/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>模型可以分为高偏差/低方差和低偏差/高方差两种。前者一般指简单的模型，如生成式模型(NB)，后者一般指复杂模型，如判别式模型之类的。</p>
-<p>在学习曲线上来看：</p>
-<p>高偏差/低方差：训练样本很少的情况下就可以达到渐进线(低方差)，但是偏差较高，持续增加样本也没用。所以小样本的情况，建议用该类模型。</p>
-<p>低偏差/高方差：训练样本很少时，容易过拟合，无法达到渐进线。当训练样本变多时，训练曲线和测试曲线达到渐进线，此时偏差又低，所以该模型适合大样本情况。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于特征工程</title>
-    <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>特征工程和模型选择是提升算法的两类途径。</p>
-<ul>
-<li>特征工程：数据清洗，(降维)，特征选择，特征组合。</li>
-<li>特征组合变换好坏都有，一方面能提高模型的表达能力，另一方面有可能引起过拟合，增加冗余特征，降低模型解释力。<ul>
-<li>特征变换还可以是将连续特征转换为离散特征。</li>
-</ul>
-</li>
-<li>模型的选择和特征工程是耦合的。因为不同模型对特征工程的需求不一样。<ul>
-<li>树模型不需要归一化处理，不需要特征选择，因为这些模型都能做到。</li>
-<li>神经网络则不需要特征组合变换。</li>
-<li>广义线性模型的效果则对数据清洗，特征选择，特征组合很敏感。这就是为啥计算广告领域后续衍生了FM,FFM等等</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>特征工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>支持向量机</title>
-    <url>/2016/05/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前上了斯坦福大学Andrew Ng的机器学习课程后，以为自己的支持向量机SVM有了一番了解，只是在logistic regression上做一点改进，另外还有核函数加入拓展数据特征，然后今天看了详细的支持向量机推导过程后，才发现之前自己的理解很肤浅。</p>
-<p><a href="http://taop.marchtea.com/07.02.svm.html" target="_blank" rel="noopener">这篇文章</a>详细介绍了支持向量机的概念及求解，对于更深入的SMO算法以及损耗分析，需要去看《支持向量机导论》这本书。</p>
-<p>支持向量机被称为最好的监督学习分类器，我认为原因有下：</p>
-<ul>
-<li><p>不像logistic regression一样有$h(x)$这个logistic函数，而是</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-g(z) = 
-\begin{cases}
-1, &z \geq 0 \\\
--1, &z < 0
-\end{cases}
-\end{equation}</script></li>
-<li><p>它的分类原理使得不同类别的间隔达到了最大。</p>
-</li>
-<li><p>对于线性不可分的情况，可以将本来的特征无限拓展到高维， 也就是系数$w$可以无限高维度，但我们却可以在求解过程中不需要知道具体维度，只要用核函数就可以求解！</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>SVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>损失函数之交叉熵和MSE</title>
-    <url>/2019/11/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B9%8B%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8CMSE/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一般神经网络都是用交叉熵，回归问题用MSE，分类问题用交叉熵。</p>
-<p>网友分析了一下，发现MSE对梯度有个不友好的地方，有时候误差越大，梯度越小，而交叉熵是正比的。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgeotc0dj30kb0e0wh3.jpg" alt="image-20200605153953308"></p>
-<p>MSE : $A^2 * (1-A)$</p>
-<p>cross entropy : A</p>
-<p>另外，一般推动神经网络BP算法的时候，用的都是MSE，如果用cross entry和softmax的话，会比较复杂一点。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于特征归一化的一些理解</title>
-    <url>/2018/11/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>归一化会加快梯度下降法的收敛速度了</strong></p>
-<p>这个是显然的，不多说了。</p>
-<p>但是这里需要注意的是，像LR这种单纯的梯度下降法求解，只是增加收敛速度罢了，并不会让解更加精确，因为最终这个最优解的系数值是和特征值比例成反比的。</p>
-<p><strong>归一化有可能会提升算法精度</strong></p>
-<p>注意，这里是可能，因为就像前文所有，对于LR，是不会提升精度的，但是归一化对某些模型也是会提升精度的：</p>
-<ul>
-<li>对于KNN(跟梯度下降法无法)，需要计算欧式距离，如果不归一化，那么欧式距离就主要取决于大的特征值，从而影响精度。</li>
-<li>对于有L1,L2正则的算法，如果不做归一化，那么系数值会受到特征值大小的影响，从而导致值小的特征对应的系数大，从而导致该特征受到影响。</li>
-</ul>
-<p>树模型不需要归一化。。。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>特征工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>特征是否越多越好？</title>
-    <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E6%98%AF%E5%90%A6%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>树模型对冗余特征鲁棒性强，树模型有特征选择能力。</p>
-<p>但树模型没有特征交叉组合的能力，神经网络有…</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhcf1i1mj30o70800uh.jpg" alt="image-20200605161214027"></p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>特征工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>最大熵与最大似然估计</title>
-    <url>/2020/05/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%80%E5%A4%A7%E7%86%B5%E4%B8%8E%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>机器学习</category>
+        <category>数学</category>
       </categories>
   </entry>
   <entry>
@@ -902,49 +990,43 @@ g(z) =
       </categories>
   </entry>
   <entry>
-    <title>类别不均衡问题的调参</title>
-    <url>/2019/04/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%9D%87%E8%A1%A1%E9%97%AE%E9%A2%98%E7%9A%84%E8%B0%83%E5%8F%82/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>对于类别不均衡问题，处理方法有：</p>
-<ul>
-<li><p>正样本过采样</p>
-</li>
-<li><p>负样本降采样</p>
-</li>
-<li><p>调整阈值</p>
-</li>
+    <title>ML2020笔记-ELMO、BERT和GPT</title>
+    <url>/2020/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-ELMO%E3%80%81BERT%E5%92%8CGPT/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li>RNN-based Language Model</li>
 </ul>
-<p>主要是这三种，实际算法处理过程往往是这样的：</p>
-<ul>
-<li><p>先对负样本进行降采样or正样本过采样来提取训练样本，以保证模型的AUC尽量高。</p>
-</li>
-<li><p>过采样or降采样之后模型输出的概率已经失去原本的意义，所以在测试集上如果看其他评价指标如交叉熵，那loss是很大的，当然不影响AUC。所以，我们需要对输出概率再做调整，恢复到真正实际的概率值。</p>
-</li>
-</ul>
-<p>实际样例：</p>
-<p>CTR预估模型之GBDT+LR：对负样本进行以w频率进行降采样，然后对预测概率值重新调整：（AUC只保序，通过calibration校正概率阈值）</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgxszy1tj30fx02z3z3.jpg" alt="image-20200605155725174"></p>
-<p>Xgboost:设置了scale_pos_weight参数，该参数的合理值= 负样本数/正样本数，该参数的意义是让正样本梯度（也就是loss）的权重值变大，也就是更加关注正样本的loss,有点类似于正样本的过采样。scale_pos_weight只适用于AUC，也就是只适用于将样本进行二分类，最终概率值并非真实概率值。</p>
-<p>关于Weighted LR中正样本过采样还是正样本梯度加权重这两种方式：</p>
-<blockquote>
-<p>这两种训练方法得到的结果是不一样的，比如要抽样10倍，对于第一种方法，就是把一条样本重复10倍，这样优化的过程中，每遇到一条这个样本，就会用梯度更新一下参数，然后用更新后的参数再去计算下一条样本上的梯度，如果逐步计算并更新梯度10次；但对于第二种方法，则是一次性更新了单条梯度乘以10这么多的梯度，是一种一次到位的做法。</p>
-<p>直观一些来讲，第一种方法更像是给予一条样本10倍的关注，愿意花更多时间和精力来对待这条样本，是一种更细致的方法，第二种则比较粗暴了，不愿意花太多功夫，直接给你10倍权重。</p>
-</blockquote>
+<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200727110754850.png" alt="image-20200727110754850" style="zoom:50%;"></p>
+<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200727110949830.png" alt="image-20200727110949830" style="zoom:50%;"></p>
+<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200727111415304.png" alt="image-20200727111415304" style="zoom:50%;"></p>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>深度学习</category>
       </categories>
       <tags>
-        <tag>特征工程</tag>
+        <tag>李宏毅-ML2020</tag>
       </tags>
   </entry>
   <entry>
-    <title>生成模型和判别模型的直观解释</title>
-    <url>/2019/11/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://www.cnblogs.com/tenosdoit/p/3721074.html" target="_blank" rel="noopener">https://www.cnblogs.com/tenosdoit/p/3721074.html</a></p>
-]]></content>
+    <title>ML2020笔记-Transformer</title>
+    <url>/2020/04/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-Transformer/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>深度学习</category>
       </categories>
+      <tags>
+        <tag>李宏毅-ML2020</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ML2020笔记-基于RNN的生成模型和Attention</title>
+    <url>/2020/04/03/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ERNN%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8CAttention/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>李宏毅-ML2020</tag>
+      </tags>
   </entry>
   <entry>
     <title>NAS系列文章解读</title>
@@ -1041,32 +1123,23 @@ g(z) =
       </categories>
   </entry>
   <entry>
-    <title>ML2020笔记-ELMO、BERT和GPT</title>
-    <url>/2020/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-ELMO%E3%80%81BERT%E5%92%8CGPT/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li>RNN-based Language Model</li>
+    <title>RNN的BPTT</title>
+    <url>/2021/01/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN%E7%9A%84BPTT/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>RNN采用的梯度更新策略是BPTT，梯度分为两部分：</p>
+<ul>
+<li>竖直方向的输出层权重：这个和传统反向传播没什么区别，因为这一层的权重只与当前loss有关</li>
+<li>竖直方向的输入层和水平权重：这个就稍微复杂点，因为rnn的总loss是所有时刻loss相加的，同时每个时刻的loss又会影响到这里所说的所有权重，所以操作是：<ul>
+<li>计算某个时刻Et的误差项，通过反向传播来计算，最后计算梯度。</li>
+<li>汇总所有的时刻计算的梯度。</li>
 </ul>
-<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200727110754850.png" alt="image-20200727110754850" style="zoom:50%;"></p>
-<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200727110949830.png" alt="image-20200727110949830" style="zoom:50%;"></p>
-<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200727111415304.png" alt="image-20200727111415304" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgf10qmerj30f207ogmg.jpg" alt="image-20210108172855248" style="zoom:50%;"></p>
+<p><a href="https://www.cnblogs.com/wacc/p/5341670.html" target="_blank" rel="noopener">参考资料</a></p>
 ]]></content>
       <categories>
         <category>深度学习</category>
       </categories>
-      <tags>
-        <tag>李宏毅-ML2020</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ML2020笔记-基于RNN的生成模型和Attention</title>
-    <url>/2020/04/03/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ERNN%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8CAttention/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>李宏毅-ML2020</tag>
-      </tags>
   </entry>
   <entry>
     <title>关于Policy Network</title>
@@ -1084,55 +1157,6 @@ L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}</script><p>其实你仔细一看�
         <category>深度学习</category>
         <category>强化学习</category>
       </categories>
-  </entry>
-  <entry>
-    <title>ML2020笔记-Transformer</title>
-    <url>/2020/04/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-Transformer/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>李宏毅-ML2020</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Github代理加速</title>
-    <url>/2020/06/05/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Github%E4%BB%A3%E7%90%86%E5%8A%A0%E9%80%9F/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span># 开启代理</span><br><span class="line">git config --global http.proxy 'socks5://127.0.0.1:7891'</span><br><span class="line">git config --global https.proxy 'socks5://127.0.0.1:7891'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 关闭代理</span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
-<p>同时需要在你的代理软件中开启全局模式：</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhkh034lhj30m40ceq7k.jpg" alt="image-20200605180018041" style="zoom:50%;"></p>
-<p>注意，socks5的端口号根据代理软件设置的端口号来开(我的是7891)</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>word2vec详解</title>
-    <url>/2019/11/04/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/word2vec%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>世界级解释博客：<a href="https://blog.csdn.net/a819825294/article/details/52438625" target="_blank" rel="noopener">https://blog.csdn.net/a819825294/article/details/52438625</a></p>
-<p>cbow和skip-gram的原理解析，hierarchical softmax / negative sampling， gradient descent derivation for each one.</p>
-<ol>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgkg8d7vj30uc09nagn.jpg" alt="image-20200605154521303"></li>
-</ol>
-<ol>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhglv7e9hj30o10lqmyw.jpg" alt="image-20200605154543836"></p>
-</li>
-<li></li>
-</ol>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhglw07lrj30rb07eab7.jpg" alt="image-20200605154601962"></p>
-<ol>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgluc6b6j30qs0mj0uw.jpg" alt="image-20200605154622654"></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>自然语言处理</category>
-      </categories>
-      <tags>
-        <tag>word2vec</tag>
-      </tags>
   </entry>
   <entry>
     <title>后端技术栈</title>
@@ -1197,9 +1221,36 @@ L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}</script><p>其实你仔细一看�
       </categories>
   </entry>
   <entry>
-    <title>理解LSI、PLSI、LDA和LFM</title>
-    <url>/2020/04/25/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/%E7%90%86%E8%A7%A3LSI%E3%80%81PLSI%E3%80%81LDA%E5%92%8CLFM/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <title>Github代理加速</title>
+    <url>/2020/06/05/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Github%E4%BB%A3%E7%90%86%E5%8A%A0%E9%80%9F/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span># 开启代理</span><br><span class="line">git config --global http.proxy 'socks5://127.0.0.1:7891'</span><br><span class="line">git config --global https.proxy 'socks5://127.0.0.1:7891'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># 关闭代理</span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+<p>同时需要在你的代理软件中开启全局模式：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhkh034lhj30m40ceq7k.jpg" alt="image-20200605180018041" style="zoom:50%;"></p>
+<p>注意，socks5的端口号根据代理软件设置的端口号来开(我的是7891)</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>word2vec详解</title>
+    <url>/2019/11/04/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/word2vec%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>世界级解释博客：<a href="https://blog.csdn.net/a819825294/article/details/52438625" target="_blank" rel="noopener">https://blog.csdn.net/a819825294/article/details/52438625</a></p>
+<p>cbow和skip-gram的原理解析，hierarchical softmax / negative sampling， gradient descent derivation for each one.</p>
+<ol>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgkg8d7vj30uc09nagn.jpg" alt="image-20200605154521303"></li>
+</ol>
+<ol>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhglv7e9hj30o10lqmyw.jpg" alt="image-20200605154543836"></p>
+</li>
+<li></li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhglw07lrj30rb07eab7.jpg" alt="image-20200605154601962"></p>
+<ol>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgluc6b6j30qs0mj0uw.jpg" alt="image-20200605154622654"></p>
+</li>
+</ol>
+]]></content>
       <categories>
         <category>自然语言处理</category>
       </categories>
@@ -1553,6 +1604,17 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </tags>
   </entry>
   <entry>
+    <title>理解LSI、PLSI、LDA和LFM</title>
+    <url>/2020/04/25/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/%E7%90%86%E8%A7%A3LSI%E3%80%81PLSI%E3%80%81LDA%E5%92%8CLFM/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>自然语言处理</category>
+      </categories>
+      <tags>
+        <tag>word2vec</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Databus学习笔记</title>
     <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Databus/Databus%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Databus是一个低延迟、可靠的、支持事务的、保持一致性的数据变更抓取系统。</p>
@@ -1605,16 +1667,6 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </categories>
   </entry>
   <entry>
-    <title>hdfs文件理解</title>
-    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hdfs%E6%96%87%E4%BB%B6%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>HDFS是一个分布式的文件系统，利用集群来存储海量数据。hdfs路径是一个虚拟节点，下面的多个文件可能放在多台机器上，具体放在哪台机器等信息由name node节点维护。</p>
-]]></content>
-      <categories>
-        <category>大数据</category>
-        <category>Hive</category>
-      </categories>
-  </entry>
-  <entry>
     <title>hive建表时的format</title>
     <url>/2018/05/30/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hive%E5%BB%BA%E8%A1%A8%E6%97%B6%E7%9A%84format/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>hive建表时有三种指定，举例如下：</p>
@@ -1641,31 +1693,13 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </categories>
   </entry>
   <entry>
-    <title>Spark名词相关理解</title>
-    <url>/2020/03/05/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/Spark%E5%90%8D%E8%AF%8D%E7%9B%B8%E5%85%B3%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="关于partition和task"><a href="#关于partition和task" class="headerlink" title="关于partition和task"></a>关于partition和task</h2><p>partition是spark RDD的操作单元，通常会把一个数据集切分成若干个partition，实现并行处理。我把它称之为需求。</p>
-<p>task则是机器能提供的操作单元，一个core对应一个task，一个task处理一个partition。我把它称之为供给。</p>
-<p><strong>所以，如果stage还是只有2个partition，无论怎么调节executors的资源数目，都是没有用的，active task也只有2个而已！</strong></p>
-<p>关于调节partition，又分为两类：</p>
-<h4 id="非spark-sql操作"><a href="#非spark-sql操作" class="headerlink" title="非spark sql操作"></a>非spark sql操作</h4><ul>
-<li><em>spark.default.parallelism</em> 集团没有默认值<br>这个参数控制RDD的partition数目，但是只对于Spark SQL以外的所有Spark的stage生效，无法控制spark sql生成的分区。Spark SQL的并行度不允许用户自己指定，Spark SQL自己会默认根据hive表对应的HDFS文件的split个数自动设置Spark SQL所在的那个stage的并行度。<br><strong>然而，我们平时用到的大部分操作都是spark sql的操作，为方便后续的复杂逻辑处理，最后sql取数之后repartition处理成多个分区</strong>。</li>
-</ul>
-<h4 id="spark-sql操作"><a href="#spark-sql操作" class="headerlink" title="spark sql操作"></a>spark sql操作</h4><h5 id="a-普通的操作可以用repartition来做。"><a href="#a-普通的操作可以用repartition来做。" class="headerlink" title="a. 普通的操作可以用repartition来做。"></a>a. 普通的操作可以用repartition来做。</h5><h5 id="b-对于shuffle操作，也是最常见的操作，例如join，-group等。"><a href="#b-对于shuffle操作，也是最常见的操作，例如join，-group等。" class="headerlink" title="b. 对于shuffle操作，也是最常见的操作，例如join， group等。"></a>b. 对于shuffle操作，也是最常见的操作，例如join， group等。</h5><ul>
-<li><em>spark.sql.shuffle.partitions</em> 集团默认是1000个<br>控制的是每个mapper端写出的partition个数，其实也就是reducer的个数，并不是mapper的个数。例如group by a,那么在每个mapper里按照a的值分成1000个partition数，写到磁盘，启动1000个reducer，每个reducer从每个mapper端拉取对应索引的partition。</li>
-<li><em>spark.sql.adaptive.enabled</em><br>是否开启调整partition功能，如果开启，spark.sql.shuffle.partitions设置的partition可能会被合并到一个reducer里运行。默认开启，同时强烈建议开启。理由：更好利用单个executor的性能，还能缓解小文件问题。</li>
-<li><em>spark.sql.adaptive.shuffle.targetPostShuffleInputSize</em><br>和spark.sql.adaptive.enabled配合使用，当开启调整partition功能后，当mapper端两个partition的数据合并后数据量小于targetPostShuffleInputSize时，Spark会将两个partition进行合并到一个reducer端进行处理。</li>
-<li><em>spark.sql.adaptive.minNumPostShufflePartitions</em><br>当spark.sql.adaptive.enabled参数开启后，有时会导致很多分区被合并，为了防止分区过少，可以设置spark.sql.adaptive.minNumPostShufflePartitions参数，防止分区过少而影响性能。</li>
-</ul>
-<h2 id="调优例子"><a href="#调优例子" class="headerlink" title="调优例子"></a>调优例子</h2><p>我明明设置了minNumPostShufflePartitions参数，但是我发现某个涉及shuffle操作stage(A join B 得到C， C join D)的始终只有2个parition!</p>
-<p>解决方案：这个问题原因应该是shuffle后的C导致，因为A join B的关联key值过少，远远小于minNumPostShufflePartitions这个值，导致reduce后C的partition只有2个，从而使得后面C join D的时候，mapper数也只有2个。<strong>只加了一句C.repartition(200)后问题就解决了。。</strong></p>
-<h2 id="关于MapReduce的shuffle过程和Spark的shuffle算子"><a href="#关于MapReduce的shuffle过程和Spark的shuffle算子" class="headerlink" title="关于MapReduce的shuffle过程和Spark的shuffle算子"></a>关于MapReduce的shuffle过程和Spark的shuffle算子</h2><p>Hadoop是MapReduce框架，任何一个MapReduce过程都分为Mapper(程序员编写), Shuffle和Reduce(程序员编写)过程。最影响性能的就是shuffle，因为涉及到key值排序，网络传输等。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9nktybqj30k508xq5u.jpg" alt="image-20200605112750651"></p>
-<p>对于spark而言，只有两类操作，包括transform操作(从一个RDD到另一个RDD)和action操作(RDD变为结果值返回)，任何操作都是由partition构成，以典型的shuffle算子为例，其实也类似与mapper(mapper数即为partition数)和reduce(reduce数即为partiton数)过程。但是更吊的是，在mapper task里直接进行了partition，后续reduce只要按照索引从每个mapper里取对应索引的partition就好了。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9s51wzjj30lq07i0u3.jpg" alt="image-20200605115037216"></p>
+    <title>hdfs文件理解</title>
+    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hdfs%E6%96%87%E4%BB%B6%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>HDFS是一个分布式的文件系统，利用集群来存储海量数据。hdfs路径是一个虚拟节点，下面的多个文件可能放在多台机器上，具体放在哪台机器等信息由name node节点维护。</p>
 ]]></content>
       <categories>
         <category>大数据</category>
-        <category>Spark</category>
+        <category>Hive</category>
       </categories>
   </entry>
   <entry>
@@ -1893,34 +1927,26 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </categories>
   </entry>
   <entry>
-    <title>多进程，多线程以及spark的executor等概念</title>
-    <url>/2018/11/07/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A5%E5%8F%8Aspark%E7%9A%84executor%E7%AD%89%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在spark中，</p>
+    <title>关于线程/进程的理解</title>
+    <url>/2020/12/16/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>最近对线程有了一些的新的理解，再整理一下知识点：</p>
 <ul>
-<li>worker就是集群里可执行的机器，一个worker可以有多个executor。</li>
-<li>一个executor就是CPU，一个CPU可以有多个核。</li>
-<li>一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。</li>
+<li>线程的执行单位是core，一个cpu可以有多个core，所以为啥现在计算就主打多核cpu..</li>
+<li>但实际上即使是一个core，也可以实现并发，因为线程之间可以随时切换，因为有thread context这个信息，下面会提。</li>
+<li>我们实现一个服务/进程，有多时候都会用多线程来并发处理，那么来看下线程的共享资源单位：<ul>
+<li>代码区：毫无疑问，就是二进制的代码文件</li>
+<li>动态链接库地址：就是依赖的外部库，c/c++在window是ddl，在linux是so</li>
+<li>堆区：就是对象，c/c++里是new、malloc的对象，java也是new出来的对象。</li>
+<li>栈区：<ul>
+<li>局部变量</li>
+<li>thread context，包含函数栈指针、程序计数器等，简单理解就是这个函数可能会调用多个其他函数，比如递归，那么就有个栈指针来记录这个上下文信息</li>
+<li>原则上栈区是每个thread独有的，但是依旧是可以被其他thread修改，所以就有多进程里的各种线程锁之类的处理。</li>
 </ul>
-<p>关于CPU和核：</p>
-<ul>
-<li>CPU有单核CPU和多核CPU。</li>
-<li>一般来讲几个物理核就是几个线程，但是通过超线程技术，一个物理核可以分成多个虚拟核，从而使得一个核可以有多个线程。但是，一个核同时只能执行一个线程。</li>
-<li>并发：多个线程在单个核心运行，同一时间一个线程运行，系统不停切换线程，看起来像同时运行，实际上是线程不停切换。</li>
-<li>并行：多个线程在多个核心运行，线程同时运行。</li>
-<li>串行和并发的区别：虽然都是同时运行一个线程，但是串行就只能一个一个线程串行处理，就是一个结束了再起另一个线程，而并发本质上还是可以处理多个线程。</li>
+</li>
 </ul>
-<p>选择多个单核CPU和单个多核CPU？</p>
-<ul>
-<li>多核CPU共享数据是通过CPU内部的总线，多个单核CPU共享数据是通过主板的总线，通信开销更大。</li>
-<li>多核CPU只需要一套芯片组，一套存储，而多个单核CPU，每一个CPU都需要有较为独立的电路支持，有自己的Cache。如果要多个耗内存的大型程序，还是需要多个单核CPU。</li>
+</li>
+<li>Spark中，一个executor可以有多个core，但是内存是按照executor来分配的，也就是core越多，多进程的话，就越吃机器的内存。内存分为memory和memoryOverHead，前者应该就是放工作数据的堆区，后者是栈区。</li>
 </ul>
-<p>多进程和多线程：</p>
-<ul>
-<li>进程是分配资源(包括了CPU、内存、磁盘IO等)的最小单位，线程是CPU分配和调度的单位。一个进程是由多个线程组成的。其实我理解无论线程和进程都是要分配资源的，但是进程涉及的资源分配更多，而线程只涉及CPU里的资源分配，进程更加宏观，线程更加精细。</li>
-<li>同一个进程内的多线程是共享资源的，因此数据共享非常方便，占用内存少，切换速度快，CPU利用率高，但是缺点就是编程较为复杂，涉及到锁之类的，同时一个线程挂导致整个进程挂，鲁棒性比较差。</li>
-<li>进程之间的通信是通过管道，信号之类的，数据要共享的话涉及到共享内存，比较复杂，同时占用内存多，切换复杂，CPU利用率低，但优点就是变成简单，且进程间不受影响，鲁棒性高。</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhf5zn73gj30sm0ajq97.jpg" alt="image-20200605145655675"></p>
 ]]></content>
       <categories>
         <category>大数据</category>
@@ -1929,6 +1955,116 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       <tags>
         <tag>并发</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Spark学习笔记</title>
+    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Kafka/Kafka%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是一个分布式的日志系统，是实时任务依赖的主流数据源。注意，数据本身同样是存储在hdfs上的。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg" alt="image-20201110211236165" style="zoom:50%;"></p>
+<p>1、话题（Topic）：是特定类型的消息流。消息是字节的有效负载（Payload），话题是消息的分类名或种子（Feed）名；</p>
+<p>2、生产者（Producer）：是能够发布消息到话题的任何对象；</p>
+<p>3、服务代理（Broker）：一个broker就是一台机器，多台broker组成集群。</p>
+<p>4、消费者（Consumer）：可以订阅一个或多个话题，并从Broker拉数据，从而消费这些已发布的消息；</p>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>理解存储最主要是理解partition的概念。其实Apache体系里partition的概念都比较类似（比如spark中的partition），都是将数据进行分片，一般分片的逻辑就比如是按照key值来划分，同一个key值分到同一个partition。</p>
+<p>Kafka里也是将topic数据进行partition，当然每个partition的数据还是按照顺序写入的，然后将parition分配到不同broker上，partition数目一般设置成broker的倍数，这样能够让每个broker的partition均匀一点。</p>
+<p>kafka的partition还会备份，leader作为主要的，follower partition放在其他broker上。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg" alt="image-20201110212007002" style="zoom:50%;"> </p>
+<p>具体存储的日志文件形式是这样的：</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg" alt="image-20201110212109581" style="zoom:50%;"></p>
+<ul>
+<li><p>每个topic下的partition都有一个文件夹。文件夹中的文件类型有.log数据文件，.index偏移量索引文件和.timeindex时间索引文件。</p>
+</li>
+<li><p>日志文件会被分为多个LogSegment文件，一般分段文件是1G。文件名字按照基准偏移量命名。</p>
+</li>
+</ul>
+<p>介绍下具体的三个文件：</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg" alt="image-20201110212424025" style="zoom:50%;"></p>
+<ul>
+<li>log文件：真实的日志数据文件，存放消息payload</li>
+<li>index文件：偏移量索引文件，重要的稀疏索引文件。因为如果直接去log文件里顺序查找的话，效率太低。所以现在index文件里做粗筛，定位到大致范围，然后再去log文件里找，大大提升了效率。</li>
+<li>timeindex文件：时间戳索引文件的时间戳类型与日志数据文件中的时间类型是一致的，索引条目中的时间戳值及偏移量与日志数据文件中对应的字段值相同，Kafka也提供了通过时间戳索引来访问消息的方法。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>Kafka</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Spark名词相关理解</title>
+    <url>/2020/03/05/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/Spark%E5%90%8D%E8%AF%8D%E7%9B%B8%E5%85%B3%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="关于partition和task"><a href="#关于partition和task" class="headerlink" title="关于partition和task"></a>关于partition和task</h2><p>partition是spark RDD的操作单元，通常会把一个数据集切分成若干个partition，实现并行处理。我把它称之为需求。</p>
+<p>task则是机器能提供的操作单元，一个core对应一个task，一个task处理一个partition。我把它称之为供给。</p>
+<p><strong>所以，如果stage还是只有2个partition，无论怎么调节executors的资源数目，都是没有用的，active task也只有2个而已！</strong></p>
+<p>关于调节partition，又分为两类：</p>
+<h4 id="非spark-sql操作"><a href="#非spark-sql操作" class="headerlink" title="非spark sql操作"></a>非spark sql操作</h4><ul>
+<li><em>spark.default.parallelism</em> 集团没有默认值<br>这个参数控制RDD的partition数目，但是只对于Spark SQL以外的所有Spark的stage生效，无法控制spark sql生成的分区。Spark SQL的并行度不允许用户自己指定，Spark SQL自己会默认根据hive表对应的HDFS文件的split个数自动设置Spark SQL所在的那个stage的并行度。<br><strong>然而，我们平时用到的大部分操作都是spark sql的操作，为方便后续的复杂逻辑处理，最后sql取数之后repartition处理成多个分区</strong>。</li>
+</ul>
+<h4 id="spark-sql操作"><a href="#spark-sql操作" class="headerlink" title="spark sql操作"></a>spark sql操作</h4><h5 id="a-普通的操作可以用repartition来做。"><a href="#a-普通的操作可以用repartition来做。" class="headerlink" title="a. 普通的操作可以用repartition来做。"></a>a. 普通的操作可以用repartition来做。</h5><h5 id="b-对于shuffle操作，也是最常见的操作，例如join，-group等。"><a href="#b-对于shuffle操作，也是最常见的操作，例如join，-group等。" class="headerlink" title="b. 对于shuffle操作，也是最常见的操作，例如join， group等。"></a>b. 对于shuffle操作，也是最常见的操作，例如join， group等。</h5><ul>
+<li><em>spark.sql.shuffle.partitions</em> 集团默认是1000个<br>控制的是每个mapper端写出的partition个数，其实也就是reducer的个数，并不是mapper的个数。例如group by a,那么在每个mapper里按照a的值分成1000个partition数，写到磁盘，启动1000个reducer，每个reducer从每个mapper端拉取对应索引的partition。</li>
+<li><em>spark.sql.adaptive.enabled</em><br>是否开启调整partition功能，如果开启，spark.sql.shuffle.partitions设置的partition可能会被合并到一个reducer里运行。默认开启，同时强烈建议开启。理由：更好利用单个executor的性能，还能缓解小文件问题。</li>
+<li><em>spark.sql.adaptive.shuffle.targetPostShuffleInputSize</em><br>和spark.sql.adaptive.enabled配合使用，当开启调整partition功能后，当mapper端两个partition的数据合并后数据量小于targetPostShuffleInputSize时，Spark会将两个partition进行合并到一个reducer端进行处理。</li>
+<li><em>spark.sql.adaptive.minNumPostShufflePartitions</em><br>当spark.sql.adaptive.enabled参数开启后，有时会导致很多分区被合并，为了防止分区过少，可以设置spark.sql.adaptive.minNumPostShufflePartitions参数，防止分区过少而影响性能。</li>
+</ul>
+<h2 id="调优例子"><a href="#调优例子" class="headerlink" title="调优例子"></a>调优例子</h2><p>我明明设置了minNumPostShufflePartitions参数，但是我发现某个涉及shuffle操作stage(A join B 得到C， C join D)的始终只有2个parition!</p>
+<p>解决方案：这个问题原因应该是shuffle后的C导致，因为A join B的关联key值过少，远远小于minNumPostShufflePartitions这个值，导致reduce后C的partition只有2个，从而使得后面C join D的时候，mapper数也只有2个。<strong>只加了一句C.repartition(200)后问题就解决了。。</strong></p>
+<h2 id="关于MapReduce的shuffle过程和Spark的shuffle算子"><a href="#关于MapReduce的shuffle过程和Spark的shuffle算子" class="headerlink" title="关于MapReduce的shuffle过程和Spark的shuffle算子"></a>关于MapReduce的shuffle过程和Spark的shuffle算子</h2><p>Hadoop是MapReduce框架，任何一个MapReduce过程都分为Mapper(程序员编写), Shuffle和Reduce(程序员编写)过程。最影响性能的就是shuffle，因为涉及到key值排序，网络传输等。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9nktybqj30k508xq5u.jpg" alt="image-20200605112750651"></p>
+<p>对于spark而言，只有两类操作，包括transform操作(从一个RDD到另一个RDD)和action操作(RDD变为结果值返回)，任何操作都是由partition构成，以典型的shuffle算子为例，其实也类似与mapper(mapper数即为partition数)和reduce(reduce数即为partiton数)过程。但是更吊的是，在mapper task里直接进行了partition，后续reduce只要按照索引从每个mapper里取对应索引的partition就好了。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9s51wzjj30lq07i0u3.jpg" alt="image-20200605115037216"></p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>Spark</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>开始使用Ubuntu</title>
+    <url>/2016/04/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Ubuntu/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>对linux的向往由来已久，加上前阵子在win7下用vim总是感觉很不舒服，用gcc编译还要专门去下载MinGW(minmalist GNU for Windows),这么想还不如直接去用linux，GNU下的那些工具就直接能用了！在linux下打造一个IDE吧！</p>
+<blockquote>
+<p>GNU’s Not Unix!</p>
+</blockquote>
+<p>哈哈哈，其实以前也装过一阵Ubuntu,但是那会啥都不会，四处碰壁，没用多久就泄气了。可是看了各种大牛的书后，发现windows这种操作系统都是给大牛们摸透了计算机后想办法降低门槛给小白用的，所以要是不会Linux，永远进不了真正的程序员世界。</p>
+<a id="more"></a>
+<p>对于linux的众多发行版中，我选择了Ubuntu 14.04 LTS，毕竟Ubuntu有不错的GUI环境（X window的gnome），我既不是忠实的GUI党也不是忠实的CLI党，我觉得选择自己最好用的才是最重要的，该GUI的时候还是得GUI（用命令行去找分区里的文件太痛苦了。。），哈哈当然CLI是超强大的！</p>
+<p>大概花了两周左右的时间，将<a href="http://linux.vbird.org/" target="_blank" rel="noopener">《鸟叔的Linux私房菜之基础学习篇》</a>看了一半（实在好长。。剩下的慢慢看），然后将Ubuntu下的工作环境都部署了一遍，感觉以后大部分的工作都可以完成了。</p>
+<p>这部署的过程相当纠结，当然主要还是因为我的强迫症，比如一个字体好不好看我要纠结半天，各种换啊换，每次强迫症犯的时候都好想打死自己啊！所以部署的效率实在是有点低诶。好了，话不多说，下面贴上我的配置。</p>
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><p>装ubuntu的时候要给系统分区，我参考了鸟叔的书以及网络上的一些博客后，最后我分区如下:<br><img src="/images/my/1.png" alt="Ubuntu 分区"></p>
+<p>因为我装了双系统，我把sda1,sda2,sda3三个主分区都分给了windows，sda4扩展分区分成了好多逻辑分区，分别给/boot，/，/home，/var，/usr，总共大概给Ubuntu650G左右^0^</p>
+<h1 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h1><p>由于用的是校园网，学校有专门的VPN客户端，我就去学校的论坛那里下了个Ubuntu下的vpn客户端，配置简单，没费什么事就能上网了（当然，前提要设置好IP地址和DNS，连上校内网）。</p>
+<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>虽然进入系统后，软件更新源里默认的是中国的服务器，但我还是按照<a href="http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">Ubuntu中文</a>的推荐换了网易，搜狐，阿里云及我们自己学校的源。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#网易</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#搜狐</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#学校</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-backports restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#阿里云</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+<h1 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h1><p>Ubuntu下自带的ibus输入法用起来还是不舒服，不像搜狗输入法那样将模糊语义，关键词之类的做得符合日常生活习惯，所以我还是装了搜狗输入法。</p>
+<p>可以直接去<a href="http://pinyin.sogou.com/linux/" target="_blank" rel="noopener">官网</a>下载deb包，然后<code>sudo dpkg -i *.deb</code> 像搜狗输入法是需要fcitx做输入法框架的，所以安装完后需要在语言设置里将默认输入法设置为fcitx.</p>
+<h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><p>Ubuntu自带浏览器为firefox，但我以前用的一直都是Chrome，书签什么的同步也会方便一点的，所以毫不犹豫的换成了Chrome,<code>sudo apt-get install google-chrome-stable</code></p>
+<p>flash插件问题:Chrome用的谷歌自己的flash插件，而firefox默认是没装flash插件的，所以我去abode flash player的<a href="https://get.adobe.com/cn/flashplayer/" target="_blank" rel="noopener">官网</a>手动下载了插件，教程可以看<a href="http://wiki.ubuntu.org.cn/Flash" target="_blank" rel="noopener">Ubuntu中文里的介绍</a>，Ubuntu软件中心装flash插件太坑了！安装的时候等半天根本就不动！</p>
+<h1 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h1><p>看论文及查资料的时候少不了查英文单词，由于在windows里一直用有道词典，所以我先去有道官网看了一下，一看，还真有linux版本，马上下载deb包后用了一下，刚开始觉得还不错，因为有道的鼠标取词（不用划词）这个功能我实在喜欢，虽然取词反应貌似有点慢。但后来我突然发现单词无法<strong>发音</strong>！！查了各种资料还是无法解决，无奈我只能忍痛割爱。</p>
+<p>然后我还是用了公认好用的星际译王，不得不说，自己可以自由添加词典，离线也能查单词确实比较强大（<em>然而现在工作基本都是联网的</em>）。具体安装及下载词典教程<a href="http://wiki.ubuntu.org.cn/index.php?title=Stardict&amp;variant=zh-cn" target="_blank" rel="noopener">看这里</a>。 </p>
+<p>发音我没有装，感觉文件比较大，离线发音没必要，因为我还在Chrome下载了一个插件，我个人觉得非常好用，推荐一下，<a href="https://chrome.google.com/webstore/detail/chazd/nkiipedegbhbjmajlhpegcpcaacbfggp?hl=zh-CN" target="_blank" rel="noopener">ChaZD</a>。</p>
+<h1 id="Matlab"><a href="#Matlab" class="headerlink" title="Matlab"></a>Matlab</h1><p>下载matlab估计是最让我蛋疼的事了，在windows直接找个破解版就好了，而找个linux下的破解版真是不容易，虽然好多博客都有贴下载地址，但我试了试总是下载不了，有的就是下到1G左右就不能继续下了，特别折腾，为此我还下了个BT客户端deluge(系统自带的transmission其实也挺好的)。</p>
+<p>后来终于找到了一个靠谱的matlab 2010a,用wget后台下载了一天终于下好了，具体教程看<a href="ftp://wcmc.csu.edu.cn/software/%E7%A8%8B%E5%BA%8F%E8%BD%AF%E4%BB%B6/matlab/install%20matlab%20in%20linux.pdf" target="_blank" rel="noopener">这里</a>～</p>
+<p>matlab下载好之后还有<a href="http://forum.ubuntu.org.cn/viewtopic.php?t=373776" target="_blank" rel="noopener">中文乱码的问题</a>还有<a href="https://forum.ubuntu.org.cn/viewtopic.php?f=122&amp;t=443586" target="_blank" rel="noopener">常见的一些安装问题</a>这两篇帖子都解决了。</p>
+<h1 id="办公套件"><a href="#办公套件" class="headerlink" title="办公套件"></a>办公套件</h1><p>LibreOffice以及WPC For Linux 都试过,感觉还是不行,格式会乱,所以决定还是office文件老老实实回到windows下编辑,平时自己写文档还是用markdown生成pdf,或者latex都行。</p>
+<h1 id="工程绘图"><a href="#工程绘图" class="headerlink" title="工程绘图"></a>工程绘图</h1><p>由于论文的需要，我需要一个类似MS下visio的工程绘图软件，这里我选的替代品是Dia，这个绘图软件基本能替代visio~安装很简单，也是直接<code>sudo apt-get install dia</code>，这里有个地方要注意的是，默认情况下进入dia是intergrated模式，中文显示会有问题，需要做如下修改</p>
+<pre><code>sudo gedit /usr/bin/dia
+#dia-normal --integrated &quot;$@&quot;
+dia-normal &quot;$@&quot;
+</code></pre><h1 id="图片处理"><a href="#图片处理" class="headerlink" title="图片处理"></a>图片处理</h1><p>Imagemagick！这个图片处理软件真的超棒！可以用import截图，用convert转换图片格式，大小，清晰，可以加滤镜等，非常好用，我直接把它当做默认图片打开方式了。安装同样<code>sudo apt-get install imagemagick</code>。</p>
+<h1 id="视频，音频播放器"><a href="#视频，音频播放器" class="headerlink" title="视频，音频播放器"></a>视频，音频播放器</h1><p>Mplayer！这是号称目前这个星球上支持多媒体文件格式最多的软件！哈哈哈，反正目前我电脑里的视频音频格式它都支持，而且gnome版的界面都还不错。详细介绍及安装可以看<a href="http://wiki.ubuntu.com.cn/MPlayer" target="_blank" rel="noopener">这里</a></p>
+<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>Git的安装很方便，直接<code>sudo apt-get install git</code>，因为git本来就是linus在linux下开发的嘛～具体git的使用方法，建议看<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖老师的这篇教程</a>！</p>
+<h1 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h1><p>我这里直接就用ubuntu自带的gnome-terminal来使用Bash（Bourne again shell），作为一个强迫症患者，我觉得终端自带的紫底白字配色太伤眼睛了，于是上Github寻找好看的配色方案。</p>
+<p>刚开始我选了solarized，想把终端配色和vim的配色都弄成solarized。</p>
+<ul>
+<li>终端的solarized配色文件显示，<a href="https://github.com/seebi/dircolors-solarized" target="_blank" rel="noopener">github下载</a></li>
+<li>终端的solarized配色，<a href="https://github.com/Anthony25/gnome-terminal-colors-solarized" target="_blank" rel="noopener">github下载</a></li>
+</ul>
+<p>然而solarized配完后，总觉得看得不舒服，一时切换不过来，强迫症发作的我又去寻找其他配色。最后用了这个<a href="https://github.com/chriskempson/base16-gnome-terminal" target="_blank" rel="noopener">Git</a>.<br><img src="/images/my/2.png" alt="Ocean Light"></p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+        <category>Linux</category>
+      </categories>
   </entry>
   <entry>
     <title>重装Ubuntu16.04</title>
@@ -2046,54 +2182,6 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </categories>
   </entry>
   <entry>
-    <title>开始使用Ubuntu</title>
-    <url>/2016/04/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Ubuntu/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>对linux的向往由来已久，加上前阵子在win7下用vim总是感觉很不舒服，用gcc编译还要专门去下载MinGW(minmalist GNU for Windows),这么想还不如直接去用linux，GNU下的那些工具就直接能用了！在linux下打造一个IDE吧！</p>
-<blockquote>
-<p>GNU’s Not Unix!</p>
-</blockquote>
-<p>哈哈哈，其实以前也装过一阵Ubuntu,但是那会啥都不会，四处碰壁，没用多久就泄气了。可是看了各种大牛的书后，发现windows这种操作系统都是给大牛们摸透了计算机后想办法降低门槛给小白用的，所以要是不会Linux，永远进不了真正的程序员世界。</p>
-<a id="more"></a>
-<p>对于linux的众多发行版中，我选择了Ubuntu 14.04 LTS，毕竟Ubuntu有不错的GUI环境（X window的gnome），我既不是忠实的GUI党也不是忠实的CLI党，我觉得选择自己最好用的才是最重要的，该GUI的时候还是得GUI（用命令行去找分区里的文件太痛苦了。。），哈哈当然CLI是超强大的！</p>
-<p>大概花了两周左右的时间，将<a href="http://linux.vbird.org/" target="_blank" rel="noopener">《鸟叔的Linux私房菜之基础学习篇》</a>看了一半（实在好长。。剩下的慢慢看），然后将Ubuntu下的工作环境都部署了一遍，感觉以后大部分的工作都可以完成了。</p>
-<p>这部署的过程相当纠结，当然主要还是因为我的强迫症，比如一个字体好不好看我要纠结半天，各种换啊换，每次强迫症犯的时候都好想打死自己啊！所以部署的效率实在是有点低诶。好了，话不多说，下面贴上我的配置。</p>
-<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><p>装ubuntu的时候要给系统分区，我参考了鸟叔的书以及网络上的一些博客后，最后我分区如下:<br><img src="/images/my/1.png" alt="Ubuntu 分区"></p>
-<p>因为我装了双系统，我把sda1,sda2,sda3三个主分区都分给了windows，sda4扩展分区分成了好多逻辑分区，分别给/boot，/，/home，/var，/usr，总共大概给Ubuntu650G左右^0^</p>
-<h1 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h1><p>由于用的是校园网，学校有专门的VPN客户端，我就去学校的论坛那里下了个Ubuntu下的vpn客户端，配置简单，没费什么事就能上网了（当然，前提要设置好IP地址和DNS，连上校内网）。</p>
-<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>虽然进入系统后，软件更新源里默认的是中国的服务器，但我还是按照<a href="http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">Ubuntu中文</a>的推荐换了网易，搜狐，阿里云及我们自己学校的源。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#网易</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.163.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#搜狐</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#学校</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-backports restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.zju.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.zju.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#阿里云</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-<h1 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h1><p>Ubuntu下自带的ibus输入法用起来还是不舒服，不像搜狗输入法那样将模糊语义，关键词之类的做得符合日常生活习惯，所以我还是装了搜狗输入法。</p>
-<p>可以直接去<a href="http://pinyin.sogou.com/linux/" target="_blank" rel="noopener">官网</a>下载deb包，然后<code>sudo dpkg -i *.deb</code> 像搜狗输入法是需要fcitx做输入法框架的，所以安装完后需要在语言设置里将默认输入法设置为fcitx.</p>
-<h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><p>Ubuntu自带浏览器为firefox，但我以前用的一直都是Chrome，书签什么的同步也会方便一点的，所以毫不犹豫的换成了Chrome,<code>sudo apt-get install google-chrome-stable</code></p>
-<p>flash插件问题:Chrome用的谷歌自己的flash插件，而firefox默认是没装flash插件的，所以我去abode flash player的<a href="https://get.adobe.com/cn/flashplayer/" target="_blank" rel="noopener">官网</a>手动下载了插件，教程可以看<a href="http://wiki.ubuntu.org.cn/Flash" target="_blank" rel="noopener">Ubuntu中文里的介绍</a>，Ubuntu软件中心装flash插件太坑了！安装的时候等半天根本就不动！</p>
-<h1 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h1><p>看论文及查资料的时候少不了查英文单词，由于在windows里一直用有道词典，所以我先去有道官网看了一下，一看，还真有linux版本，马上下载deb包后用了一下，刚开始觉得还不错，因为有道的鼠标取词（不用划词）这个功能我实在喜欢，虽然取词反应貌似有点慢。但后来我突然发现单词无法<strong>发音</strong>！！查了各种资料还是无法解决，无奈我只能忍痛割爱。</p>
-<p>然后我还是用了公认好用的星际译王，不得不说，自己可以自由添加词典，离线也能查单词确实比较强大（<em>然而现在工作基本都是联网的</em>）。具体安装及下载词典教程<a href="http://wiki.ubuntu.org.cn/index.php?title=Stardict&amp;variant=zh-cn" target="_blank" rel="noopener">看这里</a>。 </p>
-<p>发音我没有装，感觉文件比较大，离线发音没必要，因为我还在Chrome下载了一个插件，我个人觉得非常好用，推荐一下，<a href="https://chrome.google.com/webstore/detail/chazd/nkiipedegbhbjmajlhpegcpcaacbfggp?hl=zh-CN" target="_blank" rel="noopener">ChaZD</a>。</p>
-<h1 id="Matlab"><a href="#Matlab" class="headerlink" title="Matlab"></a>Matlab</h1><p>下载matlab估计是最让我蛋疼的事了，在windows直接找个破解版就好了，而找个linux下的破解版真是不容易，虽然好多博客都有贴下载地址，但我试了试总是下载不了，有的就是下到1G左右就不能继续下了，特别折腾，为此我还下了个BT客户端deluge(系统自带的transmission其实也挺好的)。</p>
-<p>后来终于找到了一个靠谱的matlab 2010a,用wget后台下载了一天终于下好了，具体教程看<a href="ftp://wcmc.csu.edu.cn/software/%E7%A8%8B%E5%BA%8F%E8%BD%AF%E4%BB%B6/matlab/install%20matlab%20in%20linux.pdf" target="_blank" rel="noopener">这里</a>～</p>
-<p>matlab下载好之后还有<a href="http://forum.ubuntu.org.cn/viewtopic.php?t=373776" target="_blank" rel="noopener">中文乱码的问题</a>还有<a href="https://forum.ubuntu.org.cn/viewtopic.php?f=122&amp;t=443586" target="_blank" rel="noopener">常见的一些安装问题</a>这两篇帖子都解决了。</p>
-<h1 id="办公套件"><a href="#办公套件" class="headerlink" title="办公套件"></a>办公套件</h1><p>LibreOffice以及WPC For Linux 都试过,感觉还是不行,格式会乱,所以决定还是office文件老老实实回到windows下编辑,平时自己写文档还是用markdown生成pdf,或者latex都行。</p>
-<h1 id="工程绘图"><a href="#工程绘图" class="headerlink" title="工程绘图"></a>工程绘图</h1><p>由于论文的需要，我需要一个类似MS下visio的工程绘图软件，这里我选的替代品是Dia，这个绘图软件基本能替代visio~安装很简单，也是直接<code>sudo apt-get install dia</code>，这里有个地方要注意的是，默认情况下进入dia是intergrated模式，中文显示会有问题，需要做如下修改</p>
-<pre><code>sudo gedit /usr/bin/dia
-#dia-normal --integrated &quot;$@&quot;
-dia-normal &quot;$@&quot;
-</code></pre><h1 id="图片处理"><a href="#图片处理" class="headerlink" title="图片处理"></a>图片处理</h1><p>Imagemagick！这个图片处理软件真的超棒！可以用import截图，用convert转换图片格式，大小，清晰，可以加滤镜等，非常好用，我直接把它当做默认图片打开方式了。安装同样<code>sudo apt-get install imagemagick</code>。</p>
-<h1 id="视频，音频播放器"><a href="#视频，音频播放器" class="headerlink" title="视频，音频播放器"></a>视频，音频播放器</h1><p>Mplayer！这是号称目前这个星球上支持多媒体文件格式最多的软件！哈哈哈，反正目前我电脑里的视频音频格式它都支持，而且gnome版的界面都还不错。详细介绍及安装可以看<a href="http://wiki.ubuntu.com.cn/MPlayer" target="_blank" rel="noopener">这里</a></p>
-<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>Git的安装很方便，直接<code>sudo apt-get install git</code>，因为git本来就是linus在linux下开发的嘛～具体git的使用方法，建议看<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖老师的这篇教程</a>！</p>
-<h1 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h1><p>我这里直接就用ubuntu自带的gnome-terminal来使用Bash（Bourne again shell），作为一个强迫症患者，我觉得终端自带的紫底白字配色太伤眼睛了，于是上Github寻找好看的配色方案。</p>
-<p>刚开始我选了solarized，想把终端配色和vim的配色都弄成solarized。</p>
-<ul>
-<li>终端的solarized配色文件显示，<a href="https://github.com/seebi/dircolors-solarized" target="_blank" rel="noopener">github下载</a></li>
-<li>终端的solarized配色，<a href="https://github.com/Anthony25/gnome-terminal-colors-solarized" target="_blank" rel="noopener">github下载</a></li>
-</ul>
-<p>然而solarized配完后，总觉得看得不舒服，一时切换不过来，强迫症发作的我又去寻找其他配色。最后用了这个<a href="https://github.com/chriskempson/base16-gnome-terminal" target="_blank" rel="noopener">Git</a>.<br><img src="/images/my/2.png" alt="Ocean Light"></p>
-]]></content>
-      <categories>
-        <category>操作系统</category>
-        <category>Linux</category>
-      </categories>
-  </entry>
-  <entry>
     <title>从零搭建Mac开发环境</title>
     <url>/2020/06/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Mac/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAMac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>前阵子电脑mac进水，搞了台备机，重新安装了各类软件搭建开发环境，特此记录…以防万一…</p>
@@ -2199,23 +2287,6 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>hash数据结构原理</title>
-    <url>/2020/03/08/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/hash%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>java hashMap底层实现：数组+链表+红黑树(链表长度大于8的时候)</p>
-<p>hashcode 通过hash函数 —&gt; hash值</p>
-<p>hash值 通过数组长度取余 —&gt; index</p>
-<p>所以说hash函数要尽量能够均匀数组位置。</p>
-<p>java里的hashMap的hash函数是：Hash值=（hashcode）^ (hashcode &gt;&gt;&gt; 16)</p>
-<p>hashMap预设数组长度也蛮重要，到load_factor(默认0.75)后，会resize 2倍，index都得重新算了。</p>
-<p>python里dict对string的hash函数就很蛋疼，是64位的整数。</p>
-<p>虽然hash的查询，插入，删除都很快，因为hash里的数组填不满，所以说hash相对其他数据结构而言，比较耗内存，且resize很慢。有点像空间换时间。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
     <title>C语言中的指针详解</title>
     <url>/2017/06/28/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/C/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%8C%87%E9%92%88%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>最近在创建动态二维数组(数组大小为变量)的时候，遇到了一些关于指针的问题，经过一番试验和研究，将一些比较容易出错的地方进行了归纳整理。</p>
@@ -2246,18 +2317,38 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>java I/O</title>
-    <url>/2019/06/11/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/java%20IO/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ol>
-<li>多线程（同步阻塞）；</li>
-<li>IO多路复用（select，poll，epoll）（同步非阻塞，严格地来讲，是把阻塞点改变了位置）；</li>
-<li>直接暴露出异步的IO接口，如kernel-aio和IOCP（异步非阻塞）。</li>
-</ol>
-<p>NIO就是IO多路复用，同步非阻塞，selector用来监听channel(OS内核空间)，另有ByteBuffer可读可写，处理程序数据空间。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhifritq9j30pd0elafo.jpg" alt="image-20200605165005503"> </p>
-<p>字节流操作，无输入输出缓存，所以一般包一个bufferedInputStream，bufferedOutputStream</p>
-<p>字符流操作，自带缓存。</p>
-<p><a href="https://www.zhihu.com/question/19732473" target="_blank" rel="noopener">https://www.zhihu.com/question/19732473</a></p>
+    <title>hash数据结构原理</title>
+    <url>/2020/03/08/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/hash%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>java hashMap底层实现：数组+链表+红黑树(链表长度大于8的时候)</p>
+<p>hashcode 通过hash函数 —&gt; hash值</p>
+<p>hash值 通过数组长度取余 —&gt; index</p>
+<p>所以说hash函数要尽量能够均匀数组位置。</p>
+<p>java里的hashMap的hash函数是：Hash值=（hashcode）^ (hashcode &gt;&gt;&gt; 16)</p>
+<p>hashMap预设数组长度也蛮重要，到load_factor(默认0.75)后，会resize 2倍，index都得重新算了。</p>
+<p>python里dict对string的hash函数就很蛋疼，是64位的整数。</p>
+<p>虽然hash的查询，插入，删除都很快，因为hash里的数组填不满，所以说hash相对其他数据结构而言，比较耗内存，且resize很慢。有点像空间换时间。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>POJO、JavaBean和SpringBean</title>
+    <url>/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/POJO%E3%80%81JavaBean%E5%92%8CSpringBean/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h2><p>普通JAVA类，专指只有setter / getter / toString的简单类，包括DO/DTO/BO/VO等。</p>
+<p>POJO是一个简单的、普通Java对象，特点是有private的属性和public的getter、setter，除此之外不具有任何特殊角色，不继承或不实现任何其它Java框架的类或接口。 </p>
+<h2 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h2><p><strong>为了方便开发，约定的一种java类的规范！</strong>，</p>
+<ul>
+<li>所有属性为private。</li>
+<li>这个类必须具有一个公共的(public)无参构造函数</li>
+<li>private属性必须提供public的getter和setter来给外部访问，并且方法的命名也必须遵循一定的命名规范。 。</li>
+<li>这个类应是可序列化的，要实现serializable接口。</li>
+</ul>
+<p>没有其他业务逻辑的javaBean,就是一个POJO</p>
+<h2 id="SpringBean"><a href="#SpringBean" class="headerlink" title="SpringBean"></a>SpringBean</h2><p>SpringBean是受Spring管理的对象。所有能受Spring容器管理的对象，都可以成为SpringBean。</p>
+<p>Spring容器对Bean没有特殊要求，不像JavaBean 一样遵循一些规范（不过对于通过设值方法注入的Bean,一定要提供setter 方法。）</p>
+<p>传统的的Javabean，如果我们要创建一个 Bean，我们就要使用关键字 New。<br>但是，在 Spring 中，Bean 的创建是由 Spring 容器进行的，也就是说，在 Spring 中使用 Bean 的时候，不是由关键字 New 来创建实例了, 由Spring容器管理其生命周期行为，</p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2271,6 +2362,25 @@ dia-normal &quot;$@&quot;
 <p><strong>泛型类型在逻辑上看以看成是多个不同的类型，实际上都是相同的基本类型。</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showKeyValue1</span><span class="params">(Generic obj)</span></span>&#123; Log.d(<span class="string">"泛型测试"</span>,<span class="string">"key value is "</span> + obj.getKey()); &#125;</span><br><span class="line"></span><br><span class="line">Generic gInteger = <span class="keyword">new</span> Generic(<span class="number">123</span>);</span><br><span class="line"></span><br><span class="line">Generic gNumber = <span class="keyword">new</span> Generic(<span class="number">456</span>);</span><br><span class="line"></span><br><span class="line">showKeyValue(gNumber);</span><br><span class="line"></span><br><span class="line"><span class="comment">// showKeyValue这个方法编译器会为我们报错：Generic&lt;java.lang.Integer&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// cannot be applied to Generic&lt;java.lang.Number&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// showKeyValue(gInteger);</span></span><br></pre></td></tr></table></figure>
 <p><strong>同一种泛型可以对应多个版本（因为参数类型是不确定的），不同版本的泛型类实例是不兼容的</strong>。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>java I/O</title>
+    <url>/2019/06/11/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/java%20IO/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ol>
+<li>多线程（同步阻塞）；</li>
+<li>IO多路复用（select，poll，epoll）（同步非阻塞，严格地来讲，是把阻塞点改变了位置）；</li>
+<li>直接暴露出异步的IO接口，如kernel-aio和IOCP（异步非阻塞）。</li>
+</ol>
+<p>NIO就是IO多路复用，同步非阻塞，selector用来监听channel(OS内核空间)，另有ByteBuffer可读可写，处理程序数据空间。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhifritq9j30pd0elafo.jpg" alt="image-20200605165005503"> </p>
+<p>字节流操作，无输入输出缓存，所以一般包一个bufferedInputStream，bufferedOutputStream</p>
+<p>字符流操作，自带缓存。</p>
+<p><a href="https://www.zhihu.com/question/19732473" target="_blank" rel="noopener">https://www.zhihu.com/question/19732473</a></p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2360,23 +2470,6 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>JAVA堆和栈内存</title>
-    <url>/2020/01/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%A0%86%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Java把内存分成两种，一种叫做栈内存，一种叫做堆内存：</p>
-<ul>
-<li><p>在函数中定义的<strong>一些基本类型的变量和对象的引用变量都是在函数的栈内存中分配</strong></p>
-</li>
-<li><p>堆内存用于存放由new创建的对象和数组</p>
-</li>
-</ul>
-<p><strong>栈中的变量指向堆内存中的变量，这就是 Java 中的指针!</strong></p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
     <title>各语言对象和变量的关系</title>
     <url>/2020/01/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%90%84%E8%AF%AD%E8%A8%80%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%8F%98%E9%87%8F%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="变量和对象"><a href="#变量和对象" class="headerlink" title="变量和对象"></a>变量和对象</h1><p>任何语言都是由变量和对象组成的。</p>
@@ -2388,7 +2481,7 @@ dia-normal &quot;$@&quot;
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">例子：int a = 3;int b;b = a; // 两个变量指向同一个栈对象a = 30; // a指向新的栈对象，b=3不会变</span><br></pre></td></tr></table></figure>
 <ul>
-<li>引用变量操作，还是指向同一个对象，类似C/C++的指针。变量操作相当于对象地址传递。</li>
+<li>引用变量操作，还是指向同一个对象，类似C/C++的指针/引用。变量操作相当于对象地址传递。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">例子：Class a = new Class();Class b = new Class();b = a; // 两个变量指向同一个堆对象a.set(something); // a,b两个引用变量依然指向同一个堆对象</span><br></pre></td></tr></table></figure>
 <ul>
@@ -2402,12 +2495,16 @@ dia-normal &quot;$@&quot;
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">例子：a = 3; b = a; // 两个变量指向同一个对象a = 30; // a指向新的对象，b=3不会变</span><br></pre></td></tr></table></figure>
 <ul>
-<li>可变对象的变量操作，还是指向同一个对象，类似C/C++的指针。变量操作相当于对象地址传递。</li>
+<li>可变对象的变量操作，还是指向同一个对象，类似C/C++的指针/引用。变量操作相当于对象地址传递。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">例子：a = Class();b = a; // 两个变量指向同一个对象a.set(something); // a,b两个变量依然指向同一个对象</span><br></pre></td></tr></table></figure>
 <h2 id="C-C"><a href="#C-C" class="headerlink" title="C/C++"></a>C/C++</h2><ul>
 <li>变量有变量的值和地址，对象有对象的值和地址</li>
 <li>通过指针来实现对同一个对象的操作，指针的自由度更高，但是代码上相比java和python就更加复杂了，引用变量多方便啊。。</li>
+<li>C/C++也有指针的高级封装-引用！</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int a =4 ; int &amp;b = a; b=3 //a = b = 3</span><br></pre></td></tr></table></figure>
+<ul>
 <li>即使是基本数据类型，也可以操作为同一个对象</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int a = 3;int* p = &amp;a;a = 4; // *p和a指向同一个对象</span><br></pre></td></tr></table></figure>]]></content>
@@ -2417,26 +2514,16 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>序列化与反序列化</title>
-    <url>/2020/03/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="基本概率"><a href="#基本概率" class="headerlink" title="基本概率"></a>基本概率</h2><p>为了磁盘or网络传输，序列/反序列化对象的状态(成员变量)，反序列化的其实是一个新的对象。</p>
-<h2 id="java序列化与反序列化"><a href="#java序列化与反序列化" class="headerlink" title="java序列化与反序列化"></a>java序列化与反序列化</h2><p>支持序列化和反序列化的基本类型有：String，Array，Enum和Serializable</p>
-<ol>
-<li>当父类继承Serializable接口，所有子类都可以被序列化</li>
-<li>子类实现了Serializable接口，父类没有，父类中的属性不能序列化（不报错，数据会丢失），但是子类中属性人能正确序列化</li>
-<li>如果序列化的属性是对象，这个对象也必须实现Serializable接口，否则会报错</li>
-<li>在反序列化时，如果对象的属性有修改或删减，修改的部分属性会丢失，但不会报错</li>
-<li>在反序列化时，如果serialVersionUID被修改，那么反序列化时会失败</li>
-<li>List或者Map容器中包含的泛型类型也必须实现Serializable接口，否则也会报java.io.NotSerializableException</li>
-</ol>
-<p>参考：<br><a href="https://blog.csdn.net/moudaen/article/details/19122233" target="_blank" rel="noopener">https://blog.csdn.net/moudaen/article/details/19122233</a><br><a href="https://blog.csdn.net/qq_16628781/article/details/70049623" target="_blank" rel="noopener">https://blog.csdn.net/qq_16628781/article/details/70049623</a></p>
-<h2 id="序列化-反序列化协议"><a href="#序列化-反序列化协议" class="headerlink" title="序列化/反序列化协议"></a>序列化/反序列化协议</h2><p>java序列化为二进制码，python的pickle也是序列化模块，为了能够支持<strong>不同平台、不同语言(前后端)之间</strong>的对象传输，必须有相关的通用协议规范。</p>
-<p>相关协议有：protobuf、json、xml、thrift等。现在主流是json、protobuf用的比较多，thrift其实是一个rpc框架，也包括了序列化/反序列化协议。</p>
-<p>目前网络传输主流框架：</p>
+    <title>JAVA堆和栈内存</title>
+    <url>/2020/01/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%A0%86%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Java把内存分成两种，一种叫做栈内存，一种叫做堆内存：</p>
 <ul>
-<li>Restful框架：用http协议，get/post/put/delte/head，把任何操作都定义成增删改查。序列化/反序列化协议一般是json。主流对公网站一般都是该框架。</li>
-<li>RPC框架：只给接口，操作更符合我们日常的编程方法or函数，传输吞吐更快，一般对内网站都用该框架。如dubbo,thrift等。</li>
+<li><p>在函数中定义的<strong>一些基本类型的变量和对象的引用变量都是在函数的栈内存中分配</strong></p>
+</li>
+<li><p>堆内存用于存放由new创建的对象和数组</p>
+</li>
 </ul>
+<p><strong>栈中的变量指向堆内存中的变量，这就是 Java 中的指针!</strong></p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2458,50 +2545,6 @@ dia-normal &quot;$@&quot;
       <categories>
         <category>编程开发</category>
         <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Texlive和Ctex的中文兼容问题</title>
-    <url>/2017/07/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Latex/some-questions-about-ctex-and-texlive/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>因为用的Ubuntu，所以用的是texlive编译环境来写latex,当然我也用过ctex套装。总体来讲，感觉编译速度texlive要更胜一筹，用起来更加舒服。</p>
-<p>今早师妹找我要beamer的模板，因为师妹用的是windows系统下的ctex，所以就发现了一个以前没弄清楚的问题，关于ctex和texlive的兼容问题。</p>
-<h1 id="概念区别"><a href="#概念区别" class="headerlink" title="概念区别"></a>概念区别</h1><p>说兼容问题之前，关于ctex和texlive有一些基本概念要搞清楚（我之前也弄混了。。）<br><a id="more"></a></p>
-<ul>
-<li>Texlive是一个latex语言的编译环境， Ctex只是一个中文版套装！</li>
-<li>Latex的编译环境主要有以下几个：<ul>
-<li>Texlive(主要用于Linux)</li>
-<li>MikTex(主要用于Windows)</li>
-<li>MaxTex(主要用于Mac)</li>
-</ul>
-</li>
-<li>Ctex是专门针对中文的国人整理的一个套装，用的是MikTex的编译环境，还包含了WinEdt编辑器，GsView等软件。</li>
-<li>Ctex package又是另一个概念！在我们需要写中文latex文档时，就需要用到ctex这个宏包，所以此ctex又非彼ctex。。</li>
-</ul>
-<h1 id="英文兼容"><a href="#英文兼容" class="headerlink" title="英文兼容"></a>英文兼容</h1><p>Texlive和ctex在英文上面，没有任何的兼容问题。我以前在这两种环境下切换时，都是写的英文文档，这就是为什么我之前一直觉得没有兼容问题，天真地以为两者虽然环境不同，但latex,pdflatex,xelatex等等命令功能都是一样的。。但事实上，之所以英文没有兼容问题，是因为无论那种编码方式，英文都是以一个字节的ASCII码形式编码，因此在任何编码中，英文都是兼容的。</p>
-<h1 id="中文兼容"><a href="#中文兼容" class="headerlink" title="中文兼容"></a>中文兼容</h1><p>中文兼容就是一个很大的问题了，因为在ctex的winedt编辑器中，默认的编码方式是GBK，而在linux环境下，默认的编码方式是utf-8，这就是为什么很多时候，linux下的文件放到windows下中文就会乱码。</p>
-<p>对于编辑器而言，我们可以设置不同的编码打开方式，让文件正常显示，但是尽管如此，文件本身的编码方式依然是不会改变的！所以最好的方法，就是在哪种环境下，就转换为哪种环境下的编码方式，以防止后面莫名奇妙地出错。注意，这里就要提到一个叫做inputenc的包了, 这个包可以让我们选择打开文件的编码方式，但是我对于gbk编码的文件选择utf-8打开，最终还是会出现问题。。所以我觉得这个包应该也是没有编码转换的功能，还是之前那个方法，最好先将文件编码转换好！</p>
-<p>既然文件编码已经转换好，接下来说一说，ctex和texlive对中文支持的区别</p>
-<h2 id="Texlive中文支持"><a href="#Texlive中文支持" class="headerlink" title="Texlive中文支持"></a>Texlive中文支持</h2><p>Texlive下要支持中文，最简单的方法就是满足下面三个条件</p>
-<ul>
-<li>UTF-8编码的tex文件</li>
-<li><code>\usepackage{ctex}</code></li>
-<li>Xelatex编译文件</li>
-</ul>
-<p>简单明了，这也是一个通用的方法，在任何编译环境下，都可以使用此方法支持中文。注意，有的时候在用这个方法编译从ctex那边移植过来的文件时，可能会遇到中文字体问题，大概率是因为模板里用了windows下的字体，而linux下没有这些字体，需要安装。</p>
-<h2 id="Ctex中文支持"><a href="#Ctex中文支持" class="headerlink" title="Ctex中文支持"></a>Ctex中文支持</h2><p>除了上面所述的方法，ctex有自己独特的中文支持方法（毕竟国人开发）：</p>
-<ul>
-<li>GBK编码的tex文件</li>
-<li><code>\usepackage{ctex}</code></li>
-<li>latex-dvi-ps-pdf或者pdflatex编译文件</li>
-</ul>
-<p>这个方法也挺简单的，但是只能针对于ctex,我觉得其中的原理应该是ctex对于pdflatex和latex命令做了一些调整，使其能够支持中文，我觉得他们本身应该是不能支持中文的。</p>
-<p><strong>切记，这两种方式最好不要随意搭配，搭配后可能会成功，但大概率是要出问题的。。我觉得最好的办法就是采用xelatex编辑utf-8文件！</strong></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上这些是我经过查阅资料以及在windows和ubuntu下试验总体得到的，具体一些理解可能会有偏差，但以上几个方法是肯定正确的。</p>
-<p>最后加一个小tips：<br>如果要改变beamer模板中的itemsize符号，需要加<code>\setbeamertemplate{items}[符号]</code>;若是article环境，需加<code>\renewcommand{\labelitemi}{符号}</code>。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Latex</category>
       </categories>
   </entry>
   <entry>
@@ -2547,37 +2590,30 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>引用，浅拷贝和深拷贝</title>
-    <url>/2019/05/06/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%BC%95%E7%94%A8,%20%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>变量名是别名，没有开辟新的内存，指向同一块内存</p>
-<h3 id="浅拷贝："><a href="#浅拷贝：" class="headerlink" title="浅拷贝："></a>浅拷贝：</h3><p>一般出现在array-like对象中，如list等。</p>
-<p>虽然开辟了一块新的内存，但是对象中的每一个元素都是指向原对象的每个元素的地址。例如：</p>
-<p>a = [1,2,[1,2,3]]</p>
-<p>b =copy.copy(a)</p>
-<p>id(a[2]) == id(b[2])</p>
-<p>对于元素为不可变对象时，倒无所谓，如果元素为可变对象，那么a变b也变。</p>
-<p>切片就是浅拷贝！！</p>
-<h3 id="深拷贝："><a href="#深拷贝：" class="headerlink" title="深拷贝："></a>深拷贝：</h3><p>既开辟了新的内存，对象中的每个元素又都是数值的拷贝，而非地址。</p>
-<p>使用方式：copy.deepcopy()</p>
-<h2 id="神奇的pandas"><a href="#神奇的pandas" class="headerlink" title="神奇的pandas:"></a>神奇的pandas:</h2><p>﻿经过对pandas的一番探索，引用，切片，花式索引。。结论是：pandas的内存机制实在是有点复杂，真是摸不透。</p>
-<p>例如：a是一个dataframe, b = a.loc[:]，这个操作后a.loc[1]的地址都会变..太恐怖了</p>
-<p>所以还是总结一下，平时用的比较多的操作：</p>
-<p>对于切片处理，如b = a.loc[:]，如果修改b.loc[<em>,</em>]的值，a也会变，如果b经过一些其他的操作，如sort_values等之后，b又变成了一个单独的内存空间。</p>
-<p>对于花式索引，如b = a[a[‘<em>‘] &gt; </em>]，修改b.loc[<em>,</em>]的值，a不会变。</p>
+    <title>序列化与反序列化</title>
+    <url>/2020/03/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="基本概率"><a href="#基本概率" class="headerlink" title="基本概率"></a>基本概率</h2><p>为了磁盘or网络传输，序列/反序列化对象的状态(成员变量)，反序列化的其实是一个新的对象。</p>
+<h2 id="java序列化与反序列化"><a href="#java序列化与反序列化" class="headerlink" title="java序列化与反序列化"></a>java序列化与反序列化</h2><p>支持序列化和反序列化的基本类型有：String，Array，Enum和Serializable</p>
+<ol>
+<li>当父类继承Serializable接口，所有子类都可以被序列化</li>
+<li>子类实现了Serializable接口，父类没有，父类中的属性不能序列化（不报错，数据会丢失），但是子类中属性人能正确序列化</li>
+<li>如果序列化的属性是对象，这个对象也必须实现Serializable接口，否则会报错</li>
+<li>在反序列化时，如果对象的属性有修改或删减，修改的部分属性会丢失，但不会报错</li>
+<li>在反序列化时，如果serialVersionUID被修改，那么反序列化时会失败</li>
+<li>List或者Map容器中包含的泛型类型也必须实现Serializable接口，否则也会报java.io.NotSerializableException</li>
+</ol>
+<p>参考：<br><a href="https://blog.csdn.net/moudaen/article/details/19122233" target="_blank" rel="noopener">https://blog.csdn.net/moudaen/article/details/19122233</a><br><a href="https://blog.csdn.net/qq_16628781/article/details/70049623" target="_blank" rel="noopener">https://blog.csdn.net/qq_16628781/article/details/70049623</a></p>
+<h2 id="序列化-反序列化协议"><a href="#序列化-反序列化协议" class="headerlink" title="序列化/反序列化协议"></a>序列化/反序列化协议</h2><p>java序列化为二进制码，python的pickle也是序列化模块，为了能够支持<strong>不同平台、不同语言(前后端)之间</strong>的对象传输，必须有相关的通用协议规范。</p>
+<p>相关协议有：protobuf、json、xml、thrift等。现在主流是json、protobuf用的比较多，thrift其实是一个rpc框架，也包括了序列化/反序列化协议。</p>
+<p>目前网络传输主流框架：</p>
+<ul>
+<li>Restful框架：用http协议，get/post/put/delte/head，把任何操作都定义成增删改查。序列化/反序列化协议一般是json。主流对公网站一般都是该框架。</li>
+<li>RPC框架：只给接口，操作更符合我们日常的编程方法or函数，传输吞吐更快，一般对内网站都用该框架。如dubbo,thrift等。</li>
+</ul>
 ]]></content>
       <categories>
         <category>编程开发</category>
-        <category>Python</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>下划线用法</title>
-    <url>/2020/10/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E4%B8%8B%E5%88%92%E7%BA%BF%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjj8geqjr5j31700mo7gr.jpg" alt="image-20201009175708340"></p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Python</category>
+        <category>Java</category>
       </categories>
   </entry>
   <entry>
@@ -2631,6 +2667,126 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
+    <title>Texlive和Ctex的中文兼容问题</title>
+    <url>/2017/07/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Latex/some-questions-about-ctex-and-texlive/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>因为用的Ubuntu，所以用的是texlive编译环境来写latex,当然我也用过ctex套装。总体来讲，感觉编译速度texlive要更胜一筹，用起来更加舒服。</p>
+<p>今早师妹找我要beamer的模板，因为师妹用的是windows系统下的ctex，所以就发现了一个以前没弄清楚的问题，关于ctex和texlive的兼容问题。</p>
+<h1 id="概念区别"><a href="#概念区别" class="headerlink" title="概念区别"></a>概念区别</h1><p>说兼容问题之前，关于ctex和texlive有一些基本概念要搞清楚（我之前也弄混了。。）<br><a id="more"></a></p>
+<ul>
+<li>Texlive是一个latex语言的编译环境， Ctex只是一个中文版套装！</li>
+<li>Latex的编译环境主要有以下几个：<ul>
+<li>Texlive(主要用于Linux)</li>
+<li>MikTex(主要用于Windows)</li>
+<li>MaxTex(主要用于Mac)</li>
+</ul>
+</li>
+<li>Ctex是专门针对中文的国人整理的一个套装，用的是MikTex的编译环境，还包含了WinEdt编辑器，GsView等软件。</li>
+<li>Ctex package又是另一个概念！在我们需要写中文latex文档时，就需要用到ctex这个宏包，所以此ctex又非彼ctex。。</li>
+</ul>
+<h1 id="英文兼容"><a href="#英文兼容" class="headerlink" title="英文兼容"></a>英文兼容</h1><p>Texlive和ctex在英文上面，没有任何的兼容问题。我以前在这两种环境下切换时，都是写的英文文档，这就是为什么我之前一直觉得没有兼容问题，天真地以为两者虽然环境不同，但latex,pdflatex,xelatex等等命令功能都是一样的。。但事实上，之所以英文没有兼容问题，是因为无论那种编码方式，英文都是以一个字节的ASCII码形式编码，因此在任何编码中，英文都是兼容的。</p>
+<h1 id="中文兼容"><a href="#中文兼容" class="headerlink" title="中文兼容"></a>中文兼容</h1><p>中文兼容就是一个很大的问题了，因为在ctex的winedt编辑器中，默认的编码方式是GBK，而在linux环境下，默认的编码方式是utf-8，这就是为什么很多时候，linux下的文件放到windows下中文就会乱码。</p>
+<p>对于编辑器而言，我们可以设置不同的编码打开方式，让文件正常显示，但是尽管如此，文件本身的编码方式依然是不会改变的！所以最好的方法，就是在哪种环境下，就转换为哪种环境下的编码方式，以防止后面莫名奇妙地出错。注意，这里就要提到一个叫做inputenc的包了, 这个包可以让我们选择打开文件的编码方式，但是我对于gbk编码的文件选择utf-8打开，最终还是会出现问题。。所以我觉得这个包应该也是没有编码转换的功能，还是之前那个方法，最好先将文件编码转换好！</p>
+<p>既然文件编码已经转换好，接下来说一说，ctex和texlive对中文支持的区别</p>
+<h2 id="Texlive中文支持"><a href="#Texlive中文支持" class="headerlink" title="Texlive中文支持"></a>Texlive中文支持</h2><p>Texlive下要支持中文，最简单的方法就是满足下面三个条件</p>
+<ul>
+<li>UTF-8编码的tex文件</li>
+<li><code>\usepackage{ctex}</code></li>
+<li>Xelatex编译文件</li>
+</ul>
+<p>简单明了，这也是一个通用的方法，在任何编译环境下，都可以使用此方法支持中文。注意，有的时候在用这个方法编译从ctex那边移植过来的文件时，可能会遇到中文字体问题，大概率是因为模板里用了windows下的字体，而linux下没有这些字体，需要安装。</p>
+<h2 id="Ctex中文支持"><a href="#Ctex中文支持" class="headerlink" title="Ctex中文支持"></a>Ctex中文支持</h2><p>除了上面所述的方法，ctex有自己独特的中文支持方法（毕竟国人开发）：</p>
+<ul>
+<li>GBK编码的tex文件</li>
+<li><code>\usepackage{ctex}</code></li>
+<li>latex-dvi-ps-pdf或者pdflatex编译文件</li>
+</ul>
+<p>这个方法也挺简单的，但是只能针对于ctex,我觉得其中的原理应该是ctex对于pdflatex和latex命令做了一些调整，使其能够支持中文，我觉得他们本身应该是不能支持中文的。</p>
+<p><strong>切记，这两种方式最好不要随意搭配，搭配后可能会成功，但大概率是要出问题的。。我觉得最好的办法就是采用xelatex编辑utf-8文件！</strong></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上这些是我经过查阅资料以及在windows和ubuntu下试验总体得到的，具体一些理解可能会有偏差，但以上几个方法是肯定正确的。</p>
+<p>最后加一个小tips：<br>如果要改变beamer模板中的itemsize符号，需要加<code>\setbeamertemplate{items}[符号]</code>;若是article环境，需加<code>\renewcommand{\labelitemi}{符号}</code>。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Latex</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>下划线用法</title>
+    <url>/2020/10/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E4%B8%8B%E5%88%92%E7%BA%BF%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjj8geqjr5j31700mo7gr.jpg" alt="image-20201009175708340"></p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Python</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>切片操作</title>
+    <url>/2018/06/03/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="python切片"><a href="#python切片" class="headerlink" title="python切片"></a>python切片</h2><p>切片复制属于较深拷贝，意思是如果拷贝的元素是可变对象，那么指的是同一段内存。如a = [1,2,3, [1,2,3]]中的a[3]，跟copy()方法一样，深拷贝是deepcopy()。</p>
+<h2 id="go切片"><a href="#go切片" class="headerlink" title="go切片"></a>go切片</h2><p>切片属于一段引用，即深拷贝，切片有长度和容量之分。切片中[:]尾数默认是长度，但是容量是指原来数组的长度,如果切片长度超出，容量还在的话，可以正常访问。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Python</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于python2的编码问题</title>
+    <url>/2020/10/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%85%B3%E4%BA%8Epython2%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h2><p>首先我们要弄明白Unicode这个概念，我以前一直理解有问题，以为是类似于ascii、utf-8的一种编码方式而已，然而我错了，可以看这篇文章：<a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">字符编码笔记：ASCII，Unicode 和 UTF-8</a>，总结一下就是：</p>
+<ul>
+<li>Unicode不是一种编码方式，而是定义了统一的字符集，包含了世界上的所有字符。它相当于维护了一个映射code point，一个二进制表示对应一个字符。虽然从这个理解上，也有点像是编码，毕竟也要用一个大概四个字节的二进制表示来表示一个字符，但还是要认为他只是一个字符集，而不是编码方式。</li>
+<li>UTF-8则是Unicode具体的一种编码实现方式，采用变长的字节来存储每个字符。</li>
+<li>任何字符都可以用unicode表示，然后用某种编码方式，例如utf-8、ascii、gbk等方式，存储为字节形式。</li>
+</ul>
+<h2 id="Python中的编码问题"><a href="#Python中的编码问题" class="headerlink" title="Python中的编码问题"></a>Python中的编码问题</h2><ul>
+<li>在python2里面，str类型是以某种编码方式存好的字节，unicode类型才是以无编码方式存储的。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'\xe4\xba\xba'</span>  <span class="comment"># 3个字节</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">u'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">u'\u4eba'</span> <span class="comment"># 1个中文字符, 2个字节</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>为了避免一系列蛋疼的编码问题，我们可以采用这种方式：</p>
+<ul>
+<li><p>文件头部指定默认编码方式，这样str类型默认是按照utf-8来编码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定python解释器的默认编码方式，这样中间有一些隐式的编解码转换，就不会出现蛋疼的问题了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Python</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>引用，浅拷贝和深拷贝</title>
+    <url>/2019/05/06/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%BC%95%E7%94%A8,%20%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>变量名是别名，没有开辟新的内存，指向同一块内存</p>
+<h3 id="浅拷贝："><a href="#浅拷贝：" class="headerlink" title="浅拷贝："></a>浅拷贝：</h3><p>一般出现在array-like对象中，如list等。</p>
+<p>虽然开辟了一块新的内存，但是对象中的每一个元素都是指向原对象的每个元素的地址。例如：</p>
+<p>a = [1,2,[1,2,3]]</p>
+<p>b =copy.copy(a)</p>
+<p>id(a[2]) == id(b[2])</p>
+<p>对于元素为不可变对象时，倒无所谓，如果元素为可变对象，那么a变b也变。</p>
+<p>切片就是浅拷贝！！</p>
+<h3 id="深拷贝："><a href="#深拷贝：" class="headerlink" title="深拷贝："></a>深拷贝：</h3><p>既开辟了新的内存，对象中的每个元素又都是数值的拷贝，而非地址。</p>
+<p>使用方式：copy.deepcopy()</p>
+<h2 id="神奇的pandas"><a href="#神奇的pandas" class="headerlink" title="神奇的pandas:"></a>神奇的pandas:</h2><p>﻿经过对pandas的一番探索，引用，切片，花式索引。。结论是：pandas的内存机制实在是有点复杂，真是摸不透。</p>
+<p>例如：a是一个dataframe, b = a.loc[:]，这个操作后a.loc[1]的地址都会变..太恐怖了</p>
+<p>所以还是总结一下，平时用的比较多的操作：</p>
+<p>对于切片处理，如b = a.loc[:]，如果修改b.loc[<em>,</em>]的值，a也会变，如果b经过一些其他的操作，如sort_values等之后，b又变成了一个单独的内存空间。</p>
+<p>对于花式索引，如b = a[a[‘<em>‘] &gt; </em>]，修改b.loc[<em>,</em>]的值，a不会变。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Python</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Linux Shell多进程并发以及并发数控制</title>
     <url>/2018/11/05/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/Shell%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%B9%B6%E5%8F%91%E4%BB%A5%E5%8F%8A%E5%B9%B6%E5%8F%91%E6%95%B0%E6%8E%A7%E5%88%B6/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>利用命名管道：和文件描述符绑定，利用FIFO，数据滞留的特性，控制并发数。</p>
@@ -2660,11 +2816,25 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>shell的变量</title>
-    <url>/2019/07/02/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/shell%E7%9A%84%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><p>只在函数内定义的变量，如果不加local关键词，其实还是一个全局变量(函数外能够访问)</p>
-<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>在当前shell内定义的变量，其他shell不能访问</p>
-<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>用export定义，在当前shell的子shell中可以传递，传子不传父。</p>
+    <title>shell变量中的反斜杠</title>
+    <url>/2018/05/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/shell%E5%8F%98%E9%87%8F%E4%B8%AD%E7%9A%84%E5%8F%8D%E6%96%9C%E6%9D%A0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li><p>变量最好用双引号引起来，可以解析里面的变量和命令</p>
+</li>
+<li><p>用单引号引起来的变量是硬转义</p>
+</li>
+<li>echo -E “” 无转义，echo -e “”有转义</li>
+<li>对于\，在命令行本身就代表了换行继续的意思，多以无论-E 还 -e，\本身就自带转义。</li>
+</ul>
+<p>因此，对于多个\先要默认对多个\转义，并且转义时按照两两消除的方式，然后再按命令参数执行命令。</p>
+<p>例如，</p>
+<p>“\...\“，假设为x个\，若x为偶数，则解析为x/2个\，若x为奇数，则最后一个\生效，另起换行。</p>
+<p>此时，如果再执行echo -e，也就是再次转义，那么就是在之前的基础上，再次两两消除转义。</p>
+<p>举例：</p>
+<p>echo -e “\\\”  : 换行继续</p>
+<p>echo  -E “\\n” : \n</p>
+<p>echo -e “\\n”  : \n</p>
+<p>echo -e “\\\n” : \ 换行</p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2702,32 +2872,6 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>shell变量中的反斜杠</title>
-    <url>/2018/05/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/shell%E5%8F%98%E9%87%8F%E4%B8%AD%E7%9A%84%E5%8F%8D%E6%96%9C%E6%9D%A0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li><p>变量最好用双引号引起来，可以解析里面的变量和命令</p>
-</li>
-<li><p>用单引号引起来的变量是硬转义</p>
-</li>
-<li>echo -E “” 无转义，echo -e “”有转义</li>
-<li>对于\，在命令行本身就代表了换行继续的意思，多以无论-E 还 -e，\本身就自带转义。</li>
-</ul>
-<p>因此，对于多个\先要默认对多个\转义，并且转义时按照两两消除的方式，然后再按命令参数执行命令。</p>
-<p>例如，</p>
-<p>“\...\“，假设为x个\，若x为偶数，则解析为x/2个\，若x为奇数，则最后一个\生效，另起换行。</p>
-<p>此时，如果再执行echo -e，也就是再次转义，那么就是在之前的基础上，再次两两消除转义。</p>
-<p>举例：</p>
-<p>echo -e “\\\”  : 换行继续</p>
-<p>echo  -E “\\n” : \n</p>
-<p>echo -e “\\n”  : \n</p>
-<p>echo -e “\\\n” : \ 换行</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Shell</category>
-      </categories>
-  </entry>
-  <entry>
     <title>sudo与su</title>
     <url>/2019/02/15/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/sudo%E4%B8%8Esu/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>sudo -u user单纯以某用户身份运行命令，并不切换环境，需要输入当前用户密码，。sudo的各类权限在/etc/sudoers配置</p>
@@ -2739,72 +2883,11 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>关于python2的编码问题</title>
-    <url>/2020/10/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%85%B3%E4%BA%8Epython2%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h2><p>首先我们要弄明白Unicode这个概念，我以前一直理解有问题，以为是类似于ascii、utf-8的一种编码方式而已，然而我错了，可以看这篇文章：<a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">字符编码笔记：ASCII，Unicode 和 UTF-8</a>，总结一下就是：</p>
-<ul>
-<li>Unicode不是一种编码方式，而是定义了统一的字符集，包含了世界上的所有字符。它相当于维护了一个映射code point，一个二进制表示对应一个字符。虽然从这个理解上，也有点像是编码，毕竟也要用一个大概四个字节的二进制表示来表示一个字符，但还是要认为他只是一个字符集，而不是编码方式。</li>
-<li>UTF-8则是Unicode具体的一种编码实现方式，采用变长的字节来存储每个字符。</li>
-<li>任何字符都可以用unicode表示，然后用某种编码方式，例如utf-8、ascii、gbk等方式，存储为字节形式。</li>
-</ul>
-<h2 id="Python中的编码问题"><a href="#Python中的编码问题" class="headerlink" title="Python中的编码问题"></a>Python中的编码问题</h2><ul>
-<li>在python2里面，str类型是以某种编码方式存好的字节，unicode类型才是以无编码方式存储的。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'\xe4\xba\xba'</span>  <span class="comment"># 3个字节</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">u'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">u'\u4eba'</span> <span class="comment"># 1个中文字符, 2个字节</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>为了避免一系列蛋疼的编码问题，我们可以采用这种方式：</p>
-<ul>
-<li><p>文件头部指定默认编码方式，这样str类型默认是按照utf-8来编码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>指定python解释器的默认编码方式，这样中间有一些隐式的编解码转换，就不会出现蛋疼的问题了</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Python</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>POJO、JavaBean和SpringBean</title>
-    <url>/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/POJO%E3%80%81JavaBean%E5%92%8CSpringBean/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h2><p>普通JAVA类，专指只有setter / getter / toString的简单类，包括DO/DTO/BO/VO等。</p>
-<p>POJO是一个简单的、普通Java对象，特点是有private的属性和public的getter、setter，除此之外不具有任何特殊角色，不继承或不实现任何其它Java框架的类或接口。 </p>
-<h2 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h2><p><strong>为了方便开发，约定的一种java类的规范！</strong>，</p>
-<ul>
-<li>所有属性为private。</li>
-<li>这个类必须具有一个公共的(public)无参构造函数</li>
-<li>private属性必须提供public的getter和setter来给外部访问，并且方法的命名也必须遵循一定的命名规范。 。</li>
-<li>这个类应是可序列化的，要实现serializable接口。</li>
-</ul>
-<p>没有其他业务逻辑的javaBean,就是一个POJO</p>
-<h2 id="SpringBean"><a href="#SpringBean" class="headerlink" title="SpringBean"></a>SpringBean</h2><p>SpringBean是受Spring管理的对象。所有能受Spring容器管理的对象，都可以成为SpringBean。</p>
-<p>Spring容器对Bean没有特殊要求，不像JavaBean 一样遵循一些规范（不过对于通过设值方法注入的Bean,一定要提供setter 方法。）</p>
-<p>传统的的Javabean，如果我们要创建一个 Bean，我们就要使用关键字 New。<br>但是，在 Spring 中，Bean 的创建是由 Spring 容器进行的，也就是说，在 Spring 中使用 Bean 的时候，不是由关键字 New 来创建实例了, 由Spring容器管理其生命周期行为，</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于nuhup与&amp;</title>
-    <url>/2018/11/02/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/%E5%85%B3%E4%BA%8Enuhup%E4%B8%8E&amp;/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://www.jianshu.com/p/747e0d5021a2" target="_blank" rel="noopener">https://www.jianshu.com/p/747e0d5021a2</a></p>
-<ul>
-<li><p>如果后台&amp;开了多个子进程，关闭父进程，子进程变成孤儿进程，继续运行。</p>
-</li>
-<li><p>如果后台&amp;开了多个子进程，关闭终端，进程全部结束。</p>
-</li>
-<li><p>如果后台&amp;开了多个字进程，但是用了nohup，关闭终端，子进程继续运行。</p>
-</li>
-<li><p>如果后台&amp;开了多个子进程，先关闭父进程，再关闭终端，子进程继续运行，子进程变成孤儿进程，父进程变了。</p>
-</li>
-</ul>
+    <title>shell的变量</title>
+    <url>/2019/07/02/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/shell%E7%9A%84%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><p>只在函数内定义的变量，如果不加local关键词，其实还是一个全局变量(函数外能够访问)</p>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>在当前shell内定义的变量，其他shell不能访问</p>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>用export定义，在当前shell的子shell中可以传递，传子不传父。</p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2851,6 +2934,26 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
+    <title>关于nuhup与&amp;</title>
+    <url>/2018/11/02/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Shell/%E5%85%B3%E4%BA%8Enuhup%E4%B8%8E&amp;/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://www.jianshu.com/p/747e0d5021a2" target="_blank" rel="noopener">https://www.jianshu.com/p/747e0d5021a2</a></p>
+<ul>
+<li><p>如果后台&amp;开了多个子进程，关闭父进程，子进程变成孤儿进程，继续运行。</p>
+</li>
+<li><p>如果后台&amp;开了多个子进程，关闭终端，进程全部结束。</p>
+</li>
+<li><p>如果后台&amp;开了多个字进程，但是用了nohup，关闭终端，子进程继续运行。</p>
+</li>
+<li><p>如果后台&amp;开了多个子进程，先关闭父进程，再关闭终端，子进程继续运行，子进程变成孤儿进程，父进程变了。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Shell</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Vim自动补全神器-YouCompleteMe</title>
     <url>/2017/06/12/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Vim/Vim%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8%E7%A5%9E%E5%99%A8/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h1><p>Ubuntu自带的vim是vim.tiny版本，很多功能都不全，所以我们需要装一个完整版的，并且我习惯装一个gvim,<code>sudo apt-get install vim-gtk</code>。 有意思的是，我发现<code>apt-get</code>下面有一个叫<code>vim+youcompleteme</code>的版本，我就好奇得装了一下，结果打开vim发现并没有补全功能，但是却装了<code>ruby，nodejs,ycmd</code>等几个软件，<code>ycmd</code>应该就是补全软件，然而不知道该怎么在vim里使用…所以最终我还是按照github上的说明手动装了<code>youcompleteme</code>,这部分留到后文说。</p>
@@ -2883,48 +2986,41 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>切片操作</title>
-    <url>/2018/06/03/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="python切片"><a href="#python切片" class="headerlink" title="python切片"></a>python切片</h2><p>切片复制属于较深拷贝，意思是如果拷贝的元素是可变对象，那么指的是同一段内存。如a = [1,2,3, [1,2,3]]中的a[3]，跟copy()方法一样，深拷贝是deepcopy()。</p>
-<h2 id="go切片"><a href="#go切片" class="headerlink" title="go切片"></a>go切片</h2><p>切片属于一段引用，即深拷贝，切片有长度和容量之分。切片中[:]尾数默认是长度，但是容量是指原来数组的长度,如果切片长度超出，容量还在的话，可以正常访问。</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Python</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Spark学习笔记</title>
-    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Kafka/Kafka%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是一个分布式的日志系统，是实时任务依赖的主流数据源。注意，数据本身同样是存储在hdfs上的。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg" alt="image-20201110211236165" style="zoom:50%;"></p>
-<p>1、话题（Topic）：是特定类型的消息流。消息是字节的有效负载（Payload），话题是消息的分类名或种子（Feed）名；</p>
-<p>2、生产者（Producer）：是能够发布消息到话题的任何对象；</p>
-<p>3、服务代理（Broker）：一个broker就是一台机器，多台broker组成集群。</p>
-<p>4、消费者（Consumer）：可以订阅一个或多个话题，并从Broker拉数据，从而消费这些已发布的消息；</p>
-<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>理解存储最主要是理解partition的概念。其实Apache体系里partition的概念都比较类似（比如spark中的partition），都是将数据进行分片，一般分片的逻辑就比如是按照key值来划分，同一个key值分到同一个partition。</p>
-<p>Kafka里也是将topic数据进行partition，当然每个partition的数据还是按照顺序写入的，然后将parition分配到不同broker上，partition数目一般设置成broker的倍数，这样能够让每个broker的partition均匀一点。</p>
-<p>kafka的partition还会备份，leader作为主要的，follower partition放在其他broker上。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg" alt="image-20201110212007002" style="zoom:50%;"> </p>
-<p>具体存储的日志文件形式是这样的：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg" alt="image-20201110212109581" style="zoom:50%;"></p>
+    <title>多进程，多线程以及spark的executor等概念</title>
+    <url>/2018/11/07/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A5%E5%8F%8Aspark%E7%9A%84executor%E7%AD%89%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在spark中，</p>
 <ul>
-<li><p>每个topic下的partition都有一个文件夹。文件夹中的文件类型有.log数据文件，.index偏移量索引文件和.timeindex时间索引文件。</p>
-</li>
-<li><p>日志文件会被分为多个LogSegment文件，一般分段文件是1G。文件名字按照基准偏移量命名。</p>
-</li>
+<li>worker就是集群里可执行的机器，一个worker可以有多个executor。</li>
+<li>一个executor就是CPU，一个CPU可以有多个核。</li>
+<li>一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。</li>
 </ul>
-<p>介绍下具体的三个文件：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg" alt="image-20201110212424025" style="zoom:50%;"></p>
+<p>关于CPU和核：</p>
 <ul>
-<li>log文件：真实的日志数据文件，存放消息payload</li>
-<li>index文件：偏移量索引文件，重要的稀疏索引文件。因为如果直接去log文件里顺序查找的话，效率太低。所以现在index文件里做粗筛，定位到大致范围，然后再去log文件里找，大大提升了效率。</li>
-<li>timeindex文件：时间戳索引文件的时间戳类型与日志数据文件中的时间类型是一致的，索引条目中的时间戳值及偏移量与日志数据文件中对应的字段值相同，Kafka也提供了通过时间戳索引来访问消息的方法。</li>
+<li>CPU有单核CPU和多核CPU。</li>
+<li>一般来讲几个物理核就是几个线程，但是通过超线程技术，一个物理核可以分成多个虚拟核，从而使得一个核可以有多个线程。但是，一个核同时只能执行一个线程。</li>
+<li>并发：多个线程在单个核心运行，同一时间一个线程运行，系统不停切换线程，看起来像同时运行，实际上是线程不停切换。</li>
+<li>并行：多个线程在多个核心运行，线程同时运行。</li>
+<li>串行和并发的区别：虽然都是同时运行一个线程，但是串行就只能一个一个线程串行处理，就是一个结束了再起另一个线程，而并发本质上还是可以处理多个线程。</li>
 </ul>
+<p>选择多个单核CPU和单个多核CPU？</p>
+<ul>
+<li>多核CPU共享数据是通过CPU内部的总线，多个单核CPU共享数据是通过主板的总线，通信开销更大。</li>
+<li>多核CPU只需要一套芯片组，一套存储，而多个单核CPU，每一个CPU都需要有较为独立的电路支持，有自己的Cache。如果要多个耗内存的大型程序，还是需要多个单核CPU。</li>
+</ul>
+<p>多进程和多线程：</p>
+<ul>
+<li>进程是分配资源(包括了CPU、内存、磁盘IO等)的最小单位，线程是CPU分配和调度的单位。一个进程是由多个线程组成的。其实我理解无论线程和进程都是要分配资源的，但是进程涉及的资源分配更多，而线程只涉及CPU里的资源分配，进程更加宏观，线程更加精细。</li>
+<li>同一个进程内的多线程是共享资源的，因此数据共享非常方便，占用内存少，切换速度快，CPU利用率高，但是缺点就是编程较为复杂，涉及到锁之类的，同时一个线程挂导致整个进程挂，鲁棒性比较差。</li>
+<li>进程之间的通信是通过管道，信号之类的，数据要共享的话涉及到共享内存，比较复杂，同时占用内存多，切换复杂，CPU利用率低，但优点就是变成简单，且进程间不受影响，鲁棒性高。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhf5zn73gj30sm0ajq97.jpg" alt="image-20200605145655675"></p>
 ]]></content>
       <categories>
         <category>大数据</category>
-        <category>Kafka</category>
+        <category>Spark</category>
       </categories>
+      <tags>
+        <tag>并发</tag>
+      </tags>
   </entry>
 </search>
