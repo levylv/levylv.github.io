@@ -45,4 +45,8 @@ categories: [编程开发,Python]
     sys.setdefaultencoding('utf-8')
     ```
 
-    
+
+
+
+很好的几个资料：[Byte(字节) 与 Bytearray(二进制数组)](https://www.cnblogs.com/zh605929205/articles/7268840.html), [编码：字符串和二进制](https://hexilee.me/2018/09/21/coding/)
+
