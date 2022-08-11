@@ -289,265 +289,6 @@
       </categories>
   </entry>
   <entry>
-    <title>《推荐系统实战》笔记</title>
-    <url>/2020/07/22/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>最近看了项亮老师的《推荐系统实践》，做了相关的心得和笔记。</p>
-<h3 id="一、推荐系统指标"><a href="#一、推荐系统指标" class="headerlink" title="一、推荐系统指标"></a>一、推荐系统指标</h3><ul>
-<li>用户满意度：调查问卷等方式，也可以通过线上其他指标来衡量</li>
-<li>预测准确度：<ul>
-<li>评分预测：RMSE,MAE</li>
-<li>TopN推荐：准确率和召回率</li>
-</ul>
-</li>
-<li>覆盖率：物品流行度之间的差异，指标如熵、基尼系数</li>
-<li>多样性：物品之间的相似性低，多样性高</li>
-<li>新颖性：一般来讲，物品平均流行度低，新颖性高<ul>
-<li>如何在不牺牲精度的情况下提高多样性和新颖性？</li>
-</ul>
-</li>
-<li>惊喜度：与用户历史兴趣不同，但会让用户喜欢</li>
-<li>信任度</li>
-<li>实时性</li>
-<li>健壮性</li>
-<li>商业目标</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh03jbvuuzj31eo0ga76x.jpg" alt="image-20200722220000325" style="zoom:50%;"></p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh03j7ho93j31dr0du78g.jpg" alt="image-20200722220010615" style="zoom:45%;"></p>
-<h3 id="二、基于用户行为分析的推荐算法"><a href="#二、基于用户行为分析的推荐算法" class="headerlink" title="二、基于用户行为分析的推荐算法"></a>二、基于用户行为分析的推荐算法</h3><p>仅仅基于用户行为数据设计的推荐算法一般称为协同过滤算法，学术界对协同过滤算法 进行了深入研究，提出了很多方法，比如基于邻域的方法(neighborhood-based)、隐语义模型(latent factor model)、基于图的随机游走算法(random walk on graph)等。最终目的都是生成用户和物品之间的兴趣度。</p>
-<h4 id="基于领域的算法"><a href="#基于领域的算法" class="headerlink" title="基于领域的算法"></a>基于领域的算法</h4><p>统计方法：</p>
-<ul>
-<li>UserCF</li>
-<li>ItemCF</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0o54pwxuj31dt0oz13l.jpg" alt="image-20200723095329692" style="zoom:50%;"></p>
-<h4 id="隐语义模型-Latent-Factor-Model"><a href="#隐语义模型-Latent-Factor-Model" class="headerlink" title="隐语义模型(Latent Factor Model)"></a>隐语义模型(Latent Factor Model)</h4><p>其实本质上就是训练得到用户的隐向量和物品的隐向量(Embedding的感觉)，然后再类似CTR预估。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0o87nop6j30x40420tb.jpg" alt="image-20200723095628676" style="zoom:50%;"></p>
-<ul>
-<li>机器学习过程</li>
-<li>离线空间复杂度较低，时间复杂度较高</li>
-<li>实时性差，预测时候需要全量CTR预估再排序</li>
-<li>解释性差</li>
-</ul>
-<h4 id="基于图模型"><a href="#基于图模型" class="headerlink" title="基于图模型"></a>基于图模型</h4><ul>
-<li>生成用户与物品的图，计算顶点之间的相似度</li>
-<li>PersonalRank，随机游走，类似马尔科夫过程，对于每个用户节点，生成所有节点访问概率，根据物品节点的概率生成推荐列表</li>
-</ul>
-<h3 id="三、冷启动问题"><a href="#三、冷启动问题" class="headerlink" title="三、冷启动问题"></a>三、冷启动问题</h3><p>主要分为三种问题：</p>
-<ul>
-<li>新用户冷启动</li>
-<li>新物品冷启动</li>
-<li>系统冷启动</li>
-</ul>
-<h4 id="针对新用户的冷启动"><a href="#针对新用户的冷启动" class="headerlink" title="针对新用户的冷启动"></a>针对新用户的冷启动</h4><ul>
-<li><p>非个性化的热门推荐</p>
-</li>
-<li><p>利用用户的注册信息，例如年龄、性别等，做粗粒度的推荐。</p>
-<ul>
-<li>相当于只利用用户的注册信息等特征做CTR预估。</li>
-</ul>
-</li>
-<li><p>要求用户注册填写感兴趣的领域。</p>
-<ul>
-<li>关键是如何选取有代表性、有区分度的领域。</li>
-<li>算法：做一颗决策树，选取分裂节点时，选取方差最大的物品</li>
-</ul>
-</li>
-<li><p>利用用户的社交网络，比如社交网络的好友推荐等，或者是外部网站的用户信息</p>
-</li>
-</ul>
-<h4 id="针对新物品的冷启动"><a href="#针对新物品的冷启动" class="headerlink" title="针对新物品的冷启动"></a>针对新物品的冷启动</h4><ul>
-<li>利用物品的自身内容，找计算物品相似度。<ul>
-<li>可能会用到文本模型，例如LSI -&gt;PLSI -&gt; LDA(目前主要是这个)等，来生成物品向量，并计算相似度</li>
-</ul>
-</li>
-<li>专家标注</li>
-</ul>
-<h3 id="四、利用用户标签数据的推荐算法"><a href="#四、利用用户标签数据的推荐算法" class="headerlink" title="四、利用用户标签数据的推荐算法"></a>四、利用用户标签数据的推荐算法</h3><p>标签相当于用户和物品之间的媒介(有点类似topic的感觉)，基于标签的推荐更加有解释性。</p>
-<ul>
-<li><p>基于标签的物品推荐算法：</p>
-<ul>
-<li><p>简单来讲，就是将标签作为一个隐向量来计算用户和物品的兴趣：</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0z5r4279j30dq039t8t.jpg" alt="image-20200723161433032" style="zoom:50%;"></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>带上热门标签和热门物品的惩罚项：</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0z69qftej30o7053wez.jpg" alt="image-20200723161512422" style="zoom:50%;"></p>
-<ul>
-<li><p>标签拓展</p>
-<ul>
-<li>有些物品标签很少，这时候可以拓展标签，寻找相似标签。类似于itemCF的标签相似度计算方法</li>
-</ul>
-</li>
-<li><p>标签清理</p>
-<ul>
-<li>如果我们要把标签呈现给用户，将其 作为给用户推荐某一个物品的解释，对标签的质量要求就很高。首先，这些标签不能包含没有意 义的停止词或者表示情绪的词。</li>
-</ul>
-</li>
-<li><p>基于图的标签推荐算法</p>
-<ul>
-<li><p>利用标签作为中间层，类似于一个栅栏图。然后利用personalRank等计算节点相关性。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0z8o963xj30py0jmag7.jpg" alt="image-20200723161730568" style="zoom:50%;"></p>
-</li>
-</ul>
-</li>
-<li><p>推荐打标签算法</p>
-<ul>
-<li>用户写标签的时候给他做推荐，很多算法：用户最常打标签，该物品最热门标签等</li>
-</ul>
-</li>
-</ul>
-<h3 id="五、利用上下文信息的推荐算法"><a href="#五、利用上下文信息的推荐算法" class="headerlink" title="五、利用上下文信息的推荐算法"></a>五、利用上下文信息的推荐算法</h3><p>上下文信息对用户兴趣的影响是很大的，主要代表是时间上下文和地点上下文。</p>
-<h4 id="引入时间上下文"><a href="#引入时间上下文" class="headerlink" title="引入时间上下文"></a>引入时间上下文</h4><ul>
-<li><p>可以通过统计发现，时间对对于物品流行度的影响。</p>
-</li>
-<li><p>推荐系统的时间多样性是很重要的(每天都有不同的推荐结果)，会影响用户满意度。</p>
-</li>
-<li><p>如何将时间上下文引入推荐系统？几个算法：</p>
-<ul>
-<li><p>TItemCF: 在计算物品相似度，预测用户和物品相似度时，引入时间衰减：</p>
-</li>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1119daluj30jd04w0t6.jpg" alt="image-20200723171933421" style="zoom:50%;"></p>
-</li>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1eo7c6j30ly04edg4.jpg" alt="image-20200723171951909" style="zoom:50%;"></p>
-</li>
-<li><p>TUserCF: 也是同理：</p>
-</li>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh112rl1ulj30f705uwev.jpg" alt="image-20200723172101864" style="zoom:50%;"></p>
-</li>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh112z8zs2j30hk044glu.jpg" alt="image-20200723172115518" style="zoom:50%;"></p>
-</li>
-<li><p>图模型：引入了时间段图模型，添加和时间有关的节点，然后再计算相关度，如果时间节点权重为0，就是普通的图。</p>
-</li>
-<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh114g1d01j30jn0hjwi3.jpg" alt="image-20200723172237557" style="zoom:50%;"></p>
-</li>
-<li><p>我自己检索了下如何在CTR预估模型里引入时间上下文。阿里有个Paper， DSTN，核心思想是在特征里引入上下文广告特征，这类似得引入了时空特征。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="引入地点上下文"><a href="#引入地点上下文" class="headerlink" title="引入地点上下文"></a>引入地点上下文</h4><p>介绍LARS算法，简单介绍一下：</p>
-<ul>
-<li><p>对于有用户位置的数据，基于兴趣的本地性，按照不同区域划分数据集，做不同层的推荐，然后按照权重，将推荐列表线性相加：</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh117zdp49j30nk0fgta3.jpg" alt="image-20200723172604197" style="zoom:50%;"></p>
-</li>
-<li><p>对于有物品位置的数据，在最后的兴趣得分中添加惩罚项，当前物品与用户历史物品的平均位置的距离差。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1dzur4j30n20210sz.jpg" alt="image-20200723172749452" style="zoom:50%;"></p>
-</li>
-</ul>
-<h3 id="六、利用社交网络数据的推荐算法"><a href="#六、利用社交网络数据的推荐算法" class="headerlink" title="六、利用社交网络数据的推荐算法"></a>六、利用社交网络数据的推荐算法</h3><h4 id="基于社交网络的推荐"><a href="#基于社交网络的推荐" class="headerlink" title="基于社交网络的推荐"></a>基于社交网络的推荐</h4><ul>
-<li>好友推荐增加推荐的新任务：基于社交网络的推荐不一定提升离线实验的指标，重在提升用户的信任度和可解释性。</li>
-<li>可以解决新用户的冷启动问题，如前文所说</li>
-</ul>
-<p>相关算法：</p>
-<ul>
-<li><p>基于领域的社会化推荐算法</p>
-<ul>
-<li>其实就是类似于UserCF，只是计算用户相似度的时候，不仅考虑用户兴趣相似度(通过用户历史行为)，还通过社交网络考虑用户好友相似度：</li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1fknqlj309602vmx6.jpg" alt="image-20200723183158908" style="zoom:50%;"></li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh134ues59j30gy0460t4.jpg" alt="image-20200723183214171" style="zoom:50%;"></li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh134yzzlcj30ge03mwet.jpg" alt="image-20200723183223785" style="zoom:50%;"></li>
-</ul>
-</li>
-<li><p>基于图的社会化推荐算法</p>
-<ul>
-<li>就是通过社交网络增加用户与用户的边，同样可以再用personalRank。</li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1361tvxfj30eg0g4mzj.jpg" alt="image-20200723183323298" style="zoom:50%;"></li>
-</ul>
-</li>
-</ul>
-<h4 id="实际系统中的社会化推荐算法"><a href="#实际系统中的社会化推荐算法" class="headerlink" title="实际系统中的社会化推荐算法"></a>实际系统中的社会化推荐算法</h4><p>因为用户数太多，如果给用户推荐的时候，去计算所有用户的话，代价太大，两种方法：</p>
-<ul>
-<li>只取相似度高的N个用户</li>
-<li>设计一种特殊的数据存储结构：每个用户维护一个消息队列，其他相关用户产生一个物品行为，则在消息队列中添加该物品。这样的话，推荐计算的时候，只需读取自身的消息队列，然后通过队列里物品的相关信息来算即可。</li>
-</ul>
-<h4 id="社交网络好友推荐"><a href="#社交网络好友推荐" class="headerlink" title="社交网络好友推荐"></a>社交网络好友推荐</h4><p>其实就是计算用户与用户之间的相似度，还是可以通过兴趣相似度和好友相似度来做。</p>
-<h3 id="七、推荐系统实例"><a href="#七、推荐系统实例" class="headerlink" title="七、推荐系统实例"></a>七、推荐系统实例</h3><p>一个真实的推荐网站有三部分组成：</p>
-<ul>
-<li><p>推荐系统</p>
-</li>
-<li><p>前端页面：需要展示推荐物品的相关信息，推荐理由，用户反馈设计</p>
-</li>
-<li><p>日志系统：不同的用户行为，有不同的规模大小和实时性需求，可能需要不同的数据存储结构</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1706abmtj312i0dkjtt.jpg" alt="image-20200723204606329" style="zoom:50%;"></p>
-</li>
-</ul>
-<p>一个推荐系统的组成：</p>
-<ul>
-<li>由不同的推荐引擎构成，来处理不同的推荐任务，比如个性化推荐、新颖性推荐、最新物品推荐等等</li>
-<li>由推荐系统再过滤、排名、解释等汇总组合各个推荐引擎结果。</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1728ehxcj31ec0gxae3.jpg" alt="image-20200723204806073" style="zoom:50%;"></p>
-<p>一个推荐引擎的架构，主要三部分：</p>
-<ul>
-<li>用户特征提取模块</li>
-<li>特征-物品推荐模块：也俗称召回模块，就是本书介绍的算法模型。</li>
-<li>对初始的推荐列表进行过滤、排名等处理，从而生成最终的推荐结果。排名模块里涉及到了CTR预估模型，也俗称精排模块。</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1746mn2fj31560sogrz.jpg" alt="image-20200723204959419" style="zoom:50%;"></p>
-<p>重点聊下排名模块：</p>
-<ul>
-<li>这个终于让我知道了CTR预估模型在推荐系统里的作用！<strong>之前一直以为CTR预估模型也是类似CF等算法，但其实不是，CTR预估模型是针对推荐结果的精排</strong>，想想也是，只有推荐结果的点击才有真实的正负样本可以来训练！前面的召回模型哪来的负样本呢..用户没购买，并不意味这不喜欢物品啊。<strong>同时CTR预估模型也是计算广告系统非常重要的模型！CTR值直接影响了预算收益等。</strong></li>
-<li>排名模块包含很多：<ul>
-<li>新颖性排名：通过基于物品流行度来降低热门物品的权重</li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh17af7pglj30fm03xmxc.jpg" alt="image-20200723205559196" style="zoom:50%;"></li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1f5awnj30vs03gaaj.jpg" alt="image-20200723205611181" style="zoom:50%;"></li>
-<li>多样性排名：1. 对物品按内容分类，不同类目分别取物品 2. 对相同推荐理由的物品进行降权采样</li>
-<li>时间多样性：对于之前推荐过的物品进行降权采样</li>
-<li>用户反馈：排名模块最重要的部分。通过用户反馈拿到正负样本，用CTR预估模型，特征有：</li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh17dapx4hj31bz0agafm.jpg" alt="image-20200723205845435" style="zoom:50%;"></li>
-</ul>
-</li>
-</ul>
-<h3 id="八、评分预测问题"><a href="#八、评分预测问题" class="headerlink" title="八、评分预测问题"></a>八、评分预测问题</h3><p>评分预测算法介绍：离线评测指标RMSE/MAE</p>
-<ul>
-<li>平均值相关</li>
-<li>基于领域的方法，就类似UserCF，只是把r=1换成得分：<ul>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh18ruzpaqj30hm04smxk.jpg" alt="image-20200723214719938" style="zoom:50%;"></li>
-</ul>
-</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh18s7twz3j30ji04pq3d.jpg" alt="image-20200723214741412" style="zoom:50%;"></p>
-<ul>
-<li>隐语义模型与矩阵分解模型：<ul>
-<li>SVD分解，取top k，再进行SVD计算，得到评分矩阵。缺点：SVD用户和物品的维度太大高，计算量太大</li>
-<li>LFM，通过梯度下降求解SVD的隐向量，换发新春。</li>
-</ul>
-</li>
-<li>加入时间信息<ul>
-<li>基于邻域的模型融合时间信息：同之前TItemCF，TUserCF</li>
-<li>基于矩阵分解的模型融合时间信息: 加入时间项</li>
-<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1atyz1gyj30vf02ewet.jpg" alt="image-20200723225835221" style="zoom:50%;"></li>
-</ul>
-</li>
-<li>模型融合：<ul>
-<li>模型级联融合：同adaboost</li>
-<li>模型加权融合：同stacking</li>
-</ul>
-</li>
-</ul>
-<h3 id="结语：推荐系统十堂课"><a href="#结语：推荐系统十堂课" class="headerlink" title="结语：推荐系统十堂课"></a>结语：推荐系统十堂课</h3><ol>
-<li>确定你真的需要推荐系统</li>
-<li>确定商业目标和用户满意度之间的关系</li>
-<li>选择合适的开发人员</li>
-<li>忘记冷启动的问题</li>
-<li>平衡数据和算法之间的关系</li>
-<li>找到相关的物品很容易</li>
-<li>不要浪费时间计算相似兴趣的用户，可以直接利用社会网络数据</li>
-<li>需要不断地提升算法的扩展性</li>
-<li>选择合适的用户反馈方式</li>
-<li>设计合理的评测系统，时刻关注推荐系统各方面的性能</li>
-</ol>
-]]></content>
-      <categories>
-        <category>推荐系统</category>
-      </categories>
-      <tags>
-        <tag>《推荐系统实战》</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于凸、P和NP</title>
     <url>/2019/08/27/%E6%95%B0%E5%AD%A6/%E5%85%B3%E4%BA%8E%E5%87%B8%E3%80%81P%E5%92%8CNP/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
@@ -1105,17 +846,6 @@ g(z) =
       </categories>
       <tags>
         <tag>word2vec</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ML2020笔记-Transformer</title>
-    <url>/2020/04/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-Transformer/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>李宏毅-ML2020</tag>
       </tags>
   </entry>
   <entry>
@@ -3130,6 +2860,555 @@ dia-normal &quot;$@&quot;
       <categories>
         <category>编程开发</category>
         <category>C++</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Online Learning中的优化器</title>
+    <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/Online%20Learning%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E5%99%A8/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天详细看了下推荐广告系统的online_learning，顾名思义，online_learning就是在线输入样本，更新模型，尽可能做到分钟级/小时级的模型更新，其实关键就是几个问题：</p>
+<ul>
+<li>模型怎么学习？</li>
+<li>怎么降低模型复杂度，保证inference的低延时？</li>
+</ul>
+<p>参考博文 : <a href="https://liam.page/2019/08/31/a-not-so-simple-introduction-to-FTRL/" target="_blank" rel="noopener">FTRL 不太简短之介绍</a></p>
+<h3 id="模型怎么学习？"><a href="#模型怎么学习？" class="headerlink" title="模型怎么学习？"></a>模型怎么学习？</h3><p>这个其实很简单，其实要求我们可以基于在线输入的样本，进行权重参数更新，基于类似随机梯度SGD的思想即可。</p>
+<h3 id="怎么降低模性复杂度，也就是稀疏特征？"><a href="#怎么降低模性复杂度，也就是稀疏特征？" class="headerlink" title="怎么降低模性复杂度，也就是稀疏特征？"></a>怎么降低模性复杂度，也就是稀疏特征？</h3><p>答案自然是L1正则。但是问题来了，如果用SGD，我们很难保证L1正则的效果-即得到稀疏解。理由是：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rtgsdh5j20y40u0aep.jpg" alt="image-20201027185248600" style="zoom: 50%;"></p>
+<p>即使全局梯度满足L1正则的稀疏条件，但是随机梯度下降因为其随机性，无法保证每次都能满足稀疏条件，所以即使用L1正则，还是难以得到稀疏特征。</p>
+<h4 id="替代SGD的方法"><a href="#替代SGD的方法" class="headerlink" title="替代SGD的方法"></a>替代SGD的方法</h4><p>总体而言，其实就是两个步骤：</p>
+<ul>
+<li>先按照次梯度更新权重（为什么是次梯度？因为L1正则在x=0的地方不可导！所以是次梯度）</li>
+<li>然后对梯度进行投影</li>
+</ul>
+<h5 id="简单截断法"><a href="#简单截断法" class="headerlink" title="简单截断法"></a>简单截断法</h5><p>投影方法，就是直接设阈值，对梯度进行截断：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rtta91fj21b00cg75k.jpg" alt="image-20201027185706752" style="zoom:40%;"></p>
+<h5 id="Truncated-Gradient"><a href="#Truncated-Gradient" class="headerlink" title="Truncated Gradient"></a>Truncated Gradient</h5><p>投影方法，就是分段截断：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rtz1wgcj21a40eiq4j.jpg" alt="image-20201027185754986" style="zoom:40%;"></p>
+<p>上面两种方法的图解：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51ru20h2vj20yu0ce0t3.jpg" alt="image-20201027185838385" style="zoom:40%;"></p>
+<h5 id="FOBOS"><a href="#FOBOS" class="headerlink" title="FOBOS"></a>FOBOS</h5><p>投影方法，就是求最优化闭式解。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51ruavat6j21au0bsdh1.jpg" alt="image-20201027185919933" style="zoom:40%;"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rudmiu2j213k0agt9v.jpg" alt="image-20201027190101940" style="zoom:40%;"></p>
+<h5 id="RDA-Regularized-Dual-Averaging"><a href="#RDA-Regularized-Dual-Averaging" class="headerlink" title="RDA (Regularized Dual Averaging)"></a>RDA (Regularized Dual Averaging)</h5><p>改进在于，利用前面t次累加的梯度。和 FOBOS 及之前的截断方法比较，RDA 最大的差别在于丢弃了梯度下降的那一项，换成了梯度的二次平均值。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51ruguyw1j20wu054q37.jpg" alt="image-20201027190202895" style="zoom:50%;"><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t8hekgxj211m07m74v.jpg" alt="image-20201027190434418"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t8os84hj211m07m74v.jpg" alt="image-20201027190434418" style="zoom:40%;"></p>
+<h5 id="FTRL-Follow-The-Regularized-Leader"><a href="#FTRL-Follow-The-Regularized-Leader" class="headerlink" title="FTRL (Follow The Regularized Leader)"></a>FTRL (Follow The Regularized Leader)</h5><p>也是我们目前通常在用的方法，结合了FOBOS和RDA两者的优势。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rul5a3oj21d60l0dj9.jpg" alt="image-20201027190550177" style="zoom:40%;"></p>
+]]></content>
+      <categories>
+        <category>搜推广</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>《推荐系统实战》笔记</title>
+    <url>/2020/07/22/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>最近看了项亮老师的《推荐系统实践》，做了相关的心得和笔记。</p>
+<h3 id="一、推荐系统指标"><a href="#一、推荐系统指标" class="headerlink" title="一、推荐系统指标"></a>一、推荐系统指标</h3><ul>
+<li>用户满意度：调查问卷等方式，也可以通过线上其他指标来衡量</li>
+<li>预测准确度：<ul>
+<li>评分预测：RMSE,MAE</li>
+<li>TopN推荐：准确率和召回率</li>
+</ul>
+</li>
+<li>覆盖率：物品流行度之间的差异，指标如熵、基尼系数</li>
+<li>多样性：物品之间的相似性低，多样性高</li>
+<li>新颖性：一般来讲，物品平均流行度低，新颖性高<ul>
+<li>如何在不牺牲精度的情况下提高多样性和新颖性？</li>
+</ul>
+</li>
+<li>惊喜度：与用户历史兴趣不同，但会让用户喜欢</li>
+<li>信任度</li>
+<li>实时性</li>
+<li>健壮性</li>
+<li>商业目标</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh03jbvuuzj31eo0ga76x.jpg" alt="image-20200722220000325" style="zoom:50%;"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh03j7ho93j31dr0du78g.jpg" alt="image-20200722220010615" style="zoom:45%;"></p>
+<h3 id="二、基于用户行为分析的推荐算法"><a href="#二、基于用户行为分析的推荐算法" class="headerlink" title="二、基于用户行为分析的推荐算法"></a>二、基于用户行为分析的推荐算法</h3><p>仅仅基于用户行为数据设计的推荐算法一般称为协同过滤算法，学术界对协同过滤算法 进行了深入研究，提出了很多方法，比如基于邻域的方法(neighborhood-based)、隐语义模型(latent factor model)、基于图的随机游走算法(random walk on graph)等。最终目的都是生成用户和物品之间的兴趣度。</p>
+<h4 id="基于领域的算法"><a href="#基于领域的算法" class="headerlink" title="基于领域的算法"></a>基于领域的算法</h4><p>统计方法：</p>
+<ul>
+<li>UserCF</li>
+<li>ItemCF</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0o54pwxuj31dt0oz13l.jpg" alt="image-20200723095329692" style="zoom:50%;"></p>
+<h4 id="隐语义模型-Latent-Factor-Model"><a href="#隐语义模型-Latent-Factor-Model" class="headerlink" title="隐语义模型(Latent Factor Model)"></a>隐语义模型(Latent Factor Model)</h4><p>其实本质上就是训练得到用户的隐向量和物品的隐向量(Embedding的感觉)，然后再类似CTR预估。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0o87nop6j30x40420tb.jpg" alt="image-20200723095628676" style="zoom:50%;"></p>
+<ul>
+<li>机器学习过程</li>
+<li>离线空间复杂度较低，时间复杂度较高</li>
+<li>实时性差，预测时候需要全量CTR预估再排序</li>
+<li>解释性差</li>
+</ul>
+<h4 id="基于图模型"><a href="#基于图模型" class="headerlink" title="基于图模型"></a>基于图模型</h4><ul>
+<li>生成用户与物品的图，计算顶点之间的相似度</li>
+<li>PersonalRank，随机游走，类似马尔科夫过程，对于每个用户节点，生成所有节点访问概率，根据物品节点的概率生成推荐列表</li>
+</ul>
+<h3 id="三、冷启动问题"><a href="#三、冷启动问题" class="headerlink" title="三、冷启动问题"></a>三、冷启动问题</h3><p>主要分为三种问题：</p>
+<ul>
+<li>新用户冷启动</li>
+<li>新物品冷启动</li>
+<li>系统冷启动</li>
+</ul>
+<h4 id="针对新用户的冷启动"><a href="#针对新用户的冷启动" class="headerlink" title="针对新用户的冷启动"></a>针对新用户的冷启动</h4><ul>
+<li><p>非个性化的热门推荐</p>
+</li>
+<li><p>利用用户的注册信息，例如年龄、性别等，做粗粒度的推荐。</p>
+<ul>
+<li>相当于只利用用户的注册信息等特征做CTR预估。</li>
+</ul>
+</li>
+<li><p>要求用户注册填写感兴趣的领域。</p>
+<ul>
+<li>关键是如何选取有代表性、有区分度的领域。</li>
+<li>算法：做一颗决策树，选取分裂节点时，选取方差最大的物品</li>
+</ul>
+</li>
+<li><p>利用用户的社交网络，比如社交网络的好友推荐等，或者是外部网站的用户信息</p>
+</li>
+</ul>
+<h4 id="针对新物品的冷启动"><a href="#针对新物品的冷启动" class="headerlink" title="针对新物品的冷启动"></a>针对新物品的冷启动</h4><ul>
+<li>利用物品的自身内容，找计算物品相似度。<ul>
+<li>可能会用到文本模型，例如LSI -&gt;PLSI -&gt; LDA(目前主要是这个)等，来生成物品向量，并计算相似度</li>
+</ul>
+</li>
+<li>专家标注</li>
+</ul>
+<h3 id="四、利用用户标签数据的推荐算法"><a href="#四、利用用户标签数据的推荐算法" class="headerlink" title="四、利用用户标签数据的推荐算法"></a>四、利用用户标签数据的推荐算法</h3><p>标签相当于用户和物品之间的媒介(有点类似topic的感觉)，基于标签的推荐更加有解释性。</p>
+<ul>
+<li><p>基于标签的物品推荐算法：</p>
+<ul>
+<li><p>简单来讲，就是将标签作为一个隐向量来计算用户和物品的兴趣：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0z5r4279j30dq039t8t.jpg" alt="image-20200723161433032" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>带上热门标签和热门物品的惩罚项：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0z69qftej30o7053wez.jpg" alt="image-20200723161512422" style="zoom:50%;"></p>
+<ul>
+<li><p>标签拓展</p>
+<ul>
+<li>有些物品标签很少，这时候可以拓展标签，寻找相似标签。类似于itemCF的标签相似度计算方法</li>
+</ul>
+</li>
+<li><p>标签清理</p>
+<ul>
+<li>如果我们要把标签呈现给用户，将其 作为给用户推荐某一个物品的解释，对标签的质量要求就很高。首先，这些标签不能包含没有意 义的停止词或者表示情绪的词。</li>
+</ul>
+</li>
+<li><p>基于图的标签推荐算法</p>
+<ul>
+<li><p>利用标签作为中间层，类似于一个栅栏图。然后利用personalRank等计算节点相关性。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh0z8o963xj30py0jmag7.jpg" alt="image-20200723161730568" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+<li><p>推荐打标签算法</p>
+<ul>
+<li>用户写标签的时候给他做推荐，很多算法：用户最常打标签，该物品最热门标签等</li>
+</ul>
+</li>
+</ul>
+<h3 id="五、利用上下文信息的推荐算法"><a href="#五、利用上下文信息的推荐算法" class="headerlink" title="五、利用上下文信息的推荐算法"></a>五、利用上下文信息的推荐算法</h3><p>上下文信息对用户兴趣的影响是很大的，主要代表是时间上下文和地点上下文。</p>
+<h4 id="引入时间上下文"><a href="#引入时间上下文" class="headerlink" title="引入时间上下文"></a>引入时间上下文</h4><ul>
+<li><p>可以通过统计发现，时间对对于物品流行度的影响。</p>
+</li>
+<li><p>推荐系统的时间多样性是很重要的(每天都有不同的推荐结果)，会影响用户满意度。</p>
+</li>
+<li><p>如何将时间上下文引入推荐系统？几个算法：</p>
+<ul>
+<li><p>TItemCF: 在计算物品相似度，预测用户和物品相似度时，引入时间衰减：</p>
+</li>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1119daluj30jd04w0t6.jpg" alt="image-20200723171933421" style="zoom:50%;"></p>
+</li>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1eo7c6j30ly04edg4.jpg" alt="image-20200723171951909" style="zoom:50%;"></p>
+</li>
+<li><p>TUserCF: 也是同理：</p>
+</li>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh112rl1ulj30f705uwev.jpg" alt="image-20200723172101864" style="zoom:50%;"></p>
+</li>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh112z8zs2j30hk044glu.jpg" alt="image-20200723172115518" style="zoom:50%;"></p>
+</li>
+<li><p>图模型：引入了时间段图模型，添加和时间有关的节点，然后再计算相关度，如果时间节点权重为0，就是普通的图。</p>
+</li>
+<li><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh114g1d01j30jn0hjwi3.jpg" alt="image-20200723172237557" style="zoom:50%;"></p>
+</li>
+<li><p>我自己检索了下如何在CTR预估模型里引入时间上下文。阿里有个Paper， DSTN，核心思想是在特征里引入上下文广告特征，这类似得引入了时空特征。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="引入地点上下文"><a href="#引入地点上下文" class="headerlink" title="引入地点上下文"></a>引入地点上下文</h4><p>介绍LARS算法，简单介绍一下：</p>
+<ul>
+<li><p>对于有用户位置的数据，基于兴趣的本地性，按照不同区域划分数据集，做不同层的推荐，然后按照权重，将推荐列表线性相加：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh117zdp49j30nk0fgta3.jpg" alt="image-20200723172604197" style="zoom:50%;"></p>
+</li>
+<li><p>对于有物品位置的数据，在最后的兴趣得分中添加惩罚项，当前物品与用户历史物品的平均位置的距离差。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1dzur4j30n20210sz.jpg" alt="image-20200723172749452" style="zoom:50%;"></p>
+</li>
+</ul>
+<h3 id="六、利用社交网络数据的推荐算法"><a href="#六、利用社交网络数据的推荐算法" class="headerlink" title="六、利用社交网络数据的推荐算法"></a>六、利用社交网络数据的推荐算法</h3><h4 id="基于社交网络的推荐"><a href="#基于社交网络的推荐" class="headerlink" title="基于社交网络的推荐"></a>基于社交网络的推荐</h4><ul>
+<li>好友推荐增加推荐的新任务：基于社交网络的推荐不一定提升离线实验的指标，重在提升用户的信任度和可解释性。</li>
+<li>可以解决新用户的冷启动问题，如前文所说</li>
+</ul>
+<p>相关算法：</p>
+<ul>
+<li><p>基于领域的社会化推荐算法</p>
+<ul>
+<li>其实就是类似于UserCF，只是计算用户相似度的时候，不仅考虑用户兴趣相似度(通过用户历史行为)，还通过社交网络考虑用户好友相似度：</li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1fknqlj309602vmx6.jpg" alt="image-20200723183158908" style="zoom:50%;"></li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh134ues59j30gy0460t4.jpg" alt="image-20200723183214171" style="zoom:50%;"></li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh134yzzlcj30ge03mwet.jpg" alt="image-20200723183223785" style="zoom:50%;"></li>
+</ul>
+</li>
+<li><p>基于图的社会化推荐算法</p>
+<ul>
+<li>就是通过社交网络增加用户与用户的边，同样可以再用personalRank。</li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1361tvxfj30eg0g4mzj.jpg" alt="image-20200723183323298" style="zoom:50%;"></li>
+</ul>
+</li>
+</ul>
+<h4 id="实际系统中的社会化推荐算法"><a href="#实际系统中的社会化推荐算法" class="headerlink" title="实际系统中的社会化推荐算法"></a>实际系统中的社会化推荐算法</h4><p>因为用户数太多，如果给用户推荐的时候，去计算所有用户的话，代价太大，两种方法：</p>
+<ul>
+<li>只取相似度高的N个用户</li>
+<li>设计一种特殊的数据存储结构：每个用户维护一个消息队列，其他相关用户产生一个物品行为，则在消息队列中添加该物品。这样的话，推荐计算的时候，只需读取自身的消息队列，然后通过队列里物品的相关信息来算即可。</li>
+</ul>
+<h4 id="社交网络好友推荐"><a href="#社交网络好友推荐" class="headerlink" title="社交网络好友推荐"></a>社交网络好友推荐</h4><p>其实就是计算用户与用户之间的相似度，还是可以通过兴趣相似度和好友相似度来做。</p>
+<h3 id="七、推荐系统实例"><a href="#七、推荐系统实例" class="headerlink" title="七、推荐系统实例"></a>七、推荐系统实例</h3><p>一个真实的推荐网站有三部分组成：</p>
+<ul>
+<li><p>推荐系统</p>
+</li>
+<li><p>前端页面：需要展示推荐物品的相关信息，推荐理由，用户反馈设计</p>
+</li>
+<li><p>日志系统：不同的用户行为，有不同的规模大小和实时性需求，可能需要不同的数据存储结构</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1706abmtj312i0dkjtt.jpg" alt="image-20200723204606329" style="zoom:50%;"></p>
+</li>
+</ul>
+<p>一个推荐系统的组成：</p>
+<ul>
+<li>由不同的推荐引擎构成，来处理不同的推荐任务，比如个性化推荐、新颖性推荐、最新物品推荐等等</li>
+<li>由推荐系统再过滤、排名、解释等汇总组合各个推荐引擎结果。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1728ehxcj31ec0gxae3.jpg" alt="image-20200723204806073" style="zoom:50%;"></p>
+<p>一个推荐引擎的架构，主要三部分：</p>
+<ul>
+<li>用户特征提取模块</li>
+<li>特征-物品推荐模块：也俗称召回模块，就是本书介绍的算法模型。</li>
+<li>对初始的推荐列表进行过滤、排名等处理，从而生成最终的推荐结果。排名模块里涉及到了CTR预估模型，也俗称精排模块。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1746mn2fj31560sogrz.jpg" alt="image-20200723204959419" style="zoom:50%;"></p>
+<p>重点聊下排名模块：</p>
+<ul>
+<li>这个终于让我知道了CTR预估模型在推荐系统里的作用！<strong>之前一直以为CTR预估模型也是类似CF等算法，但其实不是，CTR预估模型是针对推荐结果的精排</strong>，想想也是，只有推荐结果的点击才有真实的正负样本可以来训练！前面的召回模型哪来的负样本呢..用户没购买，并不意味这不喜欢物品啊。<strong>同时CTR预估模型也是计算广告系统非常重要的模型！CTR值直接影响了预算收益等。</strong></li>
+<li>排名模块包含很多：<ul>
+<li>新颖性排名：通过基于物品流行度来降低热门物品的权重</li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh17af7pglj30fm03xmxc.jpg" alt="image-20200723205559196" style="zoom:50%;"></li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1b1f5awnj30vs03gaaj.jpg" alt="image-20200723205611181" style="zoom:50%;"></li>
+<li>多样性排名：1. 对物品按内容分类，不同类目分别取物品 2. 对相同推荐理由的物品进行降权采样</li>
+<li>时间多样性：对于之前推荐过的物品进行降权采样</li>
+<li>用户反馈：排名模块最重要的部分。通过用户反馈拿到正负样本，用CTR预估模型，特征有：</li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh17dapx4hj31bz0agafm.jpg" alt="image-20200723205845435" style="zoom:50%;"></li>
+</ul>
+</li>
+</ul>
+<h3 id="八、评分预测问题"><a href="#八、评分预测问题" class="headerlink" title="八、评分预测问题"></a>八、评分预测问题</h3><p>评分预测算法介绍：离线评测指标RMSE/MAE</p>
+<ul>
+<li>平均值相关</li>
+<li>基于领域的方法，就类似UserCF，只是把r=1换成得分：<ul>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh18ruzpaqj30hm04smxk.jpg" alt="image-20200723214719938" style="zoom:50%;"></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh18s7twz3j30ji04pq3d.jpg" alt="image-20200723214741412" style="zoom:50%;"></p>
+<ul>
+<li>隐语义模型与矩阵分解模型：<ul>
+<li>SVD分解，取top k，再进行SVD计算，得到评分矩阵。缺点：SVD用户和物品的维度太大高，计算量太大</li>
+<li>LFM，通过梯度下降求解SVD的隐向量，换发新春。</li>
+</ul>
+</li>
+<li>加入时间信息<ul>
+<li>基于邻域的模型融合时间信息：同之前TItemCF，TUserCF</li>
+<li>基于矩阵分解的模型融合时间信息: 加入时间项</li>
+<li><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh1atyz1gyj30vf02ewet.jpg" alt="image-20200723225835221" style="zoom:50%;"></li>
+</ul>
+</li>
+<li>模型融合：<ul>
+<li>模型级联融合：同adaboost</li>
+<li>模型加权融合：同stacking</li>
+</ul>
+</li>
+</ul>
+<h3 id="结语：推荐系统十堂课"><a href="#结语：推荐系统十堂课" class="headerlink" title="结语：推荐系统十堂课"></a>结语：推荐系统十堂课</h3><ol>
+<li>确定你真的需要推荐系统</li>
+<li>确定商业目标和用户满意度之间的关系</li>
+<li>选择合适的开发人员</li>
+<li>忘记冷启动的问题</li>
+<li>平衡数据和算法之间的关系</li>
+<li>找到相关的物品很容易</li>
+<li>不要浪费时间计算相似兴趣的用户，可以直接利用社会网络数据</li>
+<li>需要不断地提升算法的扩展性</li>
+<li>选择合适的用户反馈方式</li>
+<li>设计合理的评测系统，时刻关注推荐系统各方面的性能</li>
+</ol>
+]]></content>
+      <categories>
+        <category>搜推广</category>
+      </categories>
+      <tags>
+        <tag>《推荐系统实战》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>理解召回和LTR</title>
+    <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>参考文章：<a href="https://mp.weixin.qq.com/s/E5a4TF9P2aMrF6gVatAF8A" target="_blank" rel="noopener">万变不离其宗：用统一框架理解向量化召回</a></p>
+<h1 id="召回本质"><a href="#召回本质" class="headerlink" title="召回本质"></a>召回本质</h1><p>召回本质上和排序其实存在很大的区别：</p>
+<ul>
+<li>召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。</li>
+<li>召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。</li>
+</ul>
+<h1 id="召回的几种类型"><a href="#召回的几种类型" class="headerlink" title="召回的几种类型"></a>召回的几种类型</h1><ul>
+<li>i2i:拿用户喜欢的item找相似item。就比如work2vec这种，或者图构建item embeding这种，都是拿用户的点击序列去构建，然后计算item emb，然后找到用户喜欢的item的相似的emb。</li>
+<li>u2i：直接给user找他可能喜欢的item。这种是目前应用最多的，例如基于DNN的FM双塔模型，就是用户一个emb，item一个emb，最后内积计算得分。</li>
+<li>u2u2i:给user查找相似user，再把相似user喜欢的item推出去。</li>
+</ul>
+<h1 id="召回的负采样"><a href="#召回的负采样" class="headerlink" title="召回的负采样"></a>召回的负采样</h1><p>召回负采样的做法不仅仅只是随机采样，一般会有类似work2vec的做法，对热门item正样本降权，负样本加权这种操作。</p>
+<p>负采样也分为easy negaitve和hard negative两种：</p>
+<ul>
+<li>easy negaitve ：随机采样一般就是这种</li>
+<li>Hard negaive ：比如正样本是狗，猫、大象明显是easy negative，而狼就和狗有几分相似，但又不是的称为hard negative。一般做法有基于业务逻辑自己加，还有FB的做法：上一个召回模型预估得分的中间位置作为下一个召回模型的hard negative。</li>
+</ul>
+<h1 id="LTR"><a href="#LTR" class="headerlink" title="LTR"></a>LTR</h1><p>Learning to Rank其实是针对排序算法的统称，针对loss function，可分为三种：</p>
+<h3 id="Pointwise"><a href="#Pointwise" class="headerlink" title="Pointwise"></a>Pointwise</h3><p>最为常见，像精排这种明确的正负样本，直接binary cross entropy计算label 准确度。缺点是没有关注到排序信息。</p>
+<h3 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h3><p>更关系两个样本的排序顺序，一般像召回任务很多都是用pairwise，常见的几种loss有：</p>
+<h4 id="sampled-softmax-loss"><a href="#sampled-softmax-loss" class="headerlink" title="sampled softmax loss"></a>sampled softmax loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg" alt="image-20210806211523927"></p>
+<p>这个就像word2vec里的计算的sampled softmax loss，值得注意的是，这个loss做梯度更新的方式，每一个样本喂进去之后都需要做负采样(会有个辅助emb矩阵，得到负样本分母的emb)，然后计算loss，然后更新梯度，不像常见的交叉熵的梯度更新。</p>
+<h4 id="margin-hinge-loss"><a href="#margin-hinge-loss" class="headerlink" title="margin hinge loss"></a>margin hinge loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rm81ox5j219u056754.jpg" alt="image-20210806211842642"></p>
+<h4 id="BPR-Loss"><a href="#BPR-Loss" class="headerlink" title="BPR Loss"></a>BPR Loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rmbwy31j21co09cdhj.jpg" alt="image-20210806211857913"></p>
+<p>对于后面两种loss，样本都需要是三元形式，《u , item+,item-》，后面两个item都要过一遍nn得到emb。</p>
+]]></content>
+      <categories>
+        <category>搜推广</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>计算广告基础概念</title>
+    <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="广告类型"><a href="#广告类型" class="headerlink" title="广告类型"></a>广告类型</h3><ul>
+<li>原生广告</li>
+</ul>
+<p>原生广告在视觉形式上与广告投放到的应用内容界面相契合，可为用户带来浑然一体的体验。这种类型的广告就是原生广告。（这个就是不容易让人发现它是一个广告）</p>
+<ul>
+<li>搜索广告</li>
+</ul>
+<p>搜索广告是以上下文查询词为粒度进行受众定向,并按照竞价方式售卖和CPC(即“按点击收费”)结算的广告产品。例如大家在百度上面搜索python，就会搜索出一堆培训机构放在前面，这就是搜索广告。</p>
+<ul>
+<li>信息流广告</li>
+</ul>
+<p><em>信息流广告</em>是位于社交媒体用户的好友动态、或者资讯媒体和视听媒体内容流中的<em>广告</em>。</p>
+<p>首先它是原生广告，也就是和内容放在一起很难区分。例如大家在刷朋友圈的时候会有一条朋友圈内容挺具有真情实感的，有文字感想还有配图，但是一看备注是拼多多。</p>
+<ul>
+<li>直播广告</li>
+</ul>
+<h3 id="定向过滤、频控流控、打散"><a href="#定向过滤、频控流控、打散" class="headerlink" title="定向过滤、频控流控、打散"></a>定向过滤、频控流控、打散</h3><h4 id="定向过滤"><a href="#定向过滤" class="headerlink" title="定向过滤"></a>定向过滤</h4><p>定向：在召回之前，每个广告都有自己的受众群体，例如这个广告只投男性之类的constraint。</p>
+<p>过略：例如用户已经安装了该app，那如果还投该app的下载广告就不合理。所以会设置一些过滤规则，这个也可以做在定向中，或者模型预估之后吧。</p>
+<h4 id="频控-流控"><a href="#频控-流控" class="headerlink" title="频控/流控"></a>频控/流控</h4><p>频控：用户历史看过哪些广告，那这些广告再次曝光的话需要控制下频率。</p>
+<p>流控：广告的投放速度控制，如果一直投某类广告，预算消耗过快也是广告主不想看见的。</p>
+<p>这两步可以做在定向中，也就是模型预估前，也可以做在模型预估之后，看架构能力吧。</p>
+<h4 id="打散"><a href="#打散" class="headerlink" title="打散"></a>打散</h4><p>最终投放的广告很有可能是类似的，所以需要将其打散到不同位置或者不同次曝光中。我理解一般是预估之后。</p>
+<h3 id="RTA-RTB"><a href="#RTA-RTB" class="headerlink" title="RTA/RTB"></a>RTA/RTB</h3><p>RTA就是在广告平台直投广告里，接入一个realtime api，在定向阶段，让广告主自己做定向。</p>
+<p>RTB就涉及到了adx和dsp，广告平台提供流量位和用户等信息，然后通过adx将这些信息发送到dsp(广告主平台)，他们基于这个流量，挑选出最好的广告创意(ctr和cvr预估)做出价，然后再发送给adx做竞价。现在oppo 信息流里就有adx广告</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/125464058" target="_blank" rel="noopener">RTA 广告产品能力详解</a></li>
+<li><a href="http://www.woshipm.com/pd/1692791.html" target="_blank" rel="noopener">广告投放平台DSP搭建：你需要了解的产品核心模块</a></li>
+</ul>
+<h3 id="竞价-定价模式"><a href="#竞价-定价模式" class="headerlink" title="竞价/定价模式"></a>竞价/定价模式</h3><p>分为两个阶段：竞价阶段+定价阶段。</p>
+<ul>
+<li>竞价阶段：通过每个广告的bid，ctr，cvr，得到该广告的ecpm，按照ecpm排序进行竞价</li>
+<li>定价阶段：为了得到truthful bidding，用GSP和VCG的方式来进行定价，这里会把ecpm(预计千次投放收益)转换成auction price(千次投放计费)</li>
+</ul>
+<h3 id="几种方式"><a href="#几种方式" class="headerlink" title="几种方式"></a>几种方式</h3><h4 id="CPM"><a href="#CPM" class="headerlink" title="CPM"></a>CPM</h4><p>最简单的方式，按照投放计费：</p>
+<ul>
+<li>竞价：ecpm = bid * 1000，bid为单次投放出价</li>
+<li>定价：auction_price = f(ecpm)，price = auction_price  / 1000，price为单次投放计费</li>
+</ul>
+<h4 id="CPC"><a href="#CPC" class="headerlink" title="CPC"></a>CPC</h4><p>按照点击计费:</p>
+<ul>
+<li>竞价：ecpm = click_bid <em> ctr </em> 1000，click_bid为单次点击出价</li>
+<li>定价：auction_price = f(ecpm)，price = auction_price  / ctr / 1000，price为单次点击计费</li>
+</ul>
+<h4 id="CPA-oCPC-oCPM"><a href="#CPA-oCPC-oCPM" class="headerlink" title="CPA/oCPC/oCPM"></a>CPA/oCPC/oCPM</h4><p>按照转化(action)计费：</p>
+<ul>
+<li>竞价：ecpm = action_bid <em> ctr </em> cvr *1000，action_bid为单次转化出价</li>
+<li>定价：注意，这里三种方式有所区别<ul>
+<li>CPA：price = auction_price  / ctr / cvr / 1000，price为单次转化计费。这种方式的问题在于，广告主可能作弊，因为他们如果不回传转化，就能薅羊毛了。</li>
+<li>oCPC：price = auction_price  / ctr / 1000，price为单次点击计费。如果是一价计费，那么price = action_bid * cvr</li>
+<li>oCPM：price = auction_price / 1000，price为单次投放计费。</li>
+<li>从CPA -&gt; oCPC -&gt; oCPM，平台风险越来越低，广告主风险变高。</li>
+</ul>
+</li>
+</ul>
+<p>字节现状：CPC -&gt; oCPC -&gt;  CPA(中小广告主) + oCPM(其他）</p>
+<h3 id="如果ocpc模式下，预估cvr偏高会怎么样？"><a href="#如果ocpc模式下，预估cvr偏高会怎么样？" class="headerlink" title="如果ocpc模式下，预估cvr偏高会怎么样？"></a>如果ocpc模式下，预估cvr偏高会怎么样？</h3><p>最近发生了个事故，就是cvr预测失败，恒定返回0.5，达魁说这就会对广告主造成损失。理由如下：</p>
+<ul>
+<li>本身来讲，cvr和ctr预测不好，只会影响广告排序，不会直接造成损失。</li>
+<li>同样不会影响流失训练，无非负例变多，但会影响online auc，因为预估得不准了嘛</li>
+<li>ocpc计费价格，在一价模式下，price = action_bid * cvr，如果cvr偏高，那么我们对单次点击的收费就会偏高，所以会对广告主多计费，但是广告主如果看后验cvr的话，发现转化没那么高，或者和以前相比，同样的预算，带来的实际收入却变低了，roi变低，那么广告主利益就受损，我们需要对广告主进行赔偿。</li>
+</ul>
+<h3 id="关于广告主价值和游戏ecpm"><a href="#关于广告主价值和游戏ecpm" class="headerlink" title="关于广告主价值和游戏ecpm"></a>关于广告主价值和游戏ecpm</h3><ul>
+<li>我们之前排序的时候，会计算广告的ecpm这个只是针对某个用户的，ctr*bid</li>
+<li>计算广告主价值（ad_estimated_ecpm）时，统计的是所有广告的，所以是会按照实际的点击次数/转化次数 <em> bid来算的（并不是针对某个用户的ctr </em> bid），只是说广告主价值还是预估的，并非实际消耗的，因为实际扣费会涉及到风控以及二价计费等。</li>
+<li>游戏归一化曝光价值也是如此(game_ecpm)，只是会用点击次数 * ltv / 曝光总数，就有点ctr的意思在里面。</li>
+<li>广告和游戏的arpu的话，就是实际产生的收入了。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>搜推广</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Attention和Transformer</title>
+    <url>/2022/08/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Attention%E5%92%8CTransformer/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>Attention是目前最热的深度学习方向，最开始从NLP领域的机器翻译方向发源，到如今百花齐放到各个领域，包括推荐搜索，计算广告等等，万物皆可embedding，万物皆可attention，因为attention的本质就是为了更好的做embedding。</p>
+<p>本篇文章按照attention发展的顺序来阐述：</p>
+<ul>
+<li>Seq2Seq模型</li>
+<li>Attention机制</li>
+<li>Transformer的Self-Attention</li>
+<li>Bert</li>
+</ul>
+<h2 id="二、Seq2Seq模型"><a href="#二、Seq2Seq模型" class="headerlink" title="二、Seq2Seq模型"></a>二、Seq2Seq模型</h2><p>最开始做机器学习的时候，我们用rnn模型做encoder-decoder，encoder输出最后的隐层向量，然后decoder逐个输入进行解码。</p>
+<p>对于encoder-decoder的方式，要注意训练和预测的不同：</p>
+<ul>
+<li>训练：decoder的输入是当前单词的embedding</li>
+<li>预测：decoder的输入是上个rnn的输出</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rorn4x1j21340l2myx.jpg" alt="image-20210202171847909" style="zoom:50%;"></p>
+<p>对于这种Seq2Seq的方式，很明显最大的问题就是将encoder压缩在了最后一个rnn输出上，RNN机制实际中存在长程梯度消失的问题，对于较长的句子，我们很难寄希望于将输入的序列转化为定长的向量而保存所有的有效信息，所以随着所需翻译句子的长度的增加，这种结构的效果会显著下降。</p>
+<h2 id="三、Attention机制"><a href="#三、Attention机制" class="headerlink" title="三、Attention机制"></a>三、Attention机制</h2><p>基于Seq2Seq，学术界提出了attention机制：</p>
+<ul>
+<li>不用将encoder的最后一层喂给decoder。</li>
+<li>在decoder的时候，除了当前的输入外，我们还会附加一个context_vector，这个vector利用上一层的隐层输出与encoder做attention得到，这样的话就充分得利用了encoder里每个词的信息。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51roxlem4j215w0u0q5f.jpg" alt="image-20210202172909409" style="zoom:50%;"></p>
+<p>参考<a href="https://www.cnblogs.com/ydcode/p/11038064.html" target="_blank" rel="noopener">博客</a>。</p>
+<p>详细讲讲attention的做法，其实本质上就是生成Q,K,V三个向量：</p>
+<ul>
+<li>Q是查询向量，一般就是我们要查的item生成的向量</li>
+<li>K是被检索向量的key</li>
+<li>V是被检索向量的value，一般而言K和V都是被检索item生成的向量</li>
+<li>具体计算方式如下：本质上就是Q和K点积先生成Q在每个被检索item的权重，然后对每个被检索item的V进行加权求和，得到检索item最终的向量。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rp2mnu7j21320gyjsk.jpg" alt="image-20210202175527001" style="zoom: 50%;"></p>
+<p>对于encoder-decoder模型，K和V就是encoder每个rnn单元的隐层向量，Q就是decoder的前一个rnn单元的隐层向量。</p>
+<h2 id="四、Transformer的Self-Attention"><a href="#四、Transformer的Self-Attention" class="headerlink" title="四、Transformer的Self-Attention"></a>四、Transformer的Self-Attention</h2><p>谷歌在<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Attention is All you need</a>首次提出来transformer模型，其中就是提出了self-attention的概念，本质上就是代替了原先的rnn单元，因为rnn单元是串行训练的，无法并行化，效率很低，而且无法充分利用上下文的信息，self-attention就是当前的item同时产生Q,K,V，然后不同item之间做attention，所以这也是为什么叫self-attention。</p>
+<p>下图是transformer的架构，也是有encoder-decoder组成的，其中最重要的就是multi-head attention部分。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpbn61pj20ke0s6768.jpg" alt="preview" style="zoom:50%;"></p>
+<p>Multi-head attention的架构图如下，所谓的multi-head就是用了多个QKV，最后concatenate之后，再经过一个线性变换，最后生成和输入一样维度的向量，中间Q,K,V的向量维度是自定义的。</p>
+<ul>
+<li>一个multi-head attention单元，每个item的输入embed维度和输出embed维度是一样的，类似经过了一个变换单元。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpfq7s8j213w0mctaz.jpg" alt="img" style="zoom: 50%;"></p>
+<ul>
+<li><p>encoder的话就是就是经过了N个multi-head attention单元，输出每个item的隐层向量</p>
+</li>
+<li><p>decoder的话有所不同，首先是生成当前item的输入向量，这个也是经过multi-head attention单元，但是会有个mask，就是只用当前item之前的item做attention，最终生成当前item的输出向量后作为Q，而K和V则是encoder的输出，这样再经过一个multi-head attention单元，生成当前item的最终输出向量，可以看下面这个图片示意：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpj4z0pj213m0k60tg.jpg" alt="image-20210202210714371" style="zoom:50%;"></p>
+</li>
+</ul>
+<h2 id="五、Bert"><a href="#五、Bert" class="headerlink" title="五、Bert"></a>五、Bert</h2><p>Bert就是transformer的encoder部分进行更多堆叠的结果，如下图所示。当输入有多少个embedding，那么输出也就有相同数量的embedding，可以采用和RNN采用相同的叫法，把输出叫做隐向量。在做具体NLP任务的时候，只需要从中取对应的隐向量作为输出即可。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpmpavzj20as0eamxe.jpg" alt="img" style="zoom:75%;"></p>
+<p>bert本质上即使一个大型的预训练模型，然后拿预训练的词向量放到特定的nlp任务里做微调，就可以得到非常好的效果。和bert类似的还有GPT，ELMo，区别如下图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpq0qjsj213q09oq53.jpg" alt="image-20210202214339626" style="zoom:50%;"></p>
+<p>bert的预训练方法有如下几种：</p>
+<ul>
+<li>masked language model：在一句话中mask掉几个单词然后对mask掉的单词做预测</li>
+<li>next sentence prediction：判断两句话是否为上下文的关系</li>
+<li>这两个训练任务是同时进行的，最后做加权loss</li>
+</ul>
+<h1 id="六、代码参考"><a href="#六、代码参考" class="headerlink" title="六、代码参考"></a>六、代码参考</h1><p>具体transformer encoder的写法，可以参考这个代码：这个代码是BST的写法，bst就是对用户行为序列做multi head self attention。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">BST</span><span class="params">(behavior_seq, mask, behavior=<span class="string">'refine_expose'</span>, pooling=<span class="string">'sum_sqrt'</span>)</span>:</span></span><br><span class="line">    max_length = int(behavior_seq.shape[<span class="number">1</span>])</span><br><span class="line">    in_features = int(behavior_seq.shape[<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line">    mask = tf.cast(mask, tf.float32)</span><br><span class="line"></span><br><span class="line">    pe = M.get_variable(<span class="string">'&#123;&#125;_position_encoding'</span>.format(behavior), shape=[<span class="number">1</span>, max_length, in_features], initializer=initializers.HeNormal())/<span class="number">10</span></span><br><span class="line">    </span><br><span class="line">    behavior_seq += pe</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">layer_norm</span><span class="params">(x, name, epsilon=<span class="number">1e-6</span>)</span>:</span></span><br><span class="line"></span><br><span class="line">        filters = x.get_shape()[<span class="number">-1</span>]</span><br><span class="line">        scale = M.get_variable(</span><br><span class="line">            <span class="string">"&#123;&#125;_layer_norm_scale_&#123;&#125;"</span>.format(behavior, name), [<span class="number">1</span>, <span class="number">1</span>, filters], initializer=initializers.Ones())</span><br><span class="line">        bias = M.get_variable(</span><br><span class="line">            <span class="string">"&#123;&#125;_layer_norm_bias_&#123;&#125;"</span>.format(behavior, name), [<span class="number">1</span>, <span class="number">1</span>, filters], initializer=initializers.Zeros())</span><br><span class="line">        mean = tf.reduce_mean(x, axis=[<span class="number">-1</span>], keepdims=<span class="literal">True</span>)</span><br><span class="line">        variance = tf.reduce_mean(tf.square(x - mean), axis=[<span class="number">-1</span>], keepdims=<span class="literal">True</span>)</span><br><span class="line">        norm_x = (x - mean) * tf.rsqrt(variance + epsilon)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> norm_x * scale + bias</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">block</span><span class="params">(seq, name=<span class="number">0</span>)</span>:</span></span><br><span class="line">        heads=<span class="number">2</span></span><br><span class="line">        attout = ScaleDotProductAttention(seq, dqk=<span class="number">2</span>, heads=heads, dv=int(in_features/heads), seq_mask=mask)</span><br><span class="line">        attout = tf.keras.layers.Dropout(rate=<span class="number">0.05</span>)(layers.Relu()(attout))</span><br><span class="line">        attout = layer_norm(attout + seq, <span class="string">'&#123;&#125;_1'</span>.format(name))</span><br><span class="line"></span><br><span class="line">        out = layers.Dense(in_features*<span class="number">2</span>, kernel_initializer=initializers.HeNormal())(attout)</span><br><span class="line">        out = layers.Dense(in_features, kernel_initializer=initializers.HeNormal())(out)</span><br><span class="line">        out = tf.keras.layers.Dropout(rate=<span class="number">0.05</span>)(layers.Relu()(out))</span><br><span class="line">        out = layer_norm(attout + out, <span class="string">'&#123;&#125;_2'</span>.format(name))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bst_pooling</span><span class="params">(seq)</span>:</span></span><br><span class="line">        print(<span class="string">'bst pooling:\t'</span>, pooling)</span><br><span class="line">        <span class="keyword">if</span> pooling==<span class="string">'sum'</span>:</span><br><span class="line">            <span class="keyword">return</span> tf.math.reduce_sum(seq*mask, axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">elif</span> pooling==<span class="string">'mean'</span>:</span><br><span class="line">            seq_len = tf.math.reduce_sum(mask, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">return</span> tf.math.reduce_sum(seq*mask/seq_len, axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">elif</span> pooling==<span class="string">'sum_sqrt'</span>:</span><br><span class="line">            seq_len = tf.math.reduce_sum(mask, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">return</span> tf.math.reduce_sum(seq*mask / tf.math.sqrt(seq_len), axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">elif</span> pooling==<span class="string">'concat'</span>:</span><br><span class="line">            <span class="keyword">return</span> tf.reshape(seq*mask, [<span class="number">-1</span>, int(seq.shape[<span class="number">1</span>])*int(seq.shape[<span class="number">2</span>])])</span><br><span class="line">        <span class="keyword">elif</span> pooling==<span class="string">'max'</span>:</span><br><span class="line">            <span class="keyword">return</span> tf.math.reduce_max(seq*mask, axis=<span class="number">1</span>) </span><br><span class="line">        <span class="keyword">elif</span> pooling==<span class="string">'selfAtt'</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">'unkown pooling method:\t'</span>, pooling)</span><br><span class="line"></span><br><span class="line">    out_seq = block(behavior_seq, <span class="number">0</span>) <span class="comment"># b * len * f</span></span><br><span class="line">    out = bst_pooling(out_seq) <span class="comment"># b * ?</span></span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>理解blade</title>
+    <url>/2021/02/03/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/C++/%E7%90%86%E8%A7%A3blade/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天在研究一个大型c++工程如何做单元测试，这个工程是用blade进行构建的，之前不是特别懂blade，看了网上的相关博客以及github的wiki，大致明白了blade原理，确实相比makefile而言，blade构建是更加方便简洁的。</p>
+<p>参考相关博客：<a href="https://www.bbsmax.com/A/MAzAOWYq59/" target="_blank" rel="noopener">blade学习</a> , <a href="https://github.com/chen3feng/blade-build/blob/master/doc/zh_CN/develop.md" target="_blank" rel="noopener">blade git wiki</a> ，<a href="https://github.com/chen3feng/blade-build/blob/master/doc/zh_CN/build_rules/cc.md" target="_blank" rel="noopener">blade cc wiki</a></p>
+<p>具体不解释了，主要记录几个关键点：</p>
+<ul>
+<li>cc_library就是要打包的库，默认打包成静态库，也就是libxxx.a文件，也可以打包成动态库，也就是libxxx.so文件，通过BUILD配置即可。<ul>
+<li>静态库直接将库文件打包到最终的可执行文件中。</li>
+<li>动态库只在可执行文件运行时候进行链接，需要建立一个lib文件夹放这些so库。</li>
+</ul>
+</li>
+<li>blade的根目录往往是放在项目的上一级，因为项目依赖其他的git项目等，都需要在根目录下生成。blade会基于项目build的target，去其他目录查找所有的依赖target，构建拓扑顺序，最终全部生成target，默认是在bluid_release目录下。</li>
+<li>对于一些项目依赖的第三方库，往往都是已经编译好的libxxx.a文件，这种的话需要注意几个点：<ul>
+<li>需要有include目录，里面是一些头文件，方便编译找到定义，有点类似接口的感觉。</li>
+<li>BUILD里面不需要再构建</li>
+<li>例如下面这个配置<ul>
+<li>prebuild=True，预先已经生成了libjemalloc.a，不需要再生成</li>
+<li>export_incs：这个就是定义编译时候寻找头文件的目录，已经编译好的第三方库会有这个include目录放头文件。正常我们自定义工程是不需要加这个配置的，因为头文件是在整个自定义工程里有的。</li>
+<li>build_dynamic：生成动态库</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rl55p9sj206z03amx4.jpg" alt="image-20210203173926774"></p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>C++</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>浅谈FM和FFM</title>
+    <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E6%B5%85%E8%B0%88FM%E5%92%8CFFM/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="梳理一下FM和FFM"><a href="#梳理一下FM和FFM" class="headerlink" title="梳理一下FM和FFM"></a>梳理一下FM和FFM</h3><h4 id="FM："><a href="#FM：" class="headerlink" title="FM："></a>FM：</h4><ul>
+<li><p>参数复杂度：O(n*k)</p>
+</li>
+<li><p>计算复杂度：O(n^2 <em> k)，但可以通过目标函数转换变为O(n </em> k)</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51s7wzr2jj20vi0o2jts.jpg" alt="image-20201020184158031" style="zoom:40%;"></p>
+</li>
+</ul>
+<h4 id="FFM"><a href="#FFM" class="headerlink" title="FFM:"></a>FFM:</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51s81aqi6j20z405waai.jpg" alt="image-20201020184225396" style="zoom:33%;"></p>
+<ul>
+<li><p>参数复杂度：O(nkF)</p>
+</li>
+<li><p>计算复杂度：O(n^2 <em> k)，无法简化。<em>*注意：每个特征都有自己所在的域，特征1和特征2交叉时，特征1的域向量选择特征2所在域F2，特征2的域向量选择特征1所在域F1</em></em>。其实FFM就是把一个one-hot 变量中FM对应的向量，变成一个矩阵。</p>
+</li>
+</ul>
+<p>FM与DeepFM的对应：</p>
+<ul>
+<li>DeepFM的FM层，就是one-hot 到 embedding层，这个本质上就是对每个one-hot变量都做一个隐向量。因为一个one-hot同时只有一个维度为1，其余为0，所以同一个field之间没有内积，做field之间的内积本质上就FM。</li>
+</ul>
+<p>FFM与DeepFFM的对应：</p>
+<ul>
+<li><p>无非就是embeding层从一个向量，变成了一个矩阵，m * F（域的个数）。两个域内积的时候注意是对应的。</p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t2v1247j214q0m8q6y.jpg" alt="image-20201224111301818" style="zoom:50%;"></p>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>传统的FFM公式，通常用神经网络来代替，通常做法就是将n个特征划分成若干个field，每个域做一个embedding，得到每个域的embedding向量和bias向量(相当于公式的一次项部分)。</p>
+<ul>
+<li>Embedding层参数量：n*k，bias参数量：n</li>
+</ul>
+<p>紧接着有很多处理方式：</p>
+<ul>
+<li>如果是低阶特征抽取，那么就是两个域之间做inner product，得到二次项交叉特征。例如DeepFFM的wide层</li>
+<li>如果是高阶特征抽取，那么可以concat这些embedding层(维度为f*k)，后面接mlp层。例如DeepFFM的deep层</li>
+<li>bias的话一般用于wide - LR层 or FM层</li>
+</ul>
+<h3 id="Ref-深度学习在CTR预估中的应用"><a href="#Ref-深度学习在CTR预估中的应用" class="headerlink" title="Ref-深度学习在CTR预估中的应用"></a>Ref-深度学习在CTR预估中的应用</h3><p><a href="https://zhuanlan.zhihu.com/p/35484389" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/35484389</a></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t33n92ej212s0n4adv.jpg" alt="image-20200930165622880"></p>
+<p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t387vlhj20zs0u042t.jpg" alt="image-20200930165727535" style="zoom:50%;"></p>
+]]></content>
+      <categories>
+        <category>搜推广</category>
       </categories>
   </entry>
 </search>
