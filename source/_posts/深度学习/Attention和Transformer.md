@@ -54,6 +54,10 @@ Attention是目前最热的深度学习方向，最开始从NLP领域的机器�
 
 对于encoder-decoder模型，K和V就是encoder每个rnn单元的隐层向量，Q就是decoder的前一个rnn单元的隐层向量。
 
+这里除以根号dk的原因：
+
+- 以数组为例，2个长度是len，均值是0，方差是1的数组点积会生成长度是len，均值是0，方差是len的数组。而方差变大会导致softmax的输入推向正无穷或负无穷，这时的梯度会无限趋近于0，不利于训练的收敛。因此除以len的开方，可以是数组的方差重新回归到1，有利于训练的收敛。
+
 
 
 ## 四、Transformer的Self-Attention
@@ -127,7 +131,7 @@ def BST(behavior_seq, mask, behavior='refine_expose', pooling='sum_sqrt'):
 
     def block(seq, name=0):
         heads=2
-        attout = ScaleDotProductAttention(seq, dqk=2, heads=heads, dv=int(in_features/heads), seq_mask=mask)
+        attout =          (seq, dqk=2, heads=heads, dv=int(in_features/heads), seq_mask=mask)
         attout = tf.keras.layers.Dropout(rate=0.05)(layers.Relu()(attout))
         attout = layer_norm(attout + seq, '{}_1'.format(name))
 
