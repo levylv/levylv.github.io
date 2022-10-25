@@ -1,38 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Tensorflow和Pytorch的比较</title>
-    <url>/2020/07/29/ML%E6%A1%86%E6%9E%B6/Tensorflow%E5%92%8CPytorch%E7%9A%84%E6%AF%94%E8%BE%83/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>来自：<a href="https://zhuanlan.zhihu.com/p/110177607" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/110177607</a></p>
-<p>Tensorflow 在工业界有着更广泛的应用，Pytorch在学术界有着更广泛的应用。</p>
-<p>TensorFlow强在在线部署，多语言支持和较好的线上系统稳定性，我觉得这个是TensorFlow在业界被广泛应用的最主要原因。在业界，无论算法性能有多好，总归还是要上线的，不然都是白扯，不上线就算不到kpi中去。而方便部署到线上，支持多语言，并且有较好的系统稳定性以及有非常多线上应用实例是TensorFlow称霸业界的主要原因。</p>
-<p>比较好一点的公司会在线上部署TensorFlow Serving，这样算法科学家们只需要提供相应的Tensorflow model即可将模型上线。但是据我所知，在国内某电商巨头公司内部，只有某院才能够使用TensorFlow Serving, 其他业务部门(包括很多小公司)想将TensorFlow modle上到线上，一律通过TensorFlow api来加载模型，做线上serve。这时候TensorFlow 支持多语言的特性就发挥了巨大的作用，它不仅支持c++， python，还支持如java等语言；很多公司目前的infrastructure 还没有针对AI做更新换代，也不提供相应的TensorFlow serving 能力，所以这些公司基本都用C++或者java来做TensorFlow 模型的线上serve。再者，TensorFlow基于静态图的这种方式非常适合线上应用，一次build好graph，多次在这个图上面做inference，工程效率很高。</p>
-<p>但是在线下，TensorFlow体验很差，用过的人都觉得体验很不好。1. 在TensorFlow1.x时期，基于静态图的模式，无法在变量定义和使用的时候查看tensor的值，只有在session run的时候才能查看tensor的值，使得debug起来异常困难。2. TensorFlow API混乱，使用体验比较差。</p>
-<p>而Pytorch 在API和文档方面都做得更好，并且pytorch是基于动态图的模式，可以很方便的查看tensor的值，可以像debug Python程序一样debug pytorch模型。因此，pytorch在只关心算法性能而不用太关心部署的学术界，非常受欢迎。</p>
-<p>虽然TensorFlow2.x默认是eager execution模式，可以像pytorch一样直接查看tensor的值，但是个人感觉出来的还是有点晚，短时间内可能不太会是主流的线下框架了。一方面，已经习惯TensorFlow1.x的人还要重新学习tensorflow2.x，并且在TensorFlow1.x中静态图习惯的一些写法，在TensorFlow2.x可能不怎么支持，还要重新再踩很多坑，才能比较好的掌握；另一方面，习惯使用pytorch的那波人不太会去在学习TensorFlow2.x。</p>
-<p>虽然Pytorch在新版本中也出了新的特性，更好的支持线上部署，但毕竟是才出来不久，没有经过线上的长时间检验，实际线上应用案例和分享也比较少。而TensorFlow自15年release以来，已经在线上经历了五年多的考验，撑过了多次双十一高流量的检测，性能稳定。Pytorch想更广泛应用在线上，短时间内也不太现实，替换成本还是很高，TensorFlow在这方面已经占尽了先机。</p>
-<p>总的来说，Tensorflow在业界线上部署占尽了先机，而Pytorch在线下占尽了先机，短时间内谁都不能很快的取代谁。</p>
-<h3 id="现在较好的部署手段"><a href="#现在较好的部署手段" class="headerlink" title="现在较好的部署手段"></a>现在较好的部署手段</h3><h5 id="使用Tensorflow"><a href="#使用Tensorflow" class="headerlink" title="使用Tensorflow"></a>使用Tensorflow</h5><ul>
-<li>TF-serving</li>
-<li>Tensorflow java/C++/python api，自定义服务上线</li>
-<li>转成uff模型，tensorRT上线 </li>
-</ul>
-<h5 id="使用Pytorch"><a href="#使用Pytorch" class="headerlink" title="使用Pytorch"></a>使用Pytorch</h5><ul>
-<li>Pytorch python等api，自定义服务上线</li>
-<li>转成tensorflow模型，然后参考tensorflow上线方式</li>
-<li>转成onnx模型，tensorRT上线</li>
-</ul>
-<p>TensorRT：<a href="https://zhuanlan.zhihu.com/p/88318324" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/88318324</a></p>
-]]></content>
-      <categories>
-        <category>ML框架</category>
-      </categories>
-      <tags>
-        <tag>Tensorflow</tag>
-        <tag>Pytorch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Cuda、Tensorflow、Pytorch版本匹配</title>
     <url>/2020/02/10/ML%E6%A1%86%E6%9E%B6/Cuda%E3%80%81Tensorflow%E3%80%81Pytorch%E7%89%88%E6%9C%AC%E5%8C%B9%E9%85%8D/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="Tensorflow和Cuda、Cudnn版本对应关系"><a href="#Tensorflow和Cuda、Cudnn版本对应关系" class="headerlink" title="Tensorflow和Cuda、Cudnn版本对应关系"></a>Tensorflow和Cuda、Cudnn版本对应关系</h4><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh6yeb38cmj315y0u0h0c.jpg" alt="image-20200728202135462" style="zoom:50%;"></p>
@@ -250,6 +218,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Tensorflow和Pytorch的比较</title>
+    <url>/2020/07/29/ML%E6%A1%86%E6%9E%B6/Tensorflow%E5%92%8CPytorch%E7%9A%84%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>来自：<a href="https://zhuanlan.zhihu.com/p/110177607" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/110177607</a></p>
+<p>Tensorflow 在工业界有着更广泛的应用，Pytorch在学术界有着更广泛的应用。</p>
+<p>TensorFlow强在在线部署，多语言支持和较好的线上系统稳定性，我觉得这个是TensorFlow在业界被广泛应用的最主要原因。在业界，无论算法性能有多好，总归还是要上线的，不然都是白扯，不上线就算不到kpi中去。而方便部署到线上，支持多语言，并且有较好的系统稳定性以及有非常多线上应用实例是TensorFlow称霸业界的主要原因。</p>
+<p>比较好一点的公司会在线上部署TensorFlow Serving，这样算法科学家们只需要提供相应的Tensorflow model即可将模型上线。但是据我所知，在国内某电商巨头公司内部，只有某院才能够使用TensorFlow Serving, 其他业务部门(包括很多小公司)想将TensorFlow modle上到线上，一律通过TensorFlow api来加载模型，做线上serve。这时候TensorFlow 支持多语言的特性就发挥了巨大的作用，它不仅支持c++， python，还支持如java等语言；很多公司目前的infrastructure 还没有针对AI做更新换代，也不提供相应的TensorFlow serving 能力，所以这些公司基本都用C++或者java来做TensorFlow 模型的线上serve。再者，TensorFlow基于静态图的这种方式非常适合线上应用，一次build好graph，多次在这个图上面做inference，工程效率很高。</p>
+<p>但是在线下，TensorFlow体验很差，用过的人都觉得体验很不好。1. 在TensorFlow1.x时期，基于静态图的模式，无法在变量定义和使用的时候查看tensor的值，只有在session run的时候才能查看tensor的值，使得debug起来异常困难。2. TensorFlow API混乱，使用体验比较差。</p>
+<p>而Pytorch 在API和文档方面都做得更好，并且pytorch是基于动态图的模式，可以很方便的查看tensor的值，可以像debug Python程序一样debug pytorch模型。因此，pytorch在只关心算法性能而不用太关心部署的学术界，非常受欢迎。</p>
+<p>虽然TensorFlow2.x默认是eager execution模式，可以像pytorch一样直接查看tensor的值，但是个人感觉出来的还是有点晚，短时间内可能不太会是主流的线下框架了。一方面，已经习惯TensorFlow1.x的人还要重新学习tensorflow2.x，并且在TensorFlow1.x中静态图习惯的一些写法，在TensorFlow2.x可能不怎么支持，还要重新再踩很多坑，才能比较好的掌握；另一方面，习惯使用pytorch的那波人不太会去在学习TensorFlow2.x。</p>
+<p>虽然Pytorch在新版本中也出了新的特性，更好的支持线上部署，但毕竟是才出来不久，没有经过线上的长时间检验，实际线上应用案例和分享也比较少。而TensorFlow自15年release以来，已经在线上经历了五年多的考验，撑过了多次双十一高流量的检测，性能稳定。Pytorch想更广泛应用在线上，短时间内也不太现实，替换成本还是很高，TensorFlow在这方面已经占尽了先机。</p>
+<p>总的来说，Tensorflow在业界线上部署占尽了先机，而Pytorch在线下占尽了先机，短时间内谁都不能很快的取代谁。</p>
+<h3 id="现在较好的部署手段"><a href="#现在较好的部署手段" class="headerlink" title="现在较好的部署手段"></a>现在较好的部署手段</h3><h5 id="使用Tensorflow"><a href="#使用Tensorflow" class="headerlink" title="使用Tensorflow"></a>使用Tensorflow</h5><ul>
+<li>TF-serving</li>
+<li>Tensorflow java/C++/python api，自定义服务上线</li>
+<li>转成uff模型，tensorRT上线 </li>
+</ul>
+<h5 id="使用Pytorch"><a href="#使用Pytorch" class="headerlink" title="使用Pytorch"></a>使用Pytorch</h5><ul>
+<li>Pytorch python等api，自定义服务上线</li>
+<li>转成tensorflow模型，然后参考tensorflow上线方式</li>
+<li>转成onnx模型，tensorRT上线</li>
+</ul>
+<p>TensorRT：<a href="https://zhuanlan.zhihu.com/p/88318324" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/88318324</a></p>
+]]></content>
+      <categories>
+        <category>ML框架</category>
+      </categories>
+      <tags>
+        <tag>Tensorflow</tag>
+        <tag>Pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端开发环境配置</title>
     <url>/2020/06/20/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Step-1-VS-code"><a href="#Step-1-VS-code" class="headerlink" title="Step 1 - VS code"></a>Step 1 - VS code</h2><ul>
@@ -273,6 +273,25 @@
       <tags>
         <tag>前端</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Uplift model理解</title>
+    <url>/2022/10/25/%E6%90%9C%E6%8E%A8%E5%B9%BF/uplift%20model%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在一些文档中看到了uplift模型，此类模型在一些用户增长(营销发券)，甚至广告模型中都有用到，因此做了一些查阅，发现确实是个蛮有意思的方向，从另一个切入点来建模广告营销场景，整理成blog记录下。</p>
+<p><a href="https://www.6aiq.com/article/1585121131929" target="_blank" rel="noopener">参考文献</a></p>
+<h1 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h1><p><img src="https://tva1.sinaimg.cn/large/008vxvgGgy1h7hom6obdxj30mg0gydh0.jpg" alt="image-20221025174957436" style="zoom: 67%;"></p>
+<p>以cvr模型为例，传统的cvr模型预估的是假设给用户曝光广告后的转化率，而没有考虑假设不曝光广告的自然转化率，uplift建模的则是该差值，并且期望找到的用户群体为：未曝光则不转化，曝光后则转化的这类群体。</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>uplift算法有多种：</p>
+<ul>
+<li>two model: 本质上还是两个cvr模型，一个是有曝光样本，一个是自然样本，建模两个模型，然后差值算uplift</li>
+<li>one model: 本质还是建模cvr，只是将曝光与否作为特征送入模型</li>
+<li>基于树模型的uplift model: 直接建模uplift，方法比较巧妙，借鉴了决策树的思想，期望让分裂的左右子树的uplift差异尽可能大。</li>
+</ul>
+<p>评估：auuc方法</p>
+]]></content>
+      <categories>
+        <category>搜推广</category>
+      </categories>
   </entry>
   <entry>
     <title>Online Learning中的优化器</title>
@@ -306,25 +325,6 @@
 <p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t8os84hj211m07m74v.jpg" alt="image-20201027190434418" style="zoom:40%;"></p>
 <h5 id="FTRL-Follow-The-Regularized-Leader"><a href="#FTRL-Follow-The-Regularized-Leader" class="headerlink" title="FTRL (Follow The Regularized Leader)"></a>FTRL (Follow The Regularized Leader)</h5><p>也是我们目前通常在用的方法，结合了FOBOS和RDA两者的优势。</p>
 <p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rul5a3oj21d60l0dj9.jpg" alt="image-20201027190550177" style="zoom:40%;"></p>
-]]></content>
-      <categories>
-        <category>搜推广</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Uplift model理解</title>
-    <url>/2022/10/25/%E6%90%9C%E6%8E%A8%E5%B9%BF/uplift%20model%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在一些文档中看到了uplift模型，此类模型在一些用户增长(营销发券)，甚至广告模型中都有用到，因此做了一些查阅，发现确实是个蛮有意思的方向，从另一个切入点来建模广告营销场景，整理成blog记录下。</p>
-<p><a href="https://www.6aiq.com/article/1585121131929" target="_blank" rel="noopener">参考文献</a></p>
-<h1 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h1><p><img src="https://tva1.sinaimg.cn/large/008vxvgGgy1h7hom6obdxj30mg0gydh0.jpg" alt="image-20221025174957436" style="zoom: 67%;"></p>
-<p>以cvr模型为例，传统的cvr模型预估的是假设给用户曝光广告后的转化率，而没有考虑假设不曝光广告的自然转化率，uplift建模的则是该差值，并且期望找到的用户群体为：未曝光则不转化，曝光后则转化的这类群体。</p>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>uplift算法有多种：</p>
-<ul>
-<li>two model: 本质上还是两个cvr模型，一个是有曝光样本，一个是自然样本，建模两个模型，然后差值算uplift</li>
-<li>one model: 本质还是建模cvr，只是将曝光与否作为特征送入模型</li>
-<li>基于树模型的uplift model: 直接建模uplift，方法比较巧妙，借鉴了决策树的思想，期望让分裂的左右子树的uplift差异尽可能大。</li>
-</ul>
-<p>评估：auuc方法</p>
 ]]></content>
       <categories>
         <category>搜推广</category>
@@ -373,6 +373,53 @@
 ]]></content>
       <categories>
         <category>搜推广</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>理解召回和LTR</title>
+    <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>参考文章：<a href="https://mp.weixin.qq.com/s/E5a4TF9P2aMrF6gVatAF8A" target="_blank" rel="noopener">万变不离其宗：用统一框架理解向量化召回</a></p>
+<h1 id="召回本质"><a href="#召回本质" class="headerlink" title="召回本质"></a>召回本质</h1><p>召回本质上和排序其实存在很大的区别：</p>
+<ul>
+<li>召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。</li>
+<li>召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。</li>
+</ul>
+<h1 id="召回的几种类型"><a href="#召回的几种类型" class="headerlink" title="召回的几种类型"></a>召回的几种类型</h1><ul>
+<li>i2i:拿用户喜欢的item找相似item。就比如work2vec这种，或者图构建item embeding这种，都是拿用户的点击序列去构建，然后计算item emb，然后找到用户喜欢的item的相似的emb。</li>
+<li>u2i：直接给user找他可能喜欢的item。这种是目前应用最多的，例如基于DNN的FM双塔模型，就是用户一个emb，item一个emb，最后内积计算得分。</li>
+<li>u2u2i:给user查找相似user，再把相似user喜欢的item推出去。</li>
+</ul>
+<h1 id="召回的负采样"><a href="#召回的负采样" class="headerlink" title="召回的负采样"></a>召回的负采样</h1><p>召回负采样的做法不仅仅只是随机采样，一般会有类似work2vec的做法，对热门item正样本降权，负样本加权这种操作。</p>
+<p>负采样也分为easy negaitve和hard negative两种：</p>
+<ul>
+<li>easy negaitve ：随机采样一般就是这种</li>
+<li>Hard negaive ：比如正样本是狗，猫、大象明显是easy negative，而狼就和狗有几分相似，但又不是的称为hard negative。一般做法有基于业务逻辑自己加，还有FB的做法：上一个召回模型预估得分的中间位置作为下一个召回模型的hard negative。</li>
+</ul>
+<h1 id="LTR"><a href="#LTR" class="headerlink" title="LTR"></a>LTR</h1><p>Learning to Rank其实是针对排序算法的统称，针对loss function，可分为三种：</p>
+<h3 id="Pointwise"><a href="#Pointwise" class="headerlink" title="Pointwise"></a>Pointwise</h3><p>最为常见，像精排这种明确的正负样本，直接binary cross entropy计算label 准确度。缺点是没有关注到排序信息。</p>
+<h3 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h3><p>更关系两个样本的排序顺序，一般像召回任务很多都是用pairwise，常见的几种loss有：</p>
+<h4 id="sampled-softmax-loss"><a href="#sampled-softmax-loss" class="headerlink" title="sampled softmax loss"></a>sampled softmax loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg" alt="image-20210806211523927"></p>
+<p>这个就像word2vec里的计算的sampled softmax loss，值得注意的是，这个loss做梯度更新的方式，每一个样本喂进去之后都需要做负采样(会有个辅助emb矩阵，得到负样本分母的emb)，然后计算loss，然后更新梯度，不像常见的交叉熵的梯度更新。</p>
+<h4 id="margin-hinge-loss"><a href="#margin-hinge-loss" class="headerlink" title="margin hinge loss"></a>margin hinge loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rm81ox5j219u056754.jpg" alt="image-20210806211842642"></p>
+<h4 id="BPR-Loss"><a href="#BPR-Loss" class="headerlink" title="BPR Loss"></a>BPR Loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rmbwy31j21co09cdhj.jpg" alt="image-20210806211857913"></p>
+<p>对于后面两种loss，样本都需要是三元形式，《u , item+,item-》，后面两个item都要过一遍nn得到emb。</p>
+]]></content>
+      <categories>
+        <category>搜推广</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>伪多项式时间复杂度</title>
+    <url>/2020/07/20/%E6%95%B0%E5%AD%A6/%E4%BC%AA%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>背包问题是典型的NPC问题，用动规求解的话，其复杂度为$O(mn)$，m为物品个数，n为背包大小。所以你可能奇怪，为什么这个复杂度看着明明是多项式时间，但为什么是NP问题？</p>
+<p>这里就涉及到了伪多项式时间复杂度这个概念，请参考<a href="https://www.zhihu.com/question/20013122/answer/44460397" target="_blank" rel="noopener">知乎回答</a>。</p>
+<p>一句话归纳：</p>
+<blockquote>
+<p>​    如果时间复杂度和输入数据的本身数值大小有关(传统公式里输入数据只代表规模，例如n个int整数)，那就是伪时间复杂度。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数学</category>
       </categories>
   </entry>
   <entry>
@@ -635,6 +682,91 @@
       </tags>
   </entry>
   <entry>
+    <title>内积、叉积和外积</title>
+    <url>/2021/01/08/%E6%95%B0%E5%AD%A6/%E5%86%85%E7%A7%AF%E3%80%81%E5%8F%89%E7%A7%AF%E5%92%8C%E5%A4%96%E7%A7%AF/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h3><p>首先介绍点积(dot product)，点积是一种接受两个等长的数字序列（通常是坐标向量）、返回单个数字的代数运算。</p>
+<p>而内积(inner product)就是两个笛卡尔坐标向量的点积。</p>
+<p>符号：$a \cdot b $</p>
+<h3 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h3><p>叉积(cross product)，又称向量积(vector product)。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeeg3kivj31c405q3zj.jpg" alt="image-20210108170711278"></p>
+<h3 id="外积"><a href="#外积" class="headerlink" title="外积"></a>外积</h3><p>首先介绍张量积(tensor product)，记为$\otimes$，可以应用于不同的上下文中如<a href="https://zh.wikipedia.org/wiki/向量" target="_blank" rel="noopener">向量</a>、<a href="https://zh.wikipedia.org/wiki/矩阵" target="_blank" rel="noopener">矩阵</a>、<a href="https://zh.wikipedia.org/wiki/张量" target="_blank" rel="noopener">张量</a>、<a href="https://zh.wikipedia.org/wiki/向量空间" target="_blank" rel="noopener">向量空间</a>、<a href="https://zh.wikipedia.org/wiki/代数" target="_blank" rel="noopener">代数</a>、<a href="https://zh.wikipedia.org/wiki/拓扑向量空间" target="_blank" rel="noopener">拓扑向量空间</a>和<a href="https://zh.wikipedia.org/wiki/模" target="_blank" rel="noopener">模</a> ，表示最一般的双线性运算。</p>
+<p>在矩阵中就是克罗内克积(Kronecker product)：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeihxb8aj30eu05uglq.jpg" alt="image-20210108171101862" style="zoom:50%;"></p>
+<p>在向量中就是外积(outer product)：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeivje1ej30nu068mxq.jpg" alt="image-20210108171128823" style="zoom:50%;"></p>
+<h3 id="哈达玛积"><a href="#哈达玛积" class="headerlink" title="哈达玛积"></a>哈达玛积</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNly1gry3kg98e4j30ve024wet.jpg" alt="image-20210628171415434"></p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于凸、P和NP</title>
+    <url>/2019/08/27/%E6%95%B0%E5%AD%A6/%E5%85%B3%E4%BA%8E%E5%87%B8%E3%80%81P%E5%92%8CNP/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
+<p>优化问题本质上分为凸和非凸两大类。</p>
+</blockquote>
+<p>凸问题有着巨大的优势：</p>
+<ul>
+<li><p>成熟有效的求解算法求得全局最优解。(内点法、椭圆法、梯度下降法等)</p>
+</li>
+<li><p>计算复杂度基本上是多项式的，基本是P的。</p>
+</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhkonh5dj30ui02jmy3.jpg" alt="image-20200605162015414"> </p>
+<p>非凸问题则求解比较困难，实际上大部分的解法都是将非凸问题转化为凸问题。</p>
+<blockquote>
+<p>P，NP，NP-hard， NPC则是计算复杂度的表示。</p>
+</blockquote>
+<ul>
+<li>P代表多项式内可求解的问题</li>
+<li>NP代表多项式内可验证的问题</li>
+<li>NP-hard表示所有NP问题都可以归约到该问题的问题</li>
+<li>NPC表示即是NP-hard，本身又是NP问题的问题</li>
+</ul>
+<p>如果证明P=NP，其实意味着世界上所有的密码系统都被破解了。</p>
+<p>因为加密是P的，解密验证是NP的，如果P=NP，说明解密也可以是P的，也就是任何解密算法都可以是多项式内求解的，那么解密就没有时间成本了，随意破解了。</p>
+<blockquote>
+<p>组合优化、混合整数规划等问题一般都是NP-hard问题，例如TSP，背包问题、汉密尔顿回路问题等等。</p>
+</blockquote>
+<p>因为P应该不等NP，这种问题也就是说很难找到多项式时间内的求解算法得到最优解。现在对这些算法的最优求解一般都是指数或者阶乘复杂度的，可参考acm题，算法的话有分支定界之类的。</p>
+<p>但如果想要求解近似解，就可以是多项式时间的算法，例如先松弛成凸问题啊之类的。</p>
+<blockquote>
+<p>以前一直以为非凸问题就是没有多项式时间的算法求最优解，其实我理解错了，非凸问题很多都是可以转成凸问题的，例如log-log convex等问题。</p>
+<p>典型的一些凸函数：</p>
+</blockquote>
+<ul>
+<li>仿射函数</li>
+<li>绝对值</li>
+<li>最大值</li>
+<li>p！= 0的所有范数</li>
+<li>指数函数</li>
+<li>a&gt; 1或者 &lt;0的幂函数</li>
+<li>xlogx</li>
+<li>以及一系列的保凸运算。。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhmvitpaj30gp07i3zh.jpg" alt="image-20200605162217125"> </p>
+<blockquote>
+<p>典型的凸问题(等式约束一定要是仿射的！)：</p>
+</blockquote>
+<ul>
+<li>线性规划 （LP）</li>
+<li>二次规划  (QP)</li>
+<li>半正定规划(不等式约束为LMI，线性矩阵不等式)(SDP)</li>
+<li>锥规划(CP)</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhoq7muvj30z50j840g.jpg" alt="image-20200605162259121" style="zoom: 50%;"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhoovacoj30ku0dz0u6.jpg" alt="image-20200605162313667" style="zoom:67%;"></p>
+<blockquote>
+<p>对称的正定矩阵一定代表了是个凸锥。</p>
+</blockquote>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhopmtpvj30jr0djgmu.jpg" alt="image-20200605162344236"></p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>计算广告基础概念</title>
     <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="广告类型"><a href="#广告类型" class="headerlink" title="广告类型"></a>广告类型</h3><ul>
@@ -711,138 +843,6 @@
       </categories>
   </entry>
   <entry>
-    <title>理解召回和LTR</title>
-    <url>/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>参考文章：<a href="https://mp.weixin.qq.com/s/E5a4TF9P2aMrF6gVatAF8A" target="_blank" rel="noopener">万变不离其宗：用统一框架理解向量化召回</a></p>
-<h1 id="召回本质"><a href="#召回本质" class="headerlink" title="召回本质"></a>召回本质</h1><p>召回本质上和排序其实存在很大的区别：</p>
-<ul>
-<li>召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。</li>
-<li>召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。</li>
-</ul>
-<h1 id="召回的几种类型"><a href="#召回的几种类型" class="headerlink" title="召回的几种类型"></a>召回的几种类型</h1><ul>
-<li>i2i:拿用户喜欢的item找相似item。就比如work2vec这种，或者图构建item embeding这种，都是拿用户的点击序列去构建，然后计算item emb，然后找到用户喜欢的item的相似的emb。</li>
-<li>u2i：直接给user找他可能喜欢的item。这种是目前应用最多的，例如基于DNN的FM双塔模型，就是用户一个emb，item一个emb，最后内积计算得分。</li>
-<li>u2u2i:给user查找相似user，再把相似user喜欢的item推出去。</li>
-</ul>
-<h1 id="召回的负采样"><a href="#召回的负采样" class="headerlink" title="召回的负采样"></a>召回的负采样</h1><p>召回负采样的做法不仅仅只是随机采样，一般会有类似work2vec的做法，对热门item正样本降权，负样本加权这种操作。</p>
-<p>负采样也分为easy negaitve和hard negative两种：</p>
-<ul>
-<li>easy negaitve ：随机采样一般就是这种</li>
-<li>Hard negaive ：比如正样本是狗，猫、大象明显是easy negative，而狼就和狗有几分相似，但又不是的称为hard negative。一般做法有基于业务逻辑自己加，还有FB的做法：上一个召回模型预估得分的中间位置作为下一个召回模型的hard negative。</li>
-</ul>
-<h1 id="LTR"><a href="#LTR" class="headerlink" title="LTR"></a>LTR</h1><p>Learning to Rank其实是针对排序算法的统称，针对loss function，可分为三种：</p>
-<h3 id="Pointwise"><a href="#Pointwise" class="headerlink" title="Pointwise"></a>Pointwise</h3><p>最为常见，像精排这种明确的正负样本，直接binary cross entropy计算label 准确度。缺点是没有关注到排序信息。</p>
-<h3 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h3><p>更关系两个样本的排序顺序，一般像召回任务很多都是用pairwise，常见的几种loss有：</p>
-<h4 id="sampled-softmax-loss"><a href="#sampled-softmax-loss" class="headerlink" title="sampled softmax loss"></a>sampled softmax loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg" alt="image-20210806211523927"></p>
-<p>这个就像word2vec里的计算的sampled softmax loss，值得注意的是，这个loss做梯度更新的方式，每一个样本喂进去之后都需要做负采样(会有个辅助emb矩阵，得到负样本分母的emb)，然后计算loss，然后更新梯度，不像常见的交叉熵的梯度更新。</p>
-<h4 id="margin-hinge-loss"><a href="#margin-hinge-loss" class="headerlink" title="margin hinge loss"></a>margin hinge loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rm81ox5j219u056754.jpg" alt="image-20210806211842642"></p>
-<h4 id="BPR-Loss"><a href="#BPR-Loss" class="headerlink" title="BPR Loss"></a>BPR Loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rmbwy31j21co09cdhj.jpg" alt="image-20210806211857913"></p>
-<p>对于后面两种loss，样本都需要是三元形式，《u , item+,item-》，后面两个item都要过一遍nn得到emb。</p>
-]]></content>
-      <categories>
-        <category>搜推广</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>伪多项式时间复杂度</title>
-    <url>/2020/07/20/%E6%95%B0%E5%AD%A6/%E4%BC%AA%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>背包问题是典型的NPC问题，用动规求解的话，其复杂度为$O(mn)$，m为物品个数，n为背包大小。所以你可能奇怪，为什么这个复杂度看着明明是多项式时间，但为什么是NP问题？</p>
-<p>这里就涉及到了伪多项式时间复杂度这个概念，请参考<a href="https://www.zhihu.com/question/20013122/answer/44460397" target="_blank" rel="noopener">知乎回答</a>。</p>
-<p>一句话归纳：</p>
-<blockquote>
-<p>​    如果时间复杂度和输入数据的本身数值大小有关(传统公式里输入数据只代表规模，例如n个int整数)，那就是伪时间复杂度。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于凸、P和NP</title>
-    <url>/2019/08/27/%E6%95%B0%E5%AD%A6/%E5%85%B3%E4%BA%8E%E5%87%B8%E3%80%81P%E5%92%8CNP/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
-<p>优化问题本质上分为凸和非凸两大类。</p>
-</blockquote>
-<p>凸问题有着巨大的优势：</p>
-<ul>
-<li><p>成熟有效的求解算法求得全局最优解。(内点法、椭圆法、梯度下降法等)</p>
-</li>
-<li><p>计算复杂度基本上是多项式的，基本是P的。</p>
-</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhkonh5dj30ui02jmy3.jpg" alt="image-20200605162015414"> </p>
-<p>非凸问题则求解比较困难，实际上大部分的解法都是将非凸问题转化为凸问题。</p>
-<blockquote>
-<p>P，NP，NP-hard， NPC则是计算复杂度的表示。</p>
-</blockquote>
-<ul>
-<li>P代表多项式内可求解的问题</li>
-<li>NP代表多项式内可验证的问题</li>
-<li>NP-hard表示所有NP问题都可以归约到该问题的问题</li>
-<li>NPC表示即是NP-hard，本身又是NP问题的问题</li>
-</ul>
-<p>如果证明P=NP，其实意味着世界上所有的密码系统都被破解了。</p>
-<p>因为加密是P的，解密验证是NP的，如果P=NP，说明解密也可以是P的，也就是任何解密算法都可以是多项式内求解的，那么解密就没有时间成本了，随意破解了。</p>
-<blockquote>
-<p>组合优化、混合整数规划等问题一般都是NP-hard问题，例如TSP，背包问题、汉密尔顿回路问题等等。</p>
-</blockquote>
-<p>因为P应该不等NP，这种问题也就是说很难找到多项式时间内的求解算法得到最优解。现在对这些算法的最优求解一般都是指数或者阶乘复杂度的，可参考acm题，算法的话有分支定界之类的。</p>
-<p>但如果想要求解近似解，就可以是多项式时间的算法，例如先松弛成凸问题啊之类的。</p>
-<blockquote>
-<p>以前一直以为非凸问题就是没有多项式时间的算法求最优解，其实我理解错了，非凸问题很多都是可以转成凸问题的，例如log-log convex等问题。</p>
-<p>典型的一些凸函数：</p>
-</blockquote>
-<ul>
-<li>仿射函数</li>
-<li>绝对值</li>
-<li>最大值</li>
-<li>p！= 0的所有范数</li>
-<li>指数函数</li>
-<li>a&gt; 1或者 &lt;0的幂函数</li>
-<li>xlogx</li>
-<li>以及一系列的保凸运算。。</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhmvitpaj30gp07i3zh.jpg" alt="image-20200605162217125"> </p>
-<blockquote>
-<p>典型的凸问题(等式约束一定要是仿射的！)：</p>
-</blockquote>
-<ul>
-<li>线性规划 （LP）</li>
-<li>二次规划  (QP)</li>
-<li>半正定规划(不等式约束为LMI，线性矩阵不等式)(SDP)</li>
-<li>锥规划(CP)</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhoq7muvj30z50j840g.jpg" alt="image-20200605162259121" style="zoom: 50%;"></p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhoovacoj30ku0dz0u6.jpg" alt="image-20200605162313667" style="zoom:67%;"></p>
-<blockquote>
-<p>对称的正定矩阵一定代表了是个凸锥。</p>
-</blockquote>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhopmtpvj30jr0djgmu.jpg" alt="image-20200605162344236"></p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>内积、叉积和外积</title>
-    <url>/2021/01/08/%E6%95%B0%E5%AD%A6/%E5%86%85%E7%A7%AF%E3%80%81%E5%8F%89%E7%A7%AF%E5%92%8C%E5%A4%96%E7%A7%AF/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h3><p>首先介绍点积(dot product)，点积是一种接受两个等长的数字序列（通常是坐标向量）、返回单个数字的代数运算。</p>
-<p>而内积(inner product)就是两个笛卡尔坐标向量的点积。</p>
-<p>符号：$a \cdot b $</p>
-<h3 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h3><p>叉积(cross product)，又称向量积(vector product)。</p>
-<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeeg3kivj31c405q3zj.jpg" alt="image-20210108170711278"></p>
-<h3 id="外积"><a href="#外积" class="headerlink" title="外积"></a>外积</h3><p>首先介绍张量积(tensor product)，记为$\otimes$，可以应用于不同的上下文中如<a href="https://zh.wikipedia.org/wiki/向量" target="_blank" rel="noopener">向量</a>、<a href="https://zh.wikipedia.org/wiki/矩阵" target="_blank" rel="noopener">矩阵</a>、<a href="https://zh.wikipedia.org/wiki/张量" target="_blank" rel="noopener">张量</a>、<a href="https://zh.wikipedia.org/wiki/向量空间" target="_blank" rel="noopener">向量空间</a>、<a href="https://zh.wikipedia.org/wiki/代数" target="_blank" rel="noopener">代数</a>、<a href="https://zh.wikipedia.org/wiki/拓扑向量空间" target="_blank" rel="noopener">拓扑向量空间</a>和<a href="https://zh.wikipedia.org/wiki/模" target="_blank" rel="noopener">模</a> ，表示最一般的双线性运算。</p>
-<p>在矩阵中就是克罗内克积(Kronecker product)：</p>
-<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeihxb8aj30eu05uglq.jpg" alt="image-20210108171101862" style="zoom:50%;"></p>
-<p>在向量中就是外积(outer product)：</p>
-<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgeivje1ej30nu068mxq.jpg" alt="image-20210108171128823" style="zoom:50%;"></p>
-<h3 id="哈达玛积"><a href="#哈达玛积" class="headerlink" title="哈达玛积"></a>哈达玛积</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNly1gry3kg98e4j30ve024wet.jpg" alt="image-20210628171415434"></p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>可导和可微</title>
     <url>/2019/08/26/%E6%95%B0%E5%AD%A6/%E5%8F%AF%E5%AF%BC%E5%92%8C%E5%8F%AF%E5%BE%AE/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一般可导指可偏导，可微指可全微分，也就是各个方向都可偏导，存在一个与其相切的平面。</p>
@@ -867,26 +867,6 @@
 <ul>
 <li>对于凸问题，KKT条件满足，则全局最优点，KKT条件是充分必要条件；对于优化问题，KKT是必要条件。</li>
 </ul>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>整数规划中的分支定界和分支切割</title>
-    <url>/2019/08/28/%E6%95%B0%E5%AD%A6/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%E4%B8%AD%E7%9A%84%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E5%92%8C%E5%88%86%E6%94%AF%E5%88%87%E5%89%B2/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li><p>branch and bound： 分支定界</p>
-</li>
-<li><p>branch and cut：分支切割</p>
-</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhgs60g1j30lo0det98.jpg" alt="image-20200605161627142"></p>
-<p>例如一个问题：</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhihzolmj30d80ao40p.jpg" alt="image-20200605161805736" style="zoom: 50%;"></p>
-<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200605161826739.png" alt="image-20200605161826739" style="zoom:67%;"></p>
-<p>branch and cut： 在每个node上寻找切割不等式，最后的得到的最优解很可能大于上界，该node就被切割掉了。</p>
-<p>如何选址cut不等式就是一门学问了。。有实数切割UserCut，也有整数切割LazyCut</p>
 ]]></content>
       <categories>
         <category>数学</category>
@@ -947,6 +927,26 @@
       </tags>
   </entry>
   <entry>
+    <title>整数规划中的分支定界和分支切割</title>
+    <url>/2019/08/28/%E6%95%B0%E5%AD%A6/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%E4%B8%AD%E7%9A%84%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E5%92%8C%E5%88%86%E6%94%AF%E5%88%87%E5%89%B2/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li><p>branch and bound： 分支定界</p>
+</li>
+<li><p>branch and cut：分支切割</p>
+</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhgs60g1j30lo0det98.jpg" alt="image-20200605161627142"></p>
+<p>例如一个问题：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhihzolmj30d80ao40p.jpg" alt="image-20200605161805736" style="zoom: 50%;"></p>
+<p><img src="/Users/didi/Library/Application Support/typora-user-images/image-20200605161826739.png" alt="image-20200605161826739" style="zoom:67%;"></p>
+<p>branch and cut： 在每个node上寻找切割不等式，最后的得到的最优解很可能大于上界，该node就被切割掉了。</p>
+<p>如何选址cut不等式就是一门学问了。。有实数切割UserCut，也有整数切割LazyCut</p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>XGBoost和LightGBM调参</title>
     <url>/2018/12/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/Xgboost%E5%92%8CLightGBM%E8%B0%83%E5%8F%82/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>有个应用上的重大区别：</p>
@@ -964,6 +964,14 @@
       <tags>
         <tag>XGBoost</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>关于PCA和SVD分解</title>
+    <url>/2020/04/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8EPCA%E5%92%8CSVD%E5%88%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
   </entry>
   <entry>
     <title>XGBoost调参</title>
@@ -989,26 +997,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于模型选型</title>
-    <url>/2019/05/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E5%9E%8B/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>模型可以分为高偏差/低方差和低偏差/高方差两种。前者一般指简单的模型，如生成式模型(NB)，后者一般指复杂模型，如判别式模型之类的。</p>
-<p>在学习曲线上来看：</p>
-<p>高偏差/低方差：训练样本很少的情况下就可以达到渐进线(低方差)，但是偏差较高，持续增加样本也没用。所以小样本的情况，建议用该类模型。</p>
-<p>低偏差/高方差：训练样本很少时，容易过拟合，无法达到渐进线。当训练样本变多时，训练曲线和测试曲线达到渐进线，此时偏差又低，所以该模型适合大样本情况。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于PCA和SVD分解</title>
-    <url>/2020/04/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8EPCA%E5%92%8CSVD%E5%88%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-  </entry>
-  <entry>
     <title>关于特征值分布不均匀的问题</title>
     <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E5%B8%83%E4%B8%8D%E5%9D%87%E5%8C%80%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前city_id作为特征后导致模型预测结果差异很大这一点，一直让我耿耿于怀，仔细思考后，其实可以这样解释：</p>
@@ -1020,6 +1008,27 @@
 <li><p>之前的结果很大一部分原因，还是类别分布不均匀导致的！杭州的值普遍大且样本多，宁波的值普遍小且样本少，导致结果值偏大，这就类似与分类问题正样本少，负样本多，导致结果偏向于为负。</p>
 </li>
 </ul>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于特征归一化的一些理解</title>
+    <url>/2018/11/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>归一化会加快梯度下降法的收敛速度了</strong></p>
+<p>这个是显然的，不多说了。</p>
+<p>但是这里需要注意的是，像LR这种单纯的梯度下降法求解，只是增加收敛速度罢了，并不会让解更加精确，因为最终这个最优解的系数值是和特征值比例成反比的。</p>
+<p><strong>归一化有可能会提升算法精度</strong></p>
+<p>注意，这里是可能，因为就像前文所有，对于LR，是不会提升精度的，但是归一化对某些模型也是会提升精度的：</p>
+<ul>
+<li>对于KNN(跟梯度下降法无法)，需要计算欧式距离，如果不归一化，那么欧式距离就主要取决于大的特征值，从而影响精度。</li>
+<li>对于有L1,L2正则的算法，如果不做归一化，那么系数值会受到特征值大小的影响，从而导致值小的特征对应的系数大，从而导致该特征受到影响。</li>
+</ul>
+<p>树模型不需要归一化。。。</p>
 ]]></content>
       <categories>
         <category>机器学习</category>
@@ -1054,27 +1063,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于特征归一化的一些理解</title>
-    <url>/2018/11/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>归一化会加快梯度下降法的收敛速度了</strong></p>
-<p>这个是显然的，不多说了。</p>
-<p>但是这里需要注意的是，像LR这种单纯的梯度下降法求解，只是增加收敛速度罢了，并不会让解更加精确，因为最终这个最优解的系数值是和特征值比例成反比的。</p>
-<p><strong>归一化有可能会提升算法精度</strong></p>
-<p>注意，这里是可能，因为就像前文所有，对于LR，是不会提升精度的，但是归一化对某些模型也是会提升精度的：</p>
-<ul>
-<li>对于KNN(跟梯度下降法无法)，需要计算欧式距离，如果不归一化，那么欧式距离就主要取决于大的特征值，从而影响精度。</li>
-<li>对于有L1,L2正则的算法，如果不做归一化，那么系数值会受到特征值大小的影响，从而导致值小的特征对应的系数大，从而导致该特征受到影响。</li>
-</ul>
-<p>树模型不需要归一化。。。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>特征工程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>损失函数之交叉熵和MSE</title>
     <url>/2019/11/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B9%8B%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8CMSE/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>一般神经网络都是用交叉熵，回归问题用MSE，分类问题用交叉熵。</p>
@@ -1084,14 +1072,6 @@
 <p>cross entropy : A</p>
 <p>另外，一般推动神经网络BP算法的时候，用的都是MSE，如果用cross entry和softmax的话，会比较复杂一点。</p>
 ]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>最大熵与最大似然估计</title>
-    <url>/2020/05/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%80%E5%A4%A7%E7%86%B5%E4%B8%8E%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       <categories>
         <category>机器学习</category>
       </categories>
@@ -1126,6 +1106,14 @@ g(z) =
       </tags>
   </entry>
   <entry>
+    <title>最大熵与最大似然估计</title>
+    <url>/2020/05/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%80%E5%A4%A7%E7%86%B5%E4%B8%8E%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
     <title>特征是否越多越好？</title>
     <url>/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E6%98%AF%E5%90%A6%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>树模型对冗余特征鲁棒性强，树模型有特征选择能力。</p>
@@ -1143,6 +1131,18 @@ g(z) =
     <title>生成模型和判别模型的直观解释</title>
     <url>/2019/11/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://www.cnblogs.com/tenosdoit/p/3721074.html" target="_blank" rel="noopener">https://www.cnblogs.com/tenosdoit/p/3721074.html</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于模型选型</title>
+    <url>/2019/05/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E5%9E%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>模型可以分为高偏差/低方差和低偏差/高方差两种。前者一般指简单的模型，如生成式模型(NB)，后者一般指复杂模型，如判别式模型之类的。</p>
+<p>在学习曲线上来看：</p>
+<p>高偏差/低方差：训练样本很少的情况下就可以达到渐进线(低方差)，但是偏差较高，持续增加样本也没用。所以小样本的情况，建议用该类模型。</p>
+<p>低偏差/高方差：训练样本很少时，容易过拟合，无法达到渐进线。当训练样本变多时，训练曲线和测试曲线达到渐进线，此时偏差又低，所以该模型适合大样本情况。</p>
 ]]></content>
       <categories>
         <category>机器学习</category>
@@ -1289,17 +1289,6 @@ g(z) =
       </tags>
   </entry>
   <entry>
-    <title>ML2020笔记-基于RNN的生成模型和Attention</title>
-    <url>/2020/04/03/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ERNN%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8CAttention/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>李宏毅-ML2020</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RNN的BPTT</title>
     <url>/2021/01/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN%E7%9A%84BPTT/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>RNN采用的梯度更新策略是BPTT，梯度分为两部分：</p>
@@ -1428,6 +1417,17 @@ L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}</script><p>其实你仔细一看�
         <category>深度学习</category>
         <category>强化学习</category>
       </categories>
+  </entry>
+  <entry>
+    <title>ML2020笔记-基于RNN的生成模型和Attention</title>
+    <url>/2020/04/03/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/ML2020%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ERNN%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8CAttention/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>李宏毅-ML2020</tag>
+      </tags>
   </entry>
   <entry>
     <title>Github代理加速</title>
@@ -1986,6 +1986,50 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </categories>
   </entry>
   <entry>
+    <title>hdfs文件理解</title>
+    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hdfs%E6%96%87%E4%BB%B6%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>HDFS是一个分布式的文件系统，利用集群来存储海量数据。hdfs路径是一个虚拟节点，下面的多个文件可能放在多台机器上，具体放在哪台机器等信息由name node节点维护。</p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>Hive</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Spark学习笔记</title>
+    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Kafka/Kafka%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是一个分布式的日志系统，是实时任务依赖的主流数据源。注意，数据本身同样是存储在hdfs上的。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg" alt="image-20201110211236165" style="zoom:50%;"></p>
+<p>1、话题（Topic）：是特定类型的消息流。消息是字节的有效负载（Payload），话题是消息的分类名或种子（Feed）名；</p>
+<p>2、生产者（Producer）：是能够发布消息到话题的任何对象；</p>
+<p>3、服务代理（Broker）：一个broker就是一台机器，多台broker组成集群。</p>
+<p>4、消费者（Consumer）：可以订阅一个或多个话题，并从Broker拉数据，从而消费这些已发布的消息；</p>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>理解存储最主要是理解partition的概念。其实Apache体系里partition的概念都比较类似（比如spark中的partition），都是将数据进行分片，一般分片的逻辑就比如是按照key值来划分，同一个key值分到同一个partition。</p>
+<p>Kafka里也是将topic数据进行partition，当然每个partition的数据还是按照顺序写入的，然后将parition分配到不同broker上，partition数目一般设置成broker的倍数，这样能够让每个broker的partition均匀一点。</p>
+<p>kafka的partition还会备份，leader作为主要的，follower partition放在其他broker上。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg" alt="image-20201110212007002" style="zoom:50%;"> </p>
+<p>具体存储的日志文件形式是这样的：</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg" alt="image-20201110212109581" style="zoom:50%;"></p>
+<ul>
+<li><p>每个topic下的partition都有一个文件夹。文件夹中的文件类型有.log数据文件，.index偏移量索引文件和.timeindex时间索引文件。</p>
+</li>
+<li><p>日志文件会被分为多个LogSegment文件，一般分段文件是1G。文件名字按照基准偏移量命名。</p>
+</li>
+</ul>
+<p>介绍下具体的三个文件：</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg" alt="image-20201110212424025" style="zoom:50%;"></p>
+<ul>
+<li>log文件：真实的日志数据文件，存放消息payload</li>
+<li>index文件：偏移量索引文件，重要的稀疏索引文件。因为如果直接去log文件里顺序查找的话，效率太低。所以现在index文件里做粗筛，定位到大致范围，然后再去log文件里找，大大提升了效率。</li>
+<li>timeindex文件：时间戳索引文件的时间戳类型与日志数据文件中的时间类型是一致的，索引条目中的时间戳值及偏移量与日志数据文件中对应的字段值相同，Kafka也提供了通过时间戳索引来访问消息的方法。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>Kafka</category>
+      </categories>
+  </entry>
+  <entry>
     <title>hive建表时的format</title>
     <url>/2018/05/30/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hive%E5%BB%BA%E8%A1%A8%E6%97%B6%E7%9A%84format/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>hive建表时有三种指定，举例如下：</p>
@@ -2005,16 +2049,6 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
 <li>如果这个表纯粹是各个数据表之间的处理，那么建议写成举例形式，orc文件毕竟高效。</li>
 <li>如果这个表是从外部生成数据导入，例如python处理后生成数据导入，那么生成表是要指定分隔符： ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘分隔符’，下面两种指定不加。</li>
 </ul>
-]]></content>
-      <categories>
-        <category>大数据</category>
-        <category>Hive</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>hdfs文件理解</title>
-    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hdfs%E6%96%87%E4%BB%B6%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>HDFS是一个分布式的文件系统，利用集群来存储海量数据。hdfs路径是一个虚拟节点，下面的多个文件可能放在多台机器上，具体放在哪台机器等信息由name node节点维护。</p>
 ]]></content>
       <categories>
         <category>大数据</category>
@@ -2055,40 +2089,6 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       <categories>
         <category>大数据</category>
         <category>Flink</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Spark学习笔记</title>
-    <url>/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Kafka/Kafka%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是一个分布式的日志系统，是实时任务依赖的主流数据源。注意，数据本身同样是存储在hdfs上的。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg" alt="image-20201110211236165" style="zoom:50%;"></p>
-<p>1、话题（Topic）：是特定类型的消息流。消息是字节的有效负载（Payload），话题是消息的分类名或种子（Feed）名；</p>
-<p>2、生产者（Producer）：是能够发布消息到话题的任何对象；</p>
-<p>3、服务代理（Broker）：一个broker就是一台机器，多台broker组成集群。</p>
-<p>4、消费者（Consumer）：可以订阅一个或多个话题，并从Broker拉数据，从而消费这些已发布的消息；</p>
-<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>理解存储最主要是理解partition的概念。其实Apache体系里partition的概念都比较类似（比如spark中的partition），都是将数据进行分片，一般分片的逻辑就比如是按照key值来划分，同一个key值分到同一个partition。</p>
-<p>Kafka里也是将topic数据进行partition，当然每个partition的数据还是按照顺序写入的，然后将parition分配到不同broker上，partition数目一般设置成broker的倍数，这样能够让每个broker的partition均匀一点。</p>
-<p>kafka的partition还会备份，leader作为主要的，follower partition放在其他broker上。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg" alt="image-20201110212007002" style="zoom:50%;"> </p>
-<p>具体存储的日志文件形式是这样的：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg" alt="image-20201110212109581" style="zoom:50%;"></p>
-<ul>
-<li><p>每个topic下的partition都有一个文件夹。文件夹中的文件类型有.log数据文件，.index偏移量索引文件和.timeindex时间索引文件。</p>
-</li>
-<li><p>日志文件会被分为多个LogSegment文件，一般分段文件是1G。文件名字按照基准偏移量命名。</p>
-</li>
-</ul>
-<p>介绍下具体的三个文件：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg" alt="image-20201110212424025" style="zoom:50%;"></p>
-<ul>
-<li>log文件：真实的日志数据文件，存放消息payload</li>
-<li>index文件：偏移量索引文件，重要的稀疏索引文件。因为如果直接去log文件里顺序查找的话，效率太低。所以现在index文件里做粗筛，定位到大致范围，然后再去log文件里找，大大提升了效率。</li>
-<li>timeindex文件：时间戳索引文件的时间戳类型与日志数据文件中的时间类型是一致的，索引条目中的时间戳值及偏移量与日志数据文件中对应的字段值相同，Kafka也提供了通过时间戳索引来访问消息的方法。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>大数据</category>
-        <category>Kafka</category>
       </categories>
   </entry>
   <entry>
@@ -2292,6 +2292,44 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </tags>
   </entry>
   <entry>
+    <title>多进程，多线程以及spark的executor等概念</title>
+    <url>/2018/11/07/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A5%E5%8F%8Aspark%E7%9A%84executor%E7%AD%89%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在spark中，</p>
+<ul>
+<li>worker就是集群里可执行的机器，一个worker可以有多个executor。</li>
+<li>一个executor就是CPU，一个CPU可以有多个核。</li>
+<li>一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。</li>
+</ul>
+<p>关于CPU和核：</p>
+<ul>
+<li>CPU有单核CPU和多核CPU。</li>
+<li>一般来讲几个物理核就是几个线程，但是通过超线程技术，一个物理核可以分成多个虚拟核，从而使得一个核可以有多个线程。但是，一个核同时只能执行一个线程。</li>
+<li>并发：多个线程在单个核心运行，同一时间一个线程运行，系统不停切换线程，看起来像同时运行，实际上是线程不停切换。</li>
+<li>并行：多个线程在多个核心运行，线程同时运行。</li>
+<li>串行和并发的区别：虽然都是同时运行一个线程，但是串行就只能一个一个线程串行处理，就是一个结束了再起另一个线程，而并发本质上还是可以处理多个线程。</li>
+</ul>
+<p>选择多个单核CPU和单个多核CPU？</p>
+<ul>
+<li>多核CPU共享数据是通过CPU内部的总线，多个单核CPU共享数据是通过主板的总线，通信开销更大。</li>
+<li>多核CPU只需要一套芯片组，一套存储，而多个单核CPU，每一个CPU都需要有较为独立的电路支持，有自己的Cache。如果要多个耗内存的大型程序，还是需要多个单核CPU。</li>
+</ul>
+<p>多进程和多线程：</p>
+<ul>
+<li>进程是分配资源(包括了CPU、内存、磁盘IO等)的最小单位，线程是CPU分配和调度的单位。一个进程是由多个线程组成的。其实我理解无论线程和进程都是要分配资源的，但是进程涉及的资源分配更多，而线程只涉及CPU里的资源分配，进程更加宏观，线程更加精细。</li>
+<li>同一个进程内的多线程是共享资源的，因此数据共享非常方便，占用内存少，切换速度快，CPU利用率高，但是缺点就是编程较为复杂，涉及到锁之类的，同时一个线程挂导致整个进程挂，鲁棒性比较差。</li>
+<li>进程之间的通信是通过管道，信号之类的，数据要共享的话涉及到共享内存，比较复杂，同时占用内存多，切换复杂，CPU利用率低，但优点就是变成简单，且进程间不受影响，鲁棒性高。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhf5zn73gj30sm0ajq97.jpg" alt="image-20200605145655675"></p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+        <category>Spark</category>
+      </categories>
+      <tags>
+        <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spark笔记</title>
     <url>/2018/10/18/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/Spark%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
@@ -2374,44 +2412,6 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
       </categories>
   </entry>
   <entry>
-    <title>多进程，多线程以及spark的executor等概念</title>
-    <url>/2018/11/07/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A5%E5%8F%8Aspark%E7%9A%84executor%E7%AD%89%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在spark中，</p>
-<ul>
-<li>worker就是集群里可执行的机器，一个worker可以有多个executor。</li>
-<li>一个executor就是CPU，一个CPU可以有多个核。</li>
-<li>一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。</li>
-</ul>
-<p>关于CPU和核：</p>
-<ul>
-<li>CPU有单核CPU和多核CPU。</li>
-<li>一般来讲几个物理核就是几个线程，但是通过超线程技术，一个物理核可以分成多个虚拟核，从而使得一个核可以有多个线程。但是，一个核同时只能执行一个线程。</li>
-<li>并发：多个线程在单个核心运行，同一时间一个线程运行，系统不停切换线程，看起来像同时运行，实际上是线程不停切换。</li>
-<li>并行：多个线程在多个核心运行，线程同时运行。</li>
-<li>串行和并发的区别：虽然都是同时运行一个线程，但是串行就只能一个一个线程串行处理，就是一个结束了再起另一个线程，而并发本质上还是可以处理多个线程。</li>
-</ul>
-<p>选择多个单核CPU和单个多核CPU？</p>
-<ul>
-<li>多核CPU共享数据是通过CPU内部的总线，多个单核CPU共享数据是通过主板的总线，通信开销更大。</li>
-<li>多核CPU只需要一套芯片组，一套存储，而多个单核CPU，每一个CPU都需要有较为独立的电路支持，有自己的Cache。如果要多个耗内存的大型程序，还是需要多个单核CPU。</li>
-</ul>
-<p>多进程和多线程：</p>
-<ul>
-<li>进程是分配资源(包括了CPU、内存、磁盘IO等)的最小单位，线程是CPU分配和调度的单位。一个进程是由多个线程组成的。其实我理解无论线程和进程都是要分配资源的，但是进程涉及的资源分配更多，而线程只涉及CPU里的资源分配，进程更加宏观，线程更加精细。</li>
-<li>同一个进程内的多线程是共享资源的，因此数据共享非常方便，占用内存少，切换速度快，CPU利用率高，但是缺点就是编程较为复杂，涉及到锁之类的，同时一个线程挂导致整个进程挂，鲁棒性比较差。</li>
-<li>进程之间的通信是通过管道，信号之类的，数据要共享的话涉及到共享内存，比较复杂，同时占用内存多，切换复杂，CPU利用率低，但优点就是变成简单，且进程间不受影响，鲁棒性高。</li>
-</ul>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhf5zn73gj30sm0ajq97.jpg" alt="image-20200605145655675"></p>
-]]></content>
-      <categories>
-        <category>大数据</category>
-        <category>Spark</category>
-      </categories>
-      <tags>
-        <tag>并发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ubuntu与Windows之间的远程连接</title>
     <url>/2017/06/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/Ubuntu%E4%B8%8EWindows%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前使用Ubuntu 14.04时其实一直没有很好得解决远程桌面连接的问题，每次用到实验室的Windows服务器时，我都会切换到windows系统去使用。。可以说非常不方便了。这回重装Ubuntu16.04，总算是解决了这个问题，并且还解决了Windows连接Ubuntu的问题。</p>
@@ -2423,24 +2423,6 @@ w = w + \phi(x, y) - E_w[\phi(x, y)]</script></li>
 <h2 id="Teamviewer安装"><a href="#Teamviewer安装" class="headerlink" title="Teamviewer安装"></a>Teamviewer安装</h2><p>从<a href="https://www.teamviewer.com/en/download/linux/" target="_blank" rel="noopener">官网</a>下载deb文件（非商业用途的个人版本是免费的），然后执行命令（建议使用apt-get安装以解决依赖问题）<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get install ./teamviewer*.deb</span><br></pre></td></tr></table></figure></p>
 <h2 id="Teamviewer使用"><a href="#Teamviewer使用" class="headerlink" title="Teamviewer使用"></a>Teamviewer使用</h2><p>在Ubuntu中打开teamviewer后会生成了一个ID和密码，我们只要在windows段也打开teamviewer，输入该ID和密码就可以连接到Ubuntu了。注意，这种连接方式是需要联网的。</p>
 <p>如果想要不联网，在内网中直接使用的话，我们需要设置<code>Extras-&gt;Options-&gt;General-&gt;Incoming LAN connections</code>选择accept exclusively,这样的话，就只会通过局域网连接了，ID也会显示为你的局域网中的ID。经过测试，我觉得teamviewer的连接速度也是挺给力的！赞！</p>
-]]></content>
-      <categories>
-        <category>操作系统</category>
-        <category>Linux</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>系统管理工具Systemd</title>
-    <url>/2021/01/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7systemd/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>以前linux用的是initd工具来管理系统，后来渐渐被systemd取代了。具体可看<a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html" target="_blank" rel="noopener">这篇博客</a>，介绍得非常详细。</p>
-<p>注意以下几点：</p>
-<ul>
-<li>systemd是可以直接与系统内核交互的，比如关机，关电源，停止cpu计算等。</li>
-<li>unit是一个资源的概念，不仅仅包含service，还有很多其他的比如挂载，硬件设备等资源。</li>
-<li>target是一个unit组的概念，相当于以前的run_level。比如poweroff，reboot, multi_user，graphical等状态，这些状态都对应了一系列unit的启动和关闭，一般我们都用默认状态，对应的是graphical状态。</li>
-<li>我们一般都是用户自定义damen，所以要加个后缀—user，这种情况下service的符号链接是注册在~/.config/systemd/user/下的。</li>
-<li>用户自定义service的话，unit配置文件只要写【Service】和【Install】就好了。</li>
-</ul>
 ]]></content>
       <categories>
         <category>操作系统</category>
@@ -2586,6 +2568,24 @@ dia-normal &quot;$@&quot;
 <blockquote>
 <p>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="noopener">https://pypi.tuna.tsinghua.edu.cn/simple</a></p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>系统管理工具Systemd</title>
+    <url>/2021/01/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7systemd/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>以前linux用的是initd工具来管理系统，后来渐渐被systemd取代了。具体可看<a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html" target="_blank" rel="noopener">这篇博客</a>，介绍得非常详细。</p>
+<p>注意以下几点：</p>
+<ul>
+<li>systemd是可以直接与系统内核交互的，比如关机，关电源，停止cpu计算等。</li>
+<li>unit是一个资源的概念，不仅仅包含service，还有很多其他的比如挂载，硬件设备等资源。</li>
+<li>target是一个unit组的概念，相当于以前的run_level。比如poweroff，reboot, multi_user，graphical等状态，这些状态都对应了一系列unit的启动和关闭，一般我们都用默认状态，对应的是graphical状态。</li>
+<li>我们一般都是用户自定义damen，所以要加个后缀—user，这种情况下service的符号链接是注册在~/.config/systemd/user/下的。</li>
+<li>用户自定义service的话，unit配置文件只要写【Service】和【Install】就好了。</li>
+</ul>
 ]]></content>
       <categories>
         <category>操作系统</category>
@@ -2798,28 +2798,6 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>POJO、JavaBean和SpringBean</title>
-    <url>/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/POJO%E3%80%81JavaBean%E5%92%8CSpringBean/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h2><p>普通JAVA类，专指只有setter / getter / toString的简单类，包括DO/DTO/BO/VO等。</p>
-<p>POJO是一个简单的、普通Java对象，特点是有private的属性和public的getter、setter，除此之外不具有任何特殊角色，不继承或不实现任何其它Java框架的类或接口。 </p>
-<h2 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h2><p><strong>为了方便开发，约定的一种java类的规范！</strong>，</p>
-<ul>
-<li>所有属性为private。</li>
-<li>这个类必须具有一个公共的(public)无参构造函数</li>
-<li>private属性必须提供public的getter和setter来给外部访问，并且方法的命名也必须遵循一定的命名规范。 。</li>
-<li>这个类应是可序列化的，要实现serializable接口。</li>
-</ul>
-<p>没有其他业务逻辑的javaBean,就是一个POJO</p>
-<h2 id="SpringBean"><a href="#SpringBean" class="headerlink" title="SpringBean"></a>SpringBean</h2><p>SpringBean是受Spring管理的对象。所有能受Spring容器管理的对象，都可以成为SpringBean。</p>
-<p>Spring容器对Bean没有特殊要求，不像JavaBean 一样遵循一些规范（不过对于通过设值方法注入的Bean,一定要提供setter 方法。）</p>
-<p>传统的的Javabean，如果我们要创建一个 Bean，我们就要使用关键字 New。<br>但是，在 Spring 中，Bean 的创建是由 Spring 容器进行的，也就是说，在 Spring 中使用 Bean 的时候，不是由关键字 New 来创建实例了, 由Spring容器管理其生命周期行为，</p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Java泛型</title>
     <url>/2018/11/19/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/Java%E6%B3%9B%E5%9E%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List stringArrayList = <span class="keyword">new</span> ArrayList();</span><br><span class="line"></span><br><span class="line">List integerArrayList = <span class="keyword">new</span> ArrayList();</span><br><span class="line"></span><br><span class="line">Class classStringArrayList = stringArrayList.getClass();</span><br><span class="line"></span><br><span class="line">Class classIntegerArrayList = integerArrayList.getClass();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(classStringArrayList.equals(classIntegerArrayList))&#123; Log.d(<span class="string">"泛型测试"</span>,<span class="string">"类型相同"</span>); &#125;  --相同</span><br></pre></td></tr></table></figure>
@@ -2869,15 +2847,21 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>关于JAVA的==和equals</title>
-    <url>/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%85%B3%E4%BA%8E==%E5%92%8Cequals/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在大部分的封装类中，都重写了Object类的这个方法，所以两者还是会有区别的。</p>
+    <title>POJO、JavaBean和SpringBean</title>
+    <url>/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/POJO%E3%80%81JavaBean%E5%92%8CSpringBean/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h2><p>普通JAVA类，专指只有setter / getter / toString的简单类，包括DO/DTO/BO/VO等。</p>
+<p>POJO是一个简单的、普通Java对象，特点是有private的属性和public的getter、setter，除此之外不具有任何特殊角色，不继承或不实现任何其它Java框架的类或接口。 </p>
+<h2 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h2><p><strong>为了方便开发，约定的一种java类的规范！</strong>，</p>
 <ul>
-<li><p>总的来说，==是一个关系运算符，如果比较的两端都为基本类型，则判断两者的值是否相等,（判断过程中还有不同基本类型的转化，这里不做讨论），如果比较的两端都为引用类型的话，则比较两者所指向对象的地址是否相同；</p>
-</li>
-<li><p>对于equals方法，首先，能调用这个方法肯定是一个对象，然后，如果这个对象所在的类重写了equals方法，则按照重写的方法进行比较，如果没有，则比较两者所指向对象的地址是否相同。 </p>
-</li>
+<li>所有属性为private。</li>
+<li>这个类必须具有一个公共的(public)无参构造函数</li>
+<li>private属性必须提供public的getter和setter来给外部访问，并且方法的命名也必须遵循一定的命名规范。 。</li>
+<li>这个类应是可序列化的，要实现serializable接口。</li>
 </ul>
+<p>没有其他业务逻辑的javaBean,就是一个POJO</p>
+<h2 id="SpringBean"><a href="#SpringBean" class="headerlink" title="SpringBean"></a>SpringBean</h2><p>SpringBean是受Spring管理的对象。所有能受Spring容器管理的对象，都可以成为SpringBean。</p>
+<p>Spring容器对Bean没有特殊要求，不像JavaBean 一样遵循一些规范（不过对于通过设值方法注入的Bean,一定要提供setter 方法。）</p>
+<p>传统的的Javabean，如果我们要创建一个 Bean，我们就要使用关键字 New。<br>但是，在 Spring 中，Bean 的创建是由 Spring 容器进行的，也就是说，在 Spring 中使用 Bean 的时候，不是由关键字 New 来创建实例了, 由Spring容器管理其生命周期行为，</p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2907,6 +2891,23 @@ dia-normal &quot;$@&quot;
 <p>对于byte和char：</p>
 <p>byte就是1个字节，8位，int表示-128~127</p>
 <p>char的话就是对应byte的编码表示，指定编码集后就对应char，一般不指定进行转换的话就是OS默认utf-8，char直接赋值的话存储的就是java默认utf-16</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JAVA堆和栈内存</title>
+    <url>/2020/01/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%A0%86%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Java把内存分成两种，一种叫做栈内存，一种叫做堆内存：</p>
+<ul>
+<li><p>在函数中定义的<strong>一些基本类型的变量和对象的引用变量都是在函数的栈内存中分配</strong></p>
+</li>
+<li><p>堆内存用于存放由new创建的对象和数组</p>
+</li>
+</ul>
+<p><strong>栈中的变量指向堆内存中的变量，这就是 Java 中的指针!</strong></p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2951,23 +2952,6 @@ dia-normal &quot;$@&quot;
       </tags>
   </entry>
   <entry>
-    <title>JAVA堆和栈内存</title>
-    <url>/2020/01/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%A0%86%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Java把内存分成两种，一种叫做栈内存，一种叫做堆内存：</p>
-<ul>
-<li><p>在函数中定义的<strong>一些基本类型的变量和对象的引用变量都是在函数的栈内存中分配</strong></p>
-</li>
-<li><p>堆内存用于存放由new创建的对象和数组</p>
-</li>
-</ul>
-<p><strong>栈中的变量指向堆内存中的变量，这就是 Java 中的指针!</strong></p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JAVA异常处理</title>
     <url>/2020/05/08/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="两种异常类型"><a href="#两种异常类型" class="headerlink" title="两种异常类型"></a>两种异常类型</h2><ul>
@@ -2978,6 +2962,22 @@ dia-normal &quot;$@&quot;
 </ul>
 <p>单线程main这种，如果异常抛出，程序中断。</p>
 <p>像web容器这种，出现runtime异常，该线程中断，容器会重新启一个线程，所以其实不影响。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于JAVA的==和equals</title>
+    <url>/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%85%B3%E4%BA%8E==%E5%92%8Cequals/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在大部分的封装类中，都重写了Object类的这个方法，所以两者还是会有区别的。</p>
+<ul>
+<li><p>总的来说，==是一个关系运算符，如果比较的两端都为基本类型，则判断两者的值是否相等,（判断过程中还有不同基本类型的转化，这里不做讨论），如果比较的两端都为引用类型的话，则比较两者所指向对象的地址是否相同；</p>
+</li>
+<li><p>对于equals方法，首先，能调用这个方法肯定是一个对象，然后，如果这个对象所在的类重写了equals方法，则按照重写的方法进行比较，如果没有，则比较两者所指向对象的地址是否相同。 </p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -3077,48 +3077,6 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>下划线用法</title>
-    <url>/2020/10/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E4%B8%8B%E5%88%92%E7%BA%BF%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjj8geqjr5j31700mo7gr.jpg" alt="image-20201009175708340"></p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Python</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>关于python2的编码问题</title>
-    <url>/2020/10/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%85%B3%E4%BA%8Epython2%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h2><p>首先我们要弄明白Unicode这个概念，我以前一直理解有问题，以为是类似于ascii、utf-8的一种编码方式而已，然而我错了，可以看这篇文章：<a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">字符编码笔记：ASCII，Unicode 和 UTF-8</a>，总结一下就是：</p>
-<ul>
-<li>Unicode不是一种编码方式，而是定义了统一的字符集，包含了世界上的所有字符。它相当于维护了一个映射code point，一个二进制表示对应一个字符。虽然从这个理解上，也有点像是编码，毕竟也要用一个大概四个字节的二进制表示来表示一个字符，但还是要认为他只是一个字符集，而不是编码方式。</li>
-<li>UTF-8则是Unicode具体的一种编码实现方式，采用变长的字节来存储每个字符。</li>
-<li>任何字符都可以用unicode表示，然后用某种编码方式，例如utf-8、ascii、gbk等方式，存储为字节形式。</li>
-</ul>
-<h2 id="Python中的编码问题"><a href="#Python中的编码问题" class="headerlink" title="Python中的编码问题"></a>Python中的编码问题</h2><ul>
-<li>在python2里面，str类型是以某种编码方式存好的字节，unicode类型才是以无编码方式存储的。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'\xe4\xba\xba'</span>  <span class="comment"># 3个字节</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">u'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">u'\u4eba'</span> <span class="comment"># 1个中文字符, 2个字节</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>为了避免一系列蛋疼的编码问题，我们可以采用这种方式：</p>
-<ul>
-<li><p>文件头部指定默认编码方式，这样str类型默认是按照utf-8来编码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>指定python解释器的默认编码方式，这样中间有一些隐式的编解码转换，就不会出现蛋疼的问题了</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>很好的几个资料：<a href="https://www.cnblogs.com/zh605929205/articles/7268840.html" target="_blank" rel="noopener">Byte(字节) 与 Bytearray(二进制数组)</a>, <a href="https://hexilee.me/2018/09/21/coding/" target="_blank" rel="noopener">编码：字符串和二进制</a></p>
-]]></content>
-      <categories>
-        <category>编程开发</category>
-        <category>Python</category>
-      </categories>
-  </entry>
-  <entry>
     <title>import及__init__.py</title>
     <url>/2019/03/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/import%E5%8F%8A__init__.py/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="import注意事项"><a href="#import注意事项" class="headerlink" title="import注意事项:"></a>import注意事项:</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> package1 <span class="keyword">import</span> module1</span><br><span class="line"><span class="keyword">from</span> package1.module2 <span class="keyword">import</span> function1</span><br><span class="line"><span class="keyword">from</span> package2 <span class="keyword">import</span> class1</span><br><span class="line"><span class="keyword">from</span> package2.subpackage1.module5 <span class="keyword">import</span> function2</span><br></pre></td></tr></table></figure>
@@ -3190,10 +3148,41 @@ dia-normal &quot;$@&quot;
       </categories>
   </entry>
   <entry>
-    <title>类变量和实例变量</title>
-    <url>/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class A(object):</span><br><span class="line">    a = 1</span><br><span class="line">    b = 2</span><br><span class="line">    def __init__(self):</span><br><span class="line">        print self.a  # 1</span><br><span class="line">        self.a = 3</span><br><span class="line"></span><br><span class="line">t = A()</span><br><span class="line">print t.a  # 3</span><br><span class="line">print A.a  # 1</span><br><span class="line"></span><br><span class="line">t.a = 4</span><br><span class="line">print t.a  # 4 </span><br><span class="line">print A.a  # 1</span><br></pre></td></tr></table></figure>
+    <title>下划线用法</title>
+    <url>/2020/10/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E4%B8%8B%E5%88%92%E7%BA%BF%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjj8geqjr5j31700mo7gr.jpg" alt="image-20201009175708340"></p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Python</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>关于python2的编码问题</title>
+    <url>/2020/10/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%85%B3%E4%BA%8Epython2%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h2><p>首先我们要弄明白Unicode这个概念，我以前一直理解有问题，以为是类似于ascii、utf-8的一种编码方式而已，然而我错了，可以看这篇文章：<a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">字符编码笔记：ASCII，Unicode 和 UTF-8</a>，总结一下就是：</p>
+<ul>
+<li>Unicode不是一种编码方式，而是定义了统一的字符集，包含了世界上的所有字符。它相当于维护了一个映射code point，一个二进制表示对应一个字符。虽然从这个理解上，也有点像是编码，毕竟也要用一个大概四个字节的二进制表示来表示一个字符，但还是要认为他只是一个字符集，而不是编码方式。</li>
+<li>UTF-8则是Unicode具体的一种编码实现方式，采用变长的字节来存储每个字符。</li>
+<li>任何字符都可以用unicode表示，然后用某种编码方式，例如utf-8、ascii、gbk等方式，存储为字节形式。</li>
+</ul>
+<h2 id="Python中的编码问题"><a href="#Python中的编码问题" class="headerlink" title="Python中的编码问题"></a>Python中的编码问题</h2><ul>
+<li>在python2里面，str类型是以某种编码方式存好的字节，unicode类型才是以无编码方式存储的。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'\xe4\xba\xba'</span>  <span class="comment"># 3个字节</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo = <span class="string">u'人'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>demo</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">u'\u4eba'</span> <span class="comment"># 1个中文字符, 2个字节</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>为了避免一系列蛋疼的编码问题，我们可以采用这种方式：</p>
+<ul>
+<li><p>文件头部指定默认编码方式，这样str类型默认是按照utf-8来编码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定python解释器的默认编码方式，这样中间有一些隐式的编解码转换，就不会出现蛋疼的问题了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>很好的几个资料：<a href="https://www.cnblogs.com/zh605929205/articles/7268840.html" target="_blank" rel="noopener">Byte(字节) 与 Bytearray(二进制数组)</a>, <a href="https://hexilee.me/2018/09/21/coding/" target="_blank" rel="noopener">编码：字符串和二进制</a></p>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -3229,6 +3218,17 @@ dia-normal &quot;$@&quot;
 <p>所以还是总结一下，平时用的比较多的操作：</p>
 <p>对于切片处理，如b = a.loc[:]，如果修改b.loc[<em>,</em>]的值，a也会变，如果b经过一些其他的操作，如sort_values等之后，b又变成了一个单独的内存空间。</p>
 <p>对于花式索引，如b = a[a[‘<em>‘] &gt; </em>]，修改b.loc[<em>,</em>]的值，a不会变。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+        <category>Python</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>类变量和实例变量</title>
+    <url>/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class A(object):</span><br><span class="line">    a = 1</span><br><span class="line">    b = 2</span><br><span class="line">    def __init__(self):</span><br><span class="line">        print self.a  # 1</span><br><span class="line">        self.a = 3</span><br><span class="line"></span><br><span class="line">t = A()</span><br><span class="line">print t.a  # 3</span><br><span class="line">print A.a  # 1</span><br><span class="line"></span><br><span class="line">t.a = 4</span><br><span class="line">print t.a  # 4 </span><br><span class="line">print A.a  # 1</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>编程开发</category>
