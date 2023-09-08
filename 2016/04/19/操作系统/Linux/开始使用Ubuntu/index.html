@@ -1,38 +1,680 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
-{% block page_class %}page-post-detail{% endblock %}
 
 
-{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wei Lyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对linux的向往由来已久，加上前阵子在win7下用vim总是感觉很不舒服，用gcc编译还要专门去下载MinGW(minmalist GNU for Windows),这么想还不如直接去用linux，GNU下的那些工具就直接能用了！在linux下打造一个IDE吧！  GNU’s Not Unix!  哈哈哈，其实以前也装过一阵Ubuntu,但是那会啥都不会，四处碰壁，没用多久就泄气了。可是看了各种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开始使用Ubuntu">
+<meta property="og:url" content="http://yoursite.com/2016/04/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Ubuntu/index.html">
+<meta property="og:site_name" content="Levy&#39;s Blog">
+<meta property="og:description" content="对linux的向往由来已久，加上前阵子在win7下用vim总是感觉很不舒服，用gcc编译还要专门去下载MinGW(minmalist GNU for Windows),这么想还不如直接去用linux，GNU下的那些工具就直接能用了！在linux下打造一个IDE吧！  GNU’s Not Unix!  哈哈哈，其实以前也装过一阵Ubuntu,但是那会啥都不会，四处碰壁，没用多久就泄气了。可是看了各种">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/my/1.png">
+<meta property="og:image" content="http://yoursite.com/images/my/2.png">
+<meta property="article:published_time" content="2016-04-19T12:41:51.000Z">
+<meta property="article:modified_time" content="2022-10-25T11:54:27.124Z">
+<meta property="article:author" content="Wei Lyu">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://yoursite.com/images/my/1.png">
+  
+  
+  
+  <title>开始使用Ubuntu - Levy&#39;s Blog</title>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0-rc2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
+</nav>
 
-{% endblock %}
+  
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="开始使用Ubuntu"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2016-04-19 20:41" pubdate>
+          2016年4月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
 
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">开始使用Ubuntu</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>对linux的向往由来已久，加上前阵子在win7下用vim总是感觉很不舒服，用gcc编译还要专门去下载MinGW(minmalist GNU for Windows),这么想还不如直接去用linux，GNU下的那些工具就直接能用了！在linux下打造一个IDE吧！</p>
+<blockquote>
+<p>GNU’s Not Unix!</p>
+</blockquote>
+<p>哈哈哈，其实以前也装过一阵Ubuntu,但是那会啥都不会，四处碰壁，没用多久就泄气了。可是看了各种大牛的书后，发现windows这种操作系统都是给大牛们摸透了计算机后想办法降低门槛给小白用的，所以要是不会Linux，永远进不了真正的程序员世界。</p>
+<span id="more"></span>
+<p>对于linux的众多发行版中，我选择了Ubuntu 14.04 LTS，毕竟Ubuntu有不错的GUI环境（X window的gnome），我既不是忠实的GUI党也不是忠实的CLI党，我觉得选择自己最好用的才是最重要的，该GUI的时候还是得GUI（用命令行去找分区里的文件太痛苦了。。），哈哈当然CLI是超强大的！</p>
+<p>大概花了两周左右的时间，将<a href="http://linux.vbird.org/">《鸟叔的Linux私房菜之基础学习篇》</a>看了一半（实在好长。。剩下的慢慢看），然后将Ubuntu下的工作环境都部署了一遍，感觉以后大部分的工作都可以完成了。</p>
+<p>这部署的过程相当纠结，当然主要还是因为我的强迫症，比如一个字体好不好看我要纠结半天，各种换啊换，每次强迫症犯的时候都好想打死自己啊！所以部署的效率实在是有点低诶。好了，话不多说，下面贴上我的配置。</p>
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><p>装ubuntu的时候要给系统分区，我参考了鸟叔的书以及网络上的一些博客后，最后我分区如下:<br><img src="/images/my/1.png" srcset="/img/loading.gif" lazyload alt="Ubuntu 分区"></p>
+<p>因为我装了双系统，我把sda1,sda2,sda3三个主分区都分给了windows，sda4扩展分区分成了好多逻辑分区，分别给/boot，/，/home，/var，/usr，总共大概给Ubuntu650G左右^0^</p>
+<h1 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h1><p>由于用的是校园网，学校有专门的VPN客户端，我就去学校的论坛那里下了个Ubuntu下的vpn客户端，配置简单，没费什么事就能上网了（当然，前提要设置好IP地址和DNS，连上校内网）。</p>
+<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>虽然进入系统后，软件更新源里默认的是中国的服务器，但我还是按照<a href="http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8">Ubuntu中文</a>的推荐换了网易，搜狐，阿里云及我们自己学校的源。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#网易</span><br>deb http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.<span class="hljs-number">163</span>.com<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br><br><span class="hljs-comment">#搜狐</span><br>deb http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.sohu.com<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br><br><span class="hljs-comment">#学校</span><br>deb http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-backports restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.zju.edu.cn<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br><br><span class="hljs-comment">#阿里云</span><br>deb http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-security main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse<br>deb-src http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse<br></code></pre></td></tr></table></figure>
+<h1 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h1><p>Ubuntu下自带的ibus输入法用起来还是不舒服，不像搜狗输入法那样将模糊语义，关键词之类的做得符合日常生活习惯，所以我还是装了搜狗输入法。</p>
+<p>可以直接去<a href="http://pinyin.sogou.com/linux/">官网</a>下载deb包，然后<code>sudo dpkg -i *.deb</code> 像搜狗输入法是需要fcitx做输入法框架的，所以安装完后需要在语言设置里将默认输入法设置为fcitx.</p>
+<h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><p>Ubuntu自带浏览器为firefox，但我以前用的一直都是Chrome，书签什么的同步也会方便一点的，所以毫不犹豫的换成了Chrome,<code>sudo apt-get install google-chrome-stable</code></p>
+<p>flash插件问题:Chrome用的谷歌自己的flash插件，而firefox默认是没装flash插件的，所以我去abode flash player的<a href="https://get.adobe.com/cn/flashplayer/">官网</a>手动下载了插件，教程可以看<a href="http://wiki.ubuntu.org.cn/Flash">Ubuntu中文里的介绍</a>，Ubuntu软件中心装flash插件太坑了！安装的时候等半天根本就不动！</p>
+<h1 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h1><p>看论文及查资料的时候少不了查英文单词，由于在windows里一直用有道词典，所以我先去有道官网看了一下，一看，还真有linux版本，马上下载deb包后用了一下，刚开始觉得还不错，因为有道的鼠标取词（不用划词）这个功能我实在喜欢，虽然取词反应貌似有点慢。但后来我突然发现单词无法<strong>发音</strong>！！查了各种资料还是无法解决，无奈我只能忍痛割爱。</p>
+<p>然后我还是用了公认好用的星际译王，不得不说，自己可以自由添加词典，离线也能查单词确实比较强大（<em>然而现在工作基本都是联网的</em>）。具体安装及下载词典教程<a href="http://wiki.ubuntu.org.cn/index.php?title=Stardict&amp;variant=zh-cn">看这里</a>。 </p>
+<p>发音我没有装，感觉文件比较大，离线发音没必要，因为我还在Chrome下载了一个插件，我个人觉得非常好用，推荐一下，<a href="https://chrome.google.com/webstore/detail/chazd/nkiipedegbhbjmajlhpegcpcaacbfggp?hl=zh-CN">ChaZD</a>。</p>
+<h1 id="Matlab"><a href="#Matlab" class="headerlink" title="Matlab"></a>Matlab</h1><p>下载matlab估计是最让我蛋疼的事了，在windows直接找个破解版就好了，而找个linux下的破解版真是不容易，虽然好多博客都有贴下载地址，但我试了试总是下载不了，有的就是下到1G左右就不能继续下了，特别折腾，为此我还下了个BT客户端deluge(系统自带的transmission其实也挺好的)。</p>
+<p>后来终于找到了一个靠谱的matlab 2010a,用wget后台下载了一天终于下好了，具体教程看<a href="ftp://wcmc.csu.edu.cn/software/%E7%A8%8B%E5%BA%8F%E8%BD%AF%E4%BB%B6/matlab/install%20matlab%20in%20linux.pdf">这里</a>～</p>
+<p>matlab下载好之后还有<a href="http://forum.ubuntu.org.cn/viewtopic.php?t=373776">中文乱码的问题</a>还有<a href="https://forum.ubuntu.org.cn/viewtopic.php?f=122&amp;t=443586">常见的一些安装问题</a>这两篇帖子都解决了。</p>
+<h1 id="办公套件"><a href="#办公套件" class="headerlink" title="办公套件"></a>办公套件</h1><p>LibreOffice以及WPC For Linux 都试过,感觉还是不行,格式会乱,所以决定还是office文件老老实实回到windows下编辑,平时自己写文档还是用markdown生成pdf,或者latex都行。</p>
+<h1 id="工程绘图"><a href="#工程绘图" class="headerlink" title="工程绘图"></a>工程绘图</h1><p>由于论文的需要，我需要一个类似MS下visio的工程绘图软件，这里我选的替代品是Dia，这个绘图软件基本能替代visio~安装很简单，也是直接<code>sudo apt-get install dia</code>，这里有个地方要注意的是，默认情况下进入dia是intergrated模式，中文显示会有问题，需要做如下修改</p>
+<pre><code class="hljs">sudo gedit /usr/bin/dia
+#dia-normal --integrated &quot;$@&quot;
+dia-normal &quot;$@&quot;
+</code></pre><h1 id="图片处理"><a href="#图片处理" class="headerlink" title="图片处理"></a>图片处理</h1><p>Imagemagick！这个图片处理软件真的超棒！可以用import截图，用convert转换图片格式，大小，清晰，可以加滤镜等，非常好用，我直接把它当做默认图片打开方式了。安装同样<code>sudo apt-get install imagemagick</code>。</p>
+<h1 id="视频，音频播放器"><a href="#视频，音频播放器" class="headerlink" title="视频，音频播放器"></a>视频，音频播放器</h1><p>Mplayer！这是号称目前这个星球上支持多媒体文件格式最多的软件！哈哈哈，反正目前我电脑里的视频音频格式它都支持，而且gnome版的界面都还不错。详细介绍及安装可以看<a href="http://wiki.ubuntu.com.cn/MPlayer">这里</a></p>
+<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>Git的安装很方便，直接<code>sudo apt-get install git</code>，因为git本来就是linus在linux下开发的嘛～具体git的使用方法，建议看<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">廖老师的这篇教程</a>！</p>
+<h1 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h1><p>我这里直接就用ubuntu自带的gnome-terminal来使用Bash（Bourne again shell），作为一个强迫症患者，我觉得终端自带的紫底白字配色太伤眼睛了，于是上Github寻找好看的配色方案。</p>
+<p>刚开始我选了solarized，想把终端配色和vim的配色都弄成solarized。</p>
+<ul>
+<li>终端的solarized配色文件显示，<a href="https://github.com/seebi/dircolors-solarized">github下载</a></li>
+<li>终端的solarized配色，<a href="https://github.com/Anthony25/gnome-terminal-colors-solarized">github下载</a></li>
+</ul>
+<p>然而solarized配完后，总觉得看得不舒服，一时切换不过来，强迫症发作的我又去寻找其他配色。最后用了这个<a href="https://github.com/chriskempson/base16-gnome-terminal">Git</a>.<br><img src="/images/my/2.png" srcset="/img/loading.gif" lazyload alt="Ocean Light"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="category-chain-item">操作系统</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>开始使用Ubuntu</div>
+      <div>http://yoursite.com/2016/04/19/操作系统/Linux/开始使用Ubuntu/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wei Lyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2016年4月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2016/04/21/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" title="RSA加密算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">RSA加密算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
