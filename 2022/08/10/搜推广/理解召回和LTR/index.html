@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="参考文章：万变不离其宗：用统一框架理解向量化召回 召回本质召回本质上和排序其实存在很大的区别：  召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。 召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。  召回的几种类型 i2i:拿用户喜欢的item找相似item。就比如">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rm81ox5j219u056754.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rmbwy31j21co09cdhj.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130501.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130505.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130508.jpg">
 <meta property="article:published_time" content="2022-08-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.124Z">
+<meta property="article:modified_time" content="2023-09-14T13:07:38.299Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130501.jpg">
   
   
   
@@ -296,10 +296,10 @@
 <h1 id="LTR"><a href="#LTR" class="headerlink" title="LTR"></a>LTR</h1><p>Learning to Rank其实是针对排序算法的统称，针对loss function，可分为三种：</p>
 <h3 id="Pointwise"><a href="#Pointwise" class="headerlink" title="Pointwise"></a>Pointwise</h3><p>最为常见，像精排这种明确的正负样本，直接binary cross entropy计算label 准确度。缺点是没有关注到排序信息。</p>
 <h3 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h3><p>更关系两个样本的排序顺序，一般像召回任务很多都是用pairwise，常见的几种loss有：</p>
-<h4 id="sampled-softmax-loss"><a href="#sampled-softmax-loss" class="headerlink" title="sampled softmax loss"></a>sampled softmax loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg" srcset="/img/loading.gif" lazyload alt="image-20210806211523927"></p>
+<h4 id="sampled-softmax-loss"><a href="#sampled-softmax-loss" class="headerlink" title="sampled softmax loss"></a>sampled softmax loss</h4><p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130501.jpg" srcset="/img/loading.gif" lazyload alt="image-20210806211523927"></p>
 <p>这个就像word2vec里的计算的sampled softmax loss，值得注意的是，这个loss做梯度更新的方式，每一个样本喂进去之后都需要做负采样(会有个辅助emb矩阵，得到负样本分母的emb)，然后计算loss，然后更新梯度，不像常见的交叉熵的梯度更新。</p>
-<h4 id="margin-hinge-loss"><a href="#margin-hinge-loss" class="headerlink" title="margin hinge loss"></a>margin hinge loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rm81ox5j219u056754.jpg" srcset="/img/loading.gif" lazyload alt="image-20210806211842642"></p>
-<h4 id="BPR-Loss"><a href="#BPR-Loss" class="headerlink" title="BPR Loss"></a>BPR Loss</h4><p><img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rmbwy31j21co09cdhj.jpg" srcset="/img/loading.gif" lazyload alt="image-20210806211857913"></p>
+<h4 id="margin-hinge-loss"><a href="#margin-hinge-loss" class="headerlink" title="margin hinge loss"></a>margin hinge loss</h4><p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130505.jpg" srcset="/img/loading.gif" lazyload alt="image-20210806211842642"></p>
+<h4 id="BPR-Loss"><a href="#BPR-Loss" class="headerlink" title="BPR Loss"></a>BPR Loss</h4><p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130508.jpg" srcset="/img/loading.gif" lazyload alt="image-20210806211857913"></p>
 <p>对于后面两种loss，样本都需要是三元形式，《u , item+,item-》，后面两个item都要过一遍nn得到emb。</p>
 
                 

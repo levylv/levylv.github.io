@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="微服务一种将整个后端服务，按照领域、模块分解为若干独立小应用的一种架构方式。微服务有如下特点  服务可以单独编写、发布、测试、部署，相比于所有功能集中于一体的单体服务，可维护性更强 服务彼此之间依赖服务通信的方式松耦合 按照业务领域来组织服务，每个团队维护各自的服务  引申出了RPC框架，比较有代表性的：  Thrift - Facebook Dubbo - 阿里 Spring Cloud  为了">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcyfsdenj31300ocwsl.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcymoo3yj311y0k4wig.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcyppscvj31bg0oagv0.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122532.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122538.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122542.jpg">
 <meta property="article:published_time" content="2020-11-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.130Z">
+<meta property="article:modified_time" content="2023-09-14T12:26:00.825Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcyfsdenj31300ocwsl.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122532.jpg">
   
   
   
@@ -302,7 +302,7 @@
 </ul>
 <h4 id="非关系型数据库-NoSQL，not-only-SQL"><a href="#非关系型数据库-NoSQL，not-only-SQL" class="headerlink" title="非关系型数据库(NoSQL，not only SQL)"></a>非关系型数据库(NoSQL，not only SQL)</h4><ul>
 <li><p>Redis：KV存储，基于分布式缓存(目前一般都是基于proxy的集群化方案，zk+codis)，高性能，速度快。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcyfsdenj31300ocwsl.jpg" srcset="/img/loading.gif" lazyload alt="image-20201015165936575"></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122532.jpg" srcset="/img/loading.gif" lazyload alt="image-20201015165936575"></p>
 </li>
 <li><p>Hbase：海量数据存储，基于列式存储，row按照key - value存</p>
 </li>
@@ -311,8 +311,8 @@
 </ul>
 <h3 id="消息队列-MQ"><a href="#消息队列-MQ" class="headerlink" title="消息队列(MQ)"></a>消息队列(MQ)</h3><p>伴随着业务的复杂，我们往往会遇到这个场景，一个数据操作后，需要触发下游若干个子操作。例如外卖场景，用户下订单成功，要通知商家用户订单，要物流平台对订单进行调度和派单，要触发一些后置的风控逻辑对订单合法性进行校验等。如果是同步的设计，需要在订单完成后对后续的操作一一进行API调用，<strong>这样的做法让订单流程依赖更多外部服务，提升了业务复杂度，降低了服务的稳定性</strong>，所以我们需要消息中间件来解耦操作。依赖的服务依赖下单消息，而不是在下单结束后，通过接口调用的方式触发。</p>
 <p>我们可以把消息队列（MQ）比作是一个存放消息的容器，Producer 负责生产消息，将消息发送到MQ，Consumer取出消息<strong>供自己使用</strong>。如图所示：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcymoo3yj311y0k4wig.jpg" srcset="/img/loading.gif" lazyload alt="image-20201015170419880"></p>
-<h4 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h4><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkcyppscvj31bg0oagv0.jpg" srcset="/img/loading.gif" lazyload alt="image-20201015170454563"></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122538.jpg" srcset="/img/loading.gif" lazyload alt="image-20201015170419880"></p>
+<h4 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h4><p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122542.jpg" srcset="/img/loading.gif" lazyload alt="image-20201015170454563"></p>
 <ul>
 <li>Producer：产生topic</li>
 <li>Parition：topic分成不同的partition处理，每个parition里保证有序</li>

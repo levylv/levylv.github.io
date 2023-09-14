@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="关于partition和taskpartition是spark RDD的操作单元，通常会把一个数据集切分成若干个partition，实现并行处理。我把它称之为需求。 task则是机器能提供的操作单元，一个core对应一个task，一个task处理一个partition。我把它称之为供给。 所以，如果stage还是只有2个partition，无论怎么调节executors的资源数目，都是没有用的，a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9nktybqj30k508xq5u.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9s51wzjj30lq07i0u3.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125453.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125455.jpg">
 <meta property="article:published_time" content="2020-03-05T14:06:02.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.122Z">
+<meta property="article:modified_time" content="2023-09-14T12:55:39.265Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9nktybqj30k508xq5u.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125453.jpg">
   
   
   
@@ -291,9 +291,9 @@
 <h2 id="调优例子"><a href="#调优例子" class="headerlink" title="调优例子"></a>调优例子</h2><p>我明明设置了minNumPostShufflePartitions参数，但是我发现某个涉及shuffle操作stage(A join B 得到C， C join D)的始终只有2个parition!</p>
 <p>解决方案：这个问题原因应该是shuffle后的C导致，因为A join B的关联key值过少，远远小于minNumPostShufflePartitions这个值，导致reduce后C的partition只有2个，从而使得后面C join D的时候，mapper数也只有2个。<strong>只加了一句C.repartition(200)后问题就解决了。。</strong></p>
 <h2 id="关于MapReduce的shuffle过程和Spark的shuffle算子"><a href="#关于MapReduce的shuffle过程和Spark的shuffle算子" class="headerlink" title="关于MapReduce的shuffle过程和Spark的shuffle算子"></a>关于MapReduce的shuffle过程和Spark的shuffle算子</h2><p>Hadoop是MapReduce框架，任何一个MapReduce过程都分为Mapper(程序员编写), Shuffle和Reduce(程序员编写)过程。最影响性能的就是shuffle，因为涉及到key值排序，网络传输等。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9nktybqj30k508xq5u.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605112750651"></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125453.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605112750651"></p>
 <p>对于spark而言，只有两类操作，包括transform操作(从一个RDD到另一个RDD)和action操作(RDD变为结果值返回)，任何操作都是由partition构成，以典型的shuffle算子为例，其实也类似与mapper(mapper数即为partition数)和reduce(reduce数即为partiton数)过程。但是更吊的是，在mapper task里直接进行了partition，后续reduce只要按照索引从每个mapper里取对应索引的partition就好了。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9s51wzjj30lq07i0u3.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605115037216"></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125455.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605115037216"></p>
 
                 
               </div>

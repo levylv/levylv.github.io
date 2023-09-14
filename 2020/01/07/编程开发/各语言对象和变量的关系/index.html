@@ -23,12 +23,12 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="变量和对象任何语言都是由变量和对象组成的。 变量和对象可能是存在一块的（变量代表内存，内存存放的的是对象二进制），也可能是分开存的，这种情况就是对象存放在其他内存，而变量存放的是那块内存的地址。 具体方式在不同语言中有很大区别，不同语言在底层可能做了很多优化，例如JVM的栈变量共享等。 12int a &#x3D; 3;int b &#x3D; 3; 对于上述代码，C++的话就是分配了两个值类型变量在不同栈空间，同时">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gmvjxiyzp0j30ok0wogq5.jpg">
+<meta property="og:image" content="https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008eGmZEly1gmvjxiyzp0j30ok0wogq5.jpg">
 <meta property="article:published_time" content="2020-01-07T10:13:30.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.130Z">
+<meta property="article:modified_time" content="2023-09-14T12:57:51.322Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gmvjxiyzp0j30ok0wogq5.jpg">
+<meta name="twitter:image" content="https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008eGmZEly1gmvjxiyzp0j30ok0wogq5.jpg">
   
   
   
@@ -280,7 +280,7 @@
 <figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">int a <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-comment">;</span><br>int b <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 <p>对于上述代码，C++的话就是分配了两个值类型变量在不同栈空间，同时分配2个对，内存各自写3。</p>
 <p>而对于java，也是分配了两个值类型变量在不同栈空间，但是对象3却是在栈空间单独存在的，值类型变量都是指向这个对象3，虽说是值类型，但是存放的也是地址。但是依然是值类型，有点像python的不可变对象传递。</p>
-<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmvjxiyzp0j30ok0wogq5.jpg" srcset="/img/loading.gif" lazyload alt="image-20210121194155398" style="zoom:50%;" /></p>
+<p><img src="https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008eGmZEly1gmvjxiyzp0j30ok0wogq5.jpg" srcset="/img/loading.gif" lazyload alt="image-20210121194155398" style="zoom:50%;" /></p>
 <h1 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h1><p>在各种语言中，变量一般分为值类型和引用类型。</p>
 <h3 id="值类型"><a href="#值类型" class="headerlink" title="值类型"></a>值类型</h3><p>变量直接存放对象的二进制数据(JVM的栈变量共享除外)，如果对变量取地址，那么就是这段内存的地址名，例如”0xc00001c100”。</p>
 <p>这里的内存空间一般是栈空间，变量和对象都是在栈空间的。</p>
@@ -351,6 +351,7 @@
 <li>即使是基本数据类型，也可以操作为同一个对象</li>
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-built_in">int</span> a = <span class="hljs-number">3</span>;<span class="hljs-built_in">int</span>* p = &amp;a;a = <span class="hljs-number">4</span>; <span class="hljs-comment">// *p和a指向同一个对象</span><br></code></pre></td></tr></table></figure>
+
                 
               </div>
             

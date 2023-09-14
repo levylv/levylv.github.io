@@ -16,23 +16,23 @@
   <meta name="author" content="Wei Lyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="小结：   在C++中，多态是靠虚函数实现的，因为如果是普通函数，调用的方法是根据当前指针类型来判断的，而不是根据指针所指向对象的类型，JAVA则是根据实际对象分配的，所以JAVA的普通函数就类似C++的虚函数。 所以C++如果一个类是基类，它的析构函数一定是虚函数。 C++的纯虚函数就类似JAVA的抽象函数，也就是只有函数定义。 C++的抽象类就是JAVA的抽象类，也就是有至少有一个纯虚函数&#x2F;抽">
+    <meta name="description" content="一直用免费的新浪图床，很多图都挂了，做了修复之后取了回来。为了以防万一，开通了ipic的会员和阿里云的oss存储服务，后续全部采用这个方式存图片了，花点钱省点心。教程：https:&#x2F;&#x2F;toolinbox.net&#x2F;iPic&#x2F;AddAliOSS.html。 另外，hexo和node也升级了版本，不然deploy一直有问题…  再此外，github现在http clone的话，upload需要用私人秘钥">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++虚函数和Java类比">
-<meta property="og:url" content="http://yoursite.com/2021/05/31/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/C++/C++%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8CJava%E7%B1%BB%E6%AF%94/index.html">
+<meta property="og:title" content="hexo升级及图床配置">
+<meta property="og:url" content="http://yoursite.com/2023/09/14/%E5%8D%9A%E5%AE%A2/hexo%E5%8D%87%E7%BA%A7%E5%8F%8A%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
-<meta property="og:description" content="小结：   在C++中，多态是靠虚函数实现的，因为如果是普通函数，调用的方法是根据当前指针类型来判断的，而不是根据指针所指向对象的类型，JAVA则是根据实际对象分配的，所以JAVA的普通函数就类似C++的虚函数。 所以C++如果一个类是基类，它的析构函数一定是虚函数。 C++的纯虚函数就类似JAVA的抽象函数，也就是只有函数定义。 C++的抽象类就是JAVA的抽象类，也就是有至少有一个纯虚函数&#x2F;抽">
+<meta property="og:description" content="一直用免费的新浪图床，很多图都挂了，做了修复之后取了回来。为了以防万一，开通了ipic的会员和阿里云的oss存储服务，后续全部采用这个方式存图片了，花点钱省点心。教程：https:&#x2F;&#x2F;toolinbox.net&#x2F;iPic&#x2F;AddAliOSS.html。 另外，hexo和node也升级了版本，不然deploy一直有问题…  再此外，github现在http clone的话，upload需要用私人秘钥">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122149.jpg">
-<meta property="article:published_time" content="2021-05-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-14T12:21:56.922Z">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-131444.png">
+<meta property="article:published_time" content="2023-09-14T09:40:06.000Z">
+<meta property="article:modified_time" content="2023-09-14T13:15:22.087Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122149.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-131444.png">
   
   
   
-  <title>C++虚函数和Java类比 - Levy&#39;s Blog</title>
+  <title>hexo升级及图床配置 - Levy&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="C++虚函数和Java类比"></span>
+            <span id="subtitle" data-typed-text="hexo升级及图床配置"></span>
           
         </div>
 
@@ -209,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-05-31 00:00" pubdate>
-          2021年5月31日 凌晨
+        <time datetime="2023-09-14 17:40" pubdate>
+          2023年9月14日 下午
         </time>
       </span>
     
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          320 字
+          207 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          3 分钟
+          2 分钟
         
       </span>
     
@@ -269,24 +269,15 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">C++虚函数和Java类比</h1>
+            <h1 id="seo-header">hexo升级及图床配置</h1>
             
             
               <div class="markdown-body">
                 
-                <p>小结：</p>
-<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122149.jpg" srcset="/img/loading.gif" lazyload alt="image-20210531170324424" style="zoom:50%;" /></p>
-<ul>
-<li>在C++中，多态是靠虚函数实现的，因为如果是普通函数，调用的方法是根据当前指针类型来判断的，而不是根据指针所指向对象的类型，JAVA则是根据实际对象分配的，所以JAVA的普通函数就类似C++的虚函数。</li>
-<li>所以C++如果一个类是基类，它的析构函数一定是虚函数。</li>
-<li>C++的纯虚函数就类似JAVA的抽象函数，也就是只有函数定义。</li>
-<li>C++的抽象类就是JAVA的抽象类，也就是有至少有一个纯虚函数/抽象函数的类。</li>
-<li>C++的虚基类就是JAVA的接口，也就是全部是纯虚函数/抽象函数的类。</li>
-<li>C++可以多继承，而JAVA只能单继承，所以JAVA又搞了接口出来。</li>
-</ul>
-<p>参考资料：</p>
-<p><a href="https://blog.csdn.net/u013630349/article/details/50838558">C++ 与 Java 之中的虚函数、抽象函数、抽象类、接口 比较</a></p>
-<p><a href="https://www.huaweicloud.com/articles/6b9f1996380f9e89335a747ac42322a5.html">C++虚函数与JAVA中抽象函数比较</a></p>
+                <p>一直用免费的新浪图床，很多图都挂了，做了修复之后取了回来。为了以防万一，开通了ipic的会员和阿里云的oss存储服务，后续全部采用这个方式存图片了，花点钱省点心。教程：<a href="https://toolinbox.net/iPic/AddAliOSS.html。">https://toolinbox.net/iPic/AddAliOSS.html。</a></p>
+<p>另外，hexo和node也升级了版本，不然deploy一直有问题…</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-131444.png" srcset="/img/loading.gif" lazyload alt="image-20230914211442123"></p>
+<p>再此外，github现在http clone的话，upload需要用私人秘钥了，而不是账号密码了。</p>
 
                 
               </div>
@@ -305,15 +296,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/" class="category-chain-item">编程开发</a>
+  <a href="/categories/%E5%8D%9A%E5%AE%A2/" class="category-chain-item">博客</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/C/" class="category-chain-item">C++</a>
-  
-  
-
   
 
       </span>
@@ -332,8 +316,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>C++虚函数和Java类比</div>
-      <div>http://yoursite.com/2021/05/31/编程开发/C++/C++虚函数和Java类比/</div>
+      <div>hexo升级及图床配置</div>
+      <div>http://yoursite.com/2023/09/14/博客/hexo升级及图床配置/</div>
     </div>
     <div class="license-meta">
       
@@ -345,7 +329,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年5月31日</div>
+          <div>2023年9月14日</div>
         </div>
       
       
@@ -377,18 +361,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/" title="类变量和实例变量">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">类变量和实例变量</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/02/03/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/C++/%E7%90%86%E8%A7%A3blade/" title="理解blade">
-                        <span class="hidden-mobile">理解blade</span>
+                      <a href="/2023/08/17/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" title="强化学习基本知识点整理">
+                        <span class="hidden-mobile">强化学习基本知识点整理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

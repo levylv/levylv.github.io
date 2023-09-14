@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="对于类别不均衡问题，处理方法有：  正样本过采样  负样本降采样  调整阈值   主要是这三种，实际算法处理过程往往是这样的：  先对负样本进行降采样or正样本过采样来提取训练样本，以保证模型的AUC尽量高。  过采样or降采样之后模型输出的概率已经失去原本的意义，所以在测试集上如果看其他评价指标如交叉熵，那loss是很大的，当然不影响AUC。所以，我们需要对输出概率再做调整，恢复到真正实际的概率">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgxszy1tj30fx02z3z3.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125853.jpg">
 <meta property="article:published_time" content="2019-04-24T11:28:44.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.126Z">
+<meta property="article:modified_time" content="2023-09-14T12:59:01.844Z">
 <meta property="article:author" content="Wei Lyu">
 <meta property="article:tag" content="特征工程">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgxszy1tj30fx02z3z3.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125853.jpg">
   
   
   
@@ -293,7 +293,7 @@
 </ul>
 <p>实际样例：</p>
 <p>CTR预估模型之GBDT+LR：对负样本进行以w频率进行降采样，然后对预测概率值重新调整：（AUC只保序，通过calibration校正概率阈值）</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgxszy1tj30fx02z3z3.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605155725174"></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125853.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605155725174"></p>
 <p>Xgboost:设置了scale_pos_weight参数，该参数的合理值= 负样本数/正样本数，该参数的意义是让正样本梯度（也就是loss）的权重值变大，也就是更加关注正样本的loss,有点类似于正样本的过采样。scale_pos_weight只适用于AUC，也就是只适用于将样本进行二分类，最终概率值并非真实概率值。</p>
 <p>关于Weighted LR中正样本过采样还是正样本梯度加权重这两种方式：</p>
 <blockquote>

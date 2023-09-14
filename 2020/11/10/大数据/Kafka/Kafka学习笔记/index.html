@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="基本概念Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是一个分布式的日志系统，是实时任务依赖的主流数据源。注意，数据本身同样是存储在hdfs上的。 原理 1、话题（Topic）：是特定类型的消息流。消息是字节的有效负载（Payload），话题是消息的分类名或种子（Feed）名； 2、生产者（Producer）：是能够发布消息到话题的任何对象； 3、服务代理（Broker）：一个brok">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125437.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125439.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125442.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125444.jpg">
 <meta property="article:published_time" content="2020-11-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.122Z">
+<meta property="article:modified_time" content="2023-09-14T12:55:39.262Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125437.jpg">
   
   
   
@@ -278,7 +278,7 @@
               <div class="markdown-body">
                 
                 <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是一个分布式的日志系统，是实时任务依赖的主流数据源。注意，数据本身同样是存储在hdfs上的。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110211236165" style="zoom:50%;" /></p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125437.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110211236165" style="zoom:50%;" /></p>
 <p>1、话题（Topic）：是特定类型的消息流。消息是字节的有效负载（Payload），话题是消息的分类名或种子（Feed）名；</p>
 <p>2、生产者（Producer）：是能够发布消息到话题的任何对象；</p>
 <p>3、服务代理（Broker）：一个broker就是一台机器，多台broker组成集群。</p>
@@ -286,9 +286,9 @@
 <h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>理解存储最主要是理解partition的概念。其实Apache体系里partition的概念都比较类似（比如spark中的partition），都是将数据进行分片，一般分片的逻辑就比如是按照key值来划分，同一个key值分到同一个partition。</p>
 <p>Kafka里也是将topic数据进行partition，当然每个partition的数据还是按照顺序写入的，然后将parition分配到不同broker上，partition数目一般设置成broker的倍数，这样能够让每个broker的partition均匀一点。</p>
 <p>kafka的partition还会备份，leader作为主要的，follower partition放在其他broker上。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110212007002" style="zoom:50%;" /> </p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125439.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110212007002" style="zoom:50%;" /> </p>
 <p>具体存储的日志文件形式是这样的：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110212109581" style="zoom:50%;" /></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125442.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110212109581" style="zoom:50%;" /></p>
 <ul>
 <li><p>每个topic下的partition都有一个文件夹。文件夹中的文件类型有.log数据文件，.index偏移量索引文件和.timeindex时间索引文件。</p>
 </li>
@@ -296,7 +296,7 @@
 </li>
 </ul>
 <p>介绍下具体的三个文件：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110212424025" style="zoom:50%;" /></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125444.jpg" srcset="/img/loading.gif" lazyload alt="image-20201110212424025" style="zoom:50%;" /></p>
 <ul>
 <li>log文件：真实的日志数据文件，存放消息payload</li>
 <li>index文件：偏移量索引文件，重要的稀疏索引文件。因为如果直接去log文件里顺序查找的话，效率太低。所以现在index文件里做粗筛，定位到大致范围，然后再去log文件里找，大大提升了效率。</li>
@@ -392,9 +392,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Flink/Flink%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Flink学习笔记">
+                      <a href="/2020/11/10/%E5%A4%A7%E6%95%B0%E6%8D%AE/Hive/hdfs%E6%96%87%E4%BB%B6%E7%90%86%E8%A7%A3/" title="hdfs文件理解">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Flink学习笔记</span>
+                        <span class="hidden-mobile">hdfs文件理解</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

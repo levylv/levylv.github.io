@@ -226,6 +226,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2023/09/14/%E5%8D%9A%E5%AE%A2/hexo%E5%8D%87%E7%BA%A7%E5%8F%8A%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" target="_self">
+          hexo升级及图床配置
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/14/%E5%8D%9A%E5%AE%A2/hexo%E5%8D%87%E7%BA%A7%E5%8F%8A%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" target="_self">
+        <div>
+          一直用免费的新浪图床，很多图都挂了，做了修复之后取了回来。为了以防万一，开通了ipic的会员和阿里云的oss存储服务，后续全部采用这个方式存图片了，花点钱省点心。教程：https://toolinbox.net/iPic/AddAliOSS.html。 另外，hexo和node也升级了版本，不然deploy一直有问题…  再此外，github现在http clone的话，upload需要用私人秘钥
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-14 17:40" pubdate>
+              2023-09-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%8D%9A%E5%AE%A2/" class="category-chain-item">博客</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2023/08/17/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" target="_self">
           强化学习基本知识点整理
         </a>
@@ -280,15 +334,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
-          update_ops和control_dependencies的理解
+        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+          关于stop_gradient和trainable的理解
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
         <div>
-          control_dependencies作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。 常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下: 123456789101112131415161718192021import tensorflow
+          两个方法的分别意义：  stop_gradient参考资料  而trainable则是在初始化变量时，手动设置为True or Flase，意图为是否加入到trainable_variable中(计算梯度时的变量集合)。   两个方法都可以起到停止梯度更新的作用，但stop_gradient更加灵活一点，可以直接截断路径上的前面所有变量的梯度。
         </div>
       </a>
 
@@ -341,15 +395,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
-          关于stop_gradient和trainable的理解
+        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+          update_ops和control_dependencies的理解
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
         <div>
-          两个方法的分别意义：  stop_gradient参考资料  而trainable则是在初始化变量时，手动设置为True or Flase，意图为是否加入到trainable_variable中(计算梯度时的变量集合)。   两个方法都可以起到停止梯度更新的作用，但stop_gradient更加灵活一点，可以直接截断路径上的前面所有变量的梯度。
+          control_dependencies作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。 常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下: 123456789101112131415161718192021import tensorflow
         </div>
       </a>
 
@@ -706,67 +760,6 @@
         
   <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/" target="_self">
-          类变量和实例变量
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/" target="_self">
-        <div>
-          类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 1234567891011121314class A(object):    a = 1    b = 2    def __init__(self):        print self.a  # 1        self.a = 3t = A()print t.a  # 3pr
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-25 00:00" pubdate>
-              2021-06-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/" class="category-chain-item">编程开发</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/" class="category-chain-item">Python</a>
-  
-  
-
   
 
       </span>

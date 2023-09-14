@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="最近在看NAS（neural architecture search）的论文，里面讲到了强化学习的policy network，然后我就研究了下这个东西，发现是个蛮有意思的概念，确实和nas有共同之处。有意思的点主要其实是在loss function的设计上，下面详细讲下我的理解。 正常来讲，我们做一个Neural Network来解决Classification or Regression ta">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e3apzp5j312u0ju0xf.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e5gww8wj312e05qdhk.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130151.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130155.jpg">
 <meta property="article:published_time" content="2020-10-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.128Z">
+<meta property="article:modified_time" content="2023-09-14T13:02:51.254Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e3apzp5j312u0ju0xf.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130151.jpg">
   
   
   
@@ -280,9 +280,9 @@
 <p>其实想法也很intuitive，Policy Network设计一个评价指标$f(a, s)$，你也可以认为是做出这个动作a之后取得的reward，然后这个loss function为：</p>
 <script type="math/tex; mode=display">
 L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}</script><p>其实你仔细一看，发现对比正常loss function - $\sum p(x) log{\hat{p}(x)}$，无非就是把真实label的概率换成$f(a, s)$罢了。这样的loss function其实本质上就是等价于 最大化评价指标$f(a, s)$，推到过程如下：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e3apzp5j312u0ju0xf.jpg" srcset="/img/loading.gif" lazyload alt="image-20201030152538474" style="zoom:50%;" /></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130151.jpg" srcset="/img/loading.gif" lazyload alt="image-20201030152538474" style="zoom:50%;" /></p>
 <p>最后，衍生到NAS上，其实本质和Policy Network是一样的。NAS里我们想要得到一个神经网络结构的概率，然后评价指标，就是用这个结构得到其在验证集上的精度。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e5gww8wj312e05qdhk.jpg" srcset="/img/loading.gif" lazyload alt="image-20201030152746965" style="zoom:50%;" /></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130155.jpg" srcset="/img/loading.gif" lazyload alt="image-20201030152746965" style="zoom:50%;" /></p>
 
                 
               </div>

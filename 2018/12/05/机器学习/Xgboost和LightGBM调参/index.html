@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="有个应用上的重大区别：  Xgboost只处理数值特征，因此Xgboost无法直接处理离散特征(categorical feature)，需要数据预处理，要么labelEncoder转换为数值特征，当做连续值处理，要么one-hot编码，当做离散值处理。  LightGBM则有对离散特征的单独处理，需要首先利用labelEncoder转换为数值，然后会利用On Grouping for Maxim">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgz8kjolj30hp0b7dhl.jpg">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125900.jpg">
 <meta property="article:published_time" content="2018-12-05T11:28:44.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.125Z">
+<meta property="article:modified_time" content="2023-09-14T12:59:01.851Z">
 <meta property="article:author" content="Wei Lyu">
 <meta property="article:tag" content="XGBoost">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgz8kjolj30hp0b7dhl.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125900.jpg">
   
   
   
@@ -280,7 +280,7 @@
 <li><p>Xgboost只处理数值特征，因此Xgboost无法直接处理离散特征(categorical feature)，需要数据预处理，要么labelEncoder转换为数值特征，当做连续值处理，要么one-hot编码，当做离散值处理。</p>
 </li>
 <li><p>LightGBM则有对离散特征的单独处理，需要首先利用labelEncoder转换为数值，然后会利用<a href="http://link.zhihu.com/?target=https%3A//www.researchgate.net/publication/242580910_On_Grouping_for_Maximum_Homogeneity">On Grouping for Maximum Homogeneity</a>提到的算法找到最优值，是从2^(n-1)-1个分区划分中选出最优optimal split，而不像OHE一样是n个划分，因此效果优于OHE。</p>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgz8kjolj30hp0b7dhl.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605155935227"></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125900.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605155935227"></p>
 </li>
 </ul>
 
@@ -373,9 +373,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E6%98%AF%E5%90%A6%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD/" title="特征是否越多越好？">
+                      <a href="/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" title="关于特征工程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">特征是否越多越好？</span>
+                        <span class="hidden-mobile">关于特征工程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
