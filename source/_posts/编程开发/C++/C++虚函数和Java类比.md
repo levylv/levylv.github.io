@@ -6,7 +6,7 @@ categories: [编程开发,C++]
 
 小结：
 
-<img src="https://tva1.sinaimg.cn/large/008i3skNly1gr1pwowrwuj30hk0a8dgv.jpg" alt="image-20210531170324424" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122149.jpg" alt="image-20210531170324424" style="zoom:50%;" />
 
 - 在C++中，多态是靠虚函数实现的，因为如果是普通函数，调用的方法是根据当前指针类型来判断的，而不是根据指针所指向对象的类型，JAVA则是根据实际对象分配的，所以JAVA的普通函数就类似C++的虚函数。
 - 所以C++如果一个类是基类，它的析构函数一定是虚函数。

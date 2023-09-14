@@ -14,7 +14,7 @@ Kafka是一个分布式的发布-订阅消息传递系统，其实本质就是�
 
 ### 原理
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkdxkxgi1j30wg0ion7f.jpg" alt="image-20201110211236165" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125437.jpg" alt="image-20201110211236165" style="zoom:50%;" />
 
 
 
@@ -40,13 +40,13 @@ Kafka里也是将topic数据进行partition，当然每个partition的数据还�
 
 kafka的partition还会备份，leader作为主要的，follower partition放在其他broker上。
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke5hzvbgj30yw0j8jt4.jpg" alt="image-20201110212007002" style="zoom:50%;" /> 
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125439.jpg" alt="image-20201110212007002" style="zoom:50%;" /> 
 
 
 
 具体存储的日志文件形式是这样的：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke6gpqcfj310i0j8djz.jpg" alt="image-20201110212109581" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125442.jpg" alt="image-20201110212109581" style="zoom:50%;" />
 
 - 每个topic下的partition都有一个文件夹。文件夹中的文件类型有.log数据文件，.index偏移量索引文件和.timeindex时间索引文件。
 
@@ -56,7 +56,7 @@ kafka的partition还会备份，leader作为主要的，follower partition放在
 
 介绍下具体的三个文件：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkke9uac8cj30u00uzn7g.jpg" alt="image-20201110212424025" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125444.jpg" alt="image-20201110212424025" style="zoom:50%;" />
 
 - log文件：真实的日志数据文件，存放消息payload
 - index文件：偏移量索引文件，重要的稀疏索引文件。因为如果直接去log文件里顺序查找的话，效率太低。所以现在index文件里做粗筛，定位到大致范围，然后再去log文件里找，大大提升了效率。

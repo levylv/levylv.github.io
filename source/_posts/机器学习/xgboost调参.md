@@ -19,4 +19,4 @@ categories: 机器学习
 
 xgboost第n颗树的第n层的分裂准则：
 
-![image-20200605153827635](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgd9bwxhj30ns0c7dj5.jpg)
+![image-20200605153827635](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125857.jpg)

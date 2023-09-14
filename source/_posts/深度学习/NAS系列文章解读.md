@@ -27,7 +27,7 @@ NAS最近几年是AutoML领域比较火热的方向，主要是神经网络结�
 
 例如卷积神经网络，那么无非就是要确定卷积核的数目、高、宽，stride的高和宽，也就是利用controller来生成这个五个参数。
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkbtsqq13vj312a0dewmu.jpg" alt="image-20201102192353768" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130226.jpg" alt="image-20201102192353768" style="zoom:50%;" />
 
 controller得到5个参数的概率，然后通过sample得到网络结构，再基于该网络结构得到其在验证集上的accuracy，再利用该accuracy去更新controller的权重。这一步就类似于强化学习的policy network，我在之前的博客中也有介绍，其实本质上就是一种优化算法，当目标变量的函数未知的情况下，优化目标的一种优化算法，这里是最大化accuracy，在无法知道结构和accuracy的关系，用神经网络去逼近。
 
@@ -35,7 +35,7 @@ controller得到5个参数的概率，然后通过sample得到网络结构，再
 
 关于网络的深度，还是靠人为去设置的，这里的话是每sample 1600次，就将深度加深2。所以其实这个计算成本是很高的，每次深度加深，又要重新计算该模型结构的精度...文章最好的cifar-10上的最佳cnn结构是这样的：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkb32ujvkrj30u00uj1ar.jpg" alt="image-20201102200659882" style="zoom:40%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130233.jpg" alt="image-20201102200659882" style="zoom:40%;" />
 
 
 
@@ -49,11 +49,11 @@ controller得到5个参数的概率，然后通过sample得到网络结构，再
 
 文章提出了Normal Cell和Reduce Cell，整个网络结构就是这两种cell的重复。注意，整个网络重复的次数N，还是人为拍的。
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkb36xh65lj30rw0zsq65.jpg" alt="image-20201102201054713" style="zoom:40%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130236.jpg" alt="image-20201102201054713" style="zoom:40%;" />
 
 我们只需搜索这两种cell的结构，搜索过程是这样的：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkb37orljrj310l0u0tg3.jpg" alt="image-20201102201138849" style="zoom:40%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130239.jpg" alt="image-20201102201138849" style="zoom:40%;" />
 
 假设一个Cell里有B个block，每个block生成步骤为：
 
@@ -73,7 +73,7 @@ controller得到5个参数的概率，然后通过sample得到网络结构，再
 
 对于第一次运行生成方法，只有两个输入，因而，选取两次，得到2x2种可能。有八种operator，选取两次，得到8x8中可能，因而第一次运行该方法的空间是22x82。而对于第二次运行生成方法，operator选择的可能性没有变化，但因为上一步有一个隐含状态输出，所以输入变成了3x3中可能。以此类推，五次运行生成算法的搜索空间是：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkb3ecta8pj30zk02ewfh.jpg" alt="image-20201102201802212" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130240.jpg" alt="image-20201102201802212" style="zoom:50%;" />
 
 
 
@@ -104,7 +104,7 @@ PNAS提升：模型数目减小为五分之一，而总速度降低为八分之�
 
 最后是目前最常用的方法ENAS，ENAS利用参数共享的思想把复杂度提升到了原来的千分之一。ENAS的思想是把要搜索的结构想像成一个node，所有的node构成一个大的DAG，而我们要搜索的可能就是一个子图结构，但是所有node之间的权重是共享的，不需要每搜索一次子图，就重新计算子图node之间的权重。
 
-![image-20201102202954216](https://tva1.sinaimg.cn/large/0081Kckwgy1gkb3qototnj31fm094gnm.jpg)
+![image-20201102202954216](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130223.jpg)
 
 之前的NAS是对候选子模型逐个从头训练，事实上子模型的结构许多都是相似的，所以许多**Wi,j** (第i个节点与第j个节点的权重矩阵) **是可以复用的**，没有必要从头开始训练。这样的共享权重在文中被称作**shared model**。
 
@@ -112,7 +112,7 @@ PNAS提升：模型数目减小为五分之一，而总速度降低为八分之�
 
 最终我们要搜索的是子图，也就是红线流向：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkb3so8j7xj30ia094jrz.jpg" alt="image-20201102203149727" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130243.jpg" alt="image-20201102203149727" style="zoom:50%;" />
 
 再讲一下ENAS的训练，显然我们需要训练两个参数：
 
@@ -134,7 +134,7 @@ PNAS提升：模型数目减小为五分之一，而总速度降低为八分之�
 
 依然是基于参数共享的理念，但是以往我们都是通过controller来控制node之间的信息流向，但是DARTS通过权重系数alpha直接来控制，不再需要controller：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkbtejwrlrj30qs0cs42u.jpg" alt="image-20201103111749052" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130245.jpg" alt="image-20201103111749052" style="zoom:50%;" />
 
 所以DARTS算法的流程是：
 
@@ -149,7 +149,7 @@ PNAS提升：模型数目减小为五分之一，而总速度降低为八分之�
 
    
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkbthoiklrj31eg0bcq5f.jpg" alt="image-20201103112025371" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130248.jpg" alt="image-20201103112025371" style="zoom:50%;" />
 
 
 

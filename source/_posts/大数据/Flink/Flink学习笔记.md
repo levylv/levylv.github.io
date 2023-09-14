@@ -53,7 +53,7 @@ flink使用Chandy-Chandy-Lamport Algorithm 来做Asynchronous Distributed Snapsh
 
 flink的checkpoint机制非常轻量，barrier不会打断streaming的流动，而且做checkpoint操作也是异步的。其次，相比storm需要ack每条data，flink做的是small batch的checkpoint，容错的代价相对要低很多。最重要的是flink的checkpoint机制能保证exactly once。
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkffelsbkj30y20cwgrm.jpg" alt="image-20201110220420631" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125426.jpg" alt="image-20201110220420631" style="zoom:50%;" />
 
 
 
@@ -67,6 +67,6 @@ flink的容错机制更加轻量，处理开销少，因此相比于storm来说�
 
 ### 最终性能
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkflbaoxyj30wu0f2qch.jpg" alt="image-20201110221000926" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125433.jpg" alt="image-20201110221000926" style="zoom:50%;" />
 
 从吞吐量和时延性能的综合来看，flink是最好的。

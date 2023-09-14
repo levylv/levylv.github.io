@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wei Lyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="因为用的Ubuntu，所以用的是texlive编译环境来写latex,当然我也用过ctex套装。总体来讲，感觉编译速度texlive要更胜一筹，用起来更加舒服。 今早师妹找我要beamer的模板，因为师妹用的是windows系统下的ctex，所以就发现了一个以前没弄清楚的问题，关于ctex和texlive的兼容问题。 概念区别说兼容问题之前，关于ctex和texlive有一些基本概念要搞清楚（我之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Texlive和Ctex的中文兼容问题">
+<meta property="og:url" content="http://yoursite.com/2017/07/07/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Latex/some-questions-about-ctex-and-texlive/index.html">
+<meta property="og:site_name" content="Levy&#39;s Blog">
+<meta property="og:description" content="因为用的Ubuntu，所以用的是texlive编译环境来写latex,当然我也用过ctex套装。总体来讲，感觉编译速度texlive要更胜一筹，用起来更加舒服。 今早师妹找我要beamer的模板，因为师妹用的是windows系统下的ctex，所以就发现了一个以前没弄清楚的问题，关于ctex和texlive的兼容问题。 概念区别说兼容问题之前，关于ctex和texlive有一些基本概念要搞清楚（我之">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-07-07T08:43:27.000Z">
+<meta property="article:modified_time" content="2022-10-25T11:54:27.129Z">
+<meta property="article:author" content="Wei Lyu">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Texlive和Ctex的中文兼容问题 - Levy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0-rc2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Texlive和Ctex的中文兼容问题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-07-07 16:43" pubdate>
+          2017年7月7日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Texlive和Ctex的中文兼容问题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>因为用的Ubuntu，所以用的是texlive编译环境来写latex,当然我也用过ctex套装。总体来讲，感觉编译速度texlive要更胜一筹，用起来更加舒服。</p>
+<p>今早师妹找我要beamer的模板，因为师妹用的是windows系统下的ctex，所以就发现了一个以前没弄清楚的问题，关于ctex和texlive的兼容问题。</p>
+<h1 id="概念区别"><a href="#概念区别" class="headerlink" title="概念区别"></a>概念区别</h1><p>说兼容问题之前，关于ctex和texlive有一些基本概念要搞清楚（我之前也弄混了。。）<br><span id="more"></span></p>
+<ul>
+<li>Texlive是一个latex语言的编译环境， Ctex只是一个中文版套装！</li>
+<li>Latex的编译环境主要有以下几个：<ul>
+<li>Texlive(主要用于Linux)</li>
+<li>MikTex(主要用于Windows)</li>
+<li>MaxTex(主要用于Mac)</li>
+</ul>
+</li>
+<li>Ctex是专门针对中文的国人整理的一个套装，用的是MikTex的编译环境，还包含了WinEdt编辑器，GsView等软件。</li>
+<li>Ctex package又是另一个概念！在我们需要写中文latex文档时，就需要用到ctex这个宏包，所以此ctex又非彼ctex。。</li>
+</ul>
+<h1 id="英文兼容"><a href="#英文兼容" class="headerlink" title="英文兼容"></a>英文兼容</h1><p>Texlive和ctex在英文上面，没有任何的兼容问题。我以前在这两种环境下切换时，都是写的英文文档，这就是为什么我之前一直觉得没有兼容问题，天真地以为两者虽然环境不同，但latex,pdflatex,xelatex等等命令功能都是一样的。。但事实上，之所以英文没有兼容问题，是因为无论那种编码方式，英文都是以一个字节的ASCII码形式编码，因此在任何编码中，英文都是兼容的。</p>
+<h1 id="中文兼容"><a href="#中文兼容" class="headerlink" title="中文兼容"></a>中文兼容</h1><p>中文兼容就是一个很大的问题了，因为在ctex的winedt编辑器中，默认的编码方式是GBK，而在linux环境下，默认的编码方式是utf-8，这就是为什么很多时候，linux下的文件放到windows下中文就会乱码。</p>
+<p>对于编辑器而言，我们可以设置不同的编码打开方式，让文件正常显示，但是尽管如此，文件本身的编码方式依然是不会改变的！所以最好的方法，就是在哪种环境下，就转换为哪种环境下的编码方式，以防止后面莫名奇妙地出错。注意，这里就要提到一个叫做inputenc的包了, 这个包可以让我们选择打开文件的编码方式，但是我对于gbk编码的文件选择utf-8打开，最终还是会出现问题。。所以我觉得这个包应该也是没有编码转换的功能，还是之前那个方法，最好先将文件编码转换好！</p>
+<p>既然文件编码已经转换好，接下来说一说，ctex和texlive对中文支持的区别</p>
+<h2 id="Texlive中文支持"><a href="#Texlive中文支持" class="headerlink" title="Texlive中文支持"></a>Texlive中文支持</h2><p>Texlive下要支持中文，最简单的方法就是满足下面三个条件</p>
+<ul>
+<li>UTF-8编码的tex文件</li>
+<li><code>\usepackage&#123;ctex&#125;</code></li>
+<li>Xelatex编译文件</li>
+</ul>
+<p>简单明了，这也是一个通用的方法，在任何编译环境下，都可以使用此方法支持中文。注意，有的时候在用这个方法编译从ctex那边移植过来的文件时，可能会遇到中文字体问题，大概率是因为模板里用了windows下的字体，而linux下没有这些字体，需要安装。</p>
+<h2 id="Ctex中文支持"><a href="#Ctex中文支持" class="headerlink" title="Ctex中文支持"></a>Ctex中文支持</h2><p>除了上面所述的方法，ctex有自己独特的中文支持方法（毕竟国人开发）：</p>
+<ul>
+<li>GBK编码的tex文件</li>
+<li><code>\usepackage&#123;ctex&#125;</code></li>
+<li>latex-dvi-ps-pdf或者pdflatex编译文件</li>
+</ul>
+<p>这个方法也挺简单的，但是只能针对于ctex,我觉得其中的原理应该是ctex对于pdflatex和latex命令做了一些调整，使其能够支持中文，我觉得他们本身应该是不能支持中文的。</p>
+<p><strong>切记，这两种方式最好不要随意搭配，搭配后可能会成功，但大概率是要出问题的。。我觉得最好的办法就是采用xelatex编辑utf-8文件！</strong></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上这些是我经过查阅资料以及在windows和ubuntu下试验总体得到的，具体一些理解可能会有偏差，但以上几个方法是肯定正确的。</p>
+<p>最后加一个小tips：<br>如果要改变beamer模板中的itemsize符号，需要加<code>\setbeamertemplate&#123;items&#125;[符号]</code>;若是article环境，需加<code>\renewcommand&#123;\labelitemi&#125;&#123;符号&#125;</code>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/" class="category-chain-item">编程开发</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Latex/" class="category-chain-item">Latex</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Texlive和Ctex的中文兼容问题</div>
+      <div>http://yoursite.com/2017/07/07/编程开发/Latex/some-questions-about-ctex-and-texlive/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wei Lyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2017年7月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/07/15/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%AD%E6%9C%89%E5%85%B3Graph%E5%92%8CSession%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" title="Tensorflow中有关Graph和Session的几个问题">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tensorflow中有关Graph和Session的几个问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/06/28/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/C++/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%8C%87%E9%92%88%E8%AF%A6%E8%A7%A3/" title="C语言中的指针详解">
+                        <span class="hidden-mobile">C语言中的指针详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

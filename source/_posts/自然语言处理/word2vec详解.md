@@ -13,18 +13,18 @@ cbow和skip-gram的原理解析，hierarchical softmax / negative sampling， gr
 
  
 
-1. ![image-20200605154521303](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgkg8d7vj30uc09nagn.jpg)
+1. ![image-20200605154521303](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130913.jpg)
 
  
 
 
 
-2. ![image-20200605154543836](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhglv7e9hj30o10lqmyw.jpg)
+2. ![image-20200605154543836](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130916.jpg)
 
 3. 
 
-![image-20200605154601962](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhglw07lrj30rb07eab7.jpg)
+![image-20200605154601962](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130919.jpg)
 
 4. 
 
-![image-20200605154622654](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgluc6b6j30qs0mj0uw.jpg)
+![image-20200605154622654](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130921.jpg)

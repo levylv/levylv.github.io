@@ -85,8 +85,8 @@ sudo apt-get install python-dev python3-dev
 ```
 ## 检查vim版本
 我们需要检查vim版本以及vim支持的python版本，保证vim版本高于7.4.1578,支持python2或者Python3。我们可以输入命令：`vim --version`来查看，以下是我的输出截图：
-![image.png](http://upload-images.jianshu.io/upload_images/825093-cc5dac3d1fd71ef2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/550)
-可以看到版本是7.4.1689，不支持python2,但支持python3（貌似Ubuntu16.04开始移除python2的支持了）。
+![image.png](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122449.jpg)
+可以看到版本是7.4.1689，不支持python2,但支持python3（貌似Ubuntu16.04开始移除python2的支持了)。
 
 ## 编译支持C家族语义补全的YCM
 ```

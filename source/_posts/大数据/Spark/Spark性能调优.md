@@ -38,15 +38,15 @@ spark.executor.instances -- 这个参数是老版本的，静态资源分配，�
 
 内存模型（heap就是工作用的可用内存，超过了就OOM，滴滴NodeManager指定了不超过15G，超过了就被yarn killed）
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfheqfmzdsj30nm0gkjxu.jpg" alt="image-20200605144153817" style="zoom:67%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125502.jpg" alt="image-20200605144153817" style="zoom:67%;" />
 
  
 
 统一内存模型：(可用内存 = 统一内存+其他，统一内存= 存储内存+计算内存)
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfheri64lbj30ux0i9dr5.jpg" alt="image-20200605144258996" style="zoom:67%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125508.jpg" alt="image-20200605144258996" style="zoom:67%;" />
 
-​      <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhes1vdxuj30uz0i8k3o.jpg" alt="image-20200605144331698" style="zoom:67%;" /> 
+​      <img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125512.jpg" alt="image-20200605144331698" style="zoom:67%;" /> 
 
 acutal used大于heap memory：因为还有overhead的开销
 
@@ -66,9 +66,9 @@ acutal used大于heap memory：因为还有overhead的开销
       - groupByKey -> reduceByKey
       - 数据预处理，降低倾斜
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhet710nmj30wb0h2k0u.jpg" alt="image-20200605144437338" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125516.jpg" alt="image-20200605144437338" style="zoom:50%;" />
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhetjtbomj30sj0hwdql.jpg" alt="image-20200605144456476" style="zoom: 60%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125520.jpg" alt="image-20200605144456476" style="zoom: 60%;" />
 
  
 
@@ -96,17 +96,17 @@ acutal used大于heap memory：因为还有overhead的开销
 
 shuffle挑战：
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhex22uzmj30ux0hcdmw.jpg" alt="image-20200605144817474" style="zoom:60%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125525.jpg" alt="image-20200605144817474" style="zoom:60%;" />
 
 I/O优化：
 
-![image-20200605144842117](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhexwmo8hj30g50820wh.jpg)
+![image-20200605144842117](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125458.jpg)
 
  
 
 避免shuffle的broadcast hash join
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhexxv824j30th0fydmf.jpg" alt="image-20200605144901134" style="zoom:60%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125528.jpg" alt="image-20200605144901134" style="zoom:60%;" />
 
 缺点：很耗driver内存，例如16M的broadcast的数据，耗费100M的driver内存。
 
@@ -114,7 +114,7 @@ I/O优化：
 
 CBO是优化join时候的build表的，从而达到各种broadcast join / shuffle hash join(先shuffle，再broadcast)的目的， sort merge join就是我们目前经常用的。
 
-​                          <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfheyd8nopj30n00exjw0.jpg" alt="image-20200605144936196" style="zoom:67%;" />
+​                          <img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125534.jpg" alt="image-20200605144936196" style="zoom:67%;" />
 
 默认不开启是为了driver内存考虑，下次可以尝试开启试一下。
 

@@ -21,6 +21,6 @@ git config --global --unset https.proxy
 
 同时需要在你的代理软件中开启全局模式：
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhkh034lhj30m40ceq7k.jpg" alt="image-20200605180018041" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122608.jpg" alt="image-20200605180018041" style="zoom:50%;" />
 
 注意，socks5的端口号根据代理软件设置的端口号来开(我的是7891)

@@ -17,10 +17,10 @@ Databus是一个低延迟、可靠的、支持事务的、保持一致性的数�
 
 图片解释：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkeg24rtjj30ju0fu0tu.jpg" alt="image-20201110213021835" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125448.jpg" alt="image-20201110213021835" style="zoom:50%;" />
 
 变为：
 
-​              											<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gkkeh2sv7ej30jy0ug3z9.jpg" alt="image-20201110213058927" style="zoom:50%;"                  />
+​              											<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125452.jpg" alt="image-20201110213058927" style="zoom:50%;"                  />
 
 ​       

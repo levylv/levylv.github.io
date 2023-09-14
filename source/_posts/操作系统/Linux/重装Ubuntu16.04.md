@@ -141,7 +141,7 @@ sudo cp ~/Downloads/crack/libcufft.so.7.5.18 /usr/local/MATLAB/R2016a/bin/glnxa6
         Categories = Development;Matlab;
 接着加上权限`sudo chmod a+x Matlab.desktop`.
 [我的快捷方式图标](http://upload-images.jianshu.io/upload_images/825093-3a8333c910981276.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/120)可供下载.
-![Matlab](http://upload-images.jianshu.io/upload_images/825093-3a8333c910981276.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/120)
+<img src="http://upload-images.jianshu.io/upload_images/825093-3a8333c910981276.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/120" alt="Matlab" style="zoom:25%;" />
 
 - 为了避免每次打开matlab后存在权限问题无法读取~/.matab文件的问题，通过`sudo chown [your ubuntu username] -R ~/.matlab`改变权限。
 

@@ -16,7 +16,7 @@ categories: 搜推广
 
 # 建模
 
-<img src="https://tva1.sinaimg.cn/large/008vxvgGgy1h7hom6obdxj30mg0gydh0.jpg" alt="image-20221025174957436" style="zoom: 67%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130717.jpg" alt="image-20221025174957436" style="zoom: 67%;" />
 
 以cvr模型为例，传统的cvr模型预估的是假设给用户曝光广告后的转化率，而没有考虑假设不曝光广告的自然转化率，uplift建模的则是该差值，并且期望找到的用户群体为：未曝光则不转化，曝光后则转化的这类群体。
 

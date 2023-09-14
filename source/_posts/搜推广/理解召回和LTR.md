@@ -52,7 +52,7 @@ Learning to Rank其实是针对排序算法的统称，针对loss function，可
 
 #### sampled softmax loss
 
-![image-20210806211523927](https://tva1.sinaimg.cn/large/e6c9d24ely1h51rlpiypvj21c60jcq7e.jpg)
+![image-20210806211523927](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130501.jpg)
 
 这个就像word2vec里的计算的sampled softmax loss，值得注意的是，这个loss做梯度更新的方式，每一个样本喂进去之后都需要做负采样(会有个辅助emb矩阵，得到负样本分母的emb)，然后计算loss，然后更新梯度，不像常见的交叉熵的梯度更新。
 
@@ -60,11 +60,11 @@ Learning to Rank其实是针对排序算法的统称，针对loss function，可
 
 #### margin hinge loss
 
-![image-20210806211842642](https://tva1.sinaimg.cn/large/e6c9d24ely1h51rm81ox5j219u056754.jpg)
+![image-20210806211842642](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130505.jpg)
 
 #### BPR Loss
 
-![image-20210806211857913](https://tva1.sinaimg.cn/large/e6c9d24ely1h51rmbwy31j21co09cdhj.jpg)
+![image-20210806211857913](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130508.jpg)
 
 对于后面两种loss，样本都需要是三元形式，《u , item+,item-》，后面两个item都要过一遍nn得到emb。
 

@@ -10,7 +10,7 @@ categories: 机器学习
 
 网友分析了一下，发现MSE对梯度有个不友好的地方，有时候误差越大，梯度越小，而交叉熵是正比的。
 
-![image-20200605153953308](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgeotc0dj30kb0e0wh3.jpg)
+![image-20200605153953308](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125901.jpg)
 
 MSE : $A^2 * (1-A)$
 

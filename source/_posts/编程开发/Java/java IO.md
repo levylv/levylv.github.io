@@ -14,7 +14,7 @@ categories: [编程开发,Java]
 
 NIO就是IO多路复用，同步非阻塞，selector用来监听channel(OS内核空间)，另有ByteBuffer可读可写，处理程序数据空间。
 
-![image-20200605165005503](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhifritq9j30pd0elafo.jpg) 
+![image-20200605165005503](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122232.jpg) 
 
 字节流操作，无输入输出缓存，所以一般包一个bufferedInputStream，bufferedOutputStream
 

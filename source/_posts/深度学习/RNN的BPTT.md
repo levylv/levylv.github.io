@@ -13,7 +13,7 @@ RNN采用的梯度更新策略是BPTT，梯度分为两部分：
   - 计算某个时刻Et的误差项，通过反向传播来计算，最后计算梯度。
   - 汇总所有的时刻计算的梯度。
 
-<img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmgf10qmerj30f207ogmg.jpg" alt="image-20210108172855248" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130143.jpg" alt="image-20210108172855248" style="zoom:50%;" />
 
 [参考资料](https://www.cnblogs.com/wacc/p/5341670.html)
 

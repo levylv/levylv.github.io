@@ -12,7 +12,7 @@ categories: 数学
 
 - 计算复杂度基本上是多项式的，基本是P的。
 
-![image-20200605162015414](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhkonh5dj30ui02jmy3.jpg) 
+![image-20200605162015414](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130346.jpg) 
 
 非凸问题则求解比较困难，实际上大部分的解法都是将非凸问题转化为凸问题。
 
@@ -58,7 +58,7 @@ categories: 数学
 - xlogx
 - 以及一系列的保凸运算。。
 
-![image-20200605162217125](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhmvitpaj30gp07i3zh.jpg) 
+![image-20200605162217125](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130348.jpg) 
 
 
 
@@ -69,12 +69,12 @@ categories: 数学
 - 半正定规划(不等式约束为LMI，线性矩阵不等式)(SDP)
 - 锥规划(CP)
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhoq7muvj30z50j840g.jpg" alt="image-20200605162259121" style="zoom: 50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130356.jpg" alt="image-20200605162259121" style="zoom: 50%;" />
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhoovacoj30ku0dz0u6.jpg" alt="image-20200605162313667" style="zoom:67%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130360.jpg" alt="image-20200605162313667" style="zoom:67%;" />
 
 
 
 > 对称的正定矩阵一定代表了是个凸锥。
 
-![image-20200605162344236](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhhopmtpvj30jr0djgmu.jpg)
+![image-20200605162344236](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130354.jpg)

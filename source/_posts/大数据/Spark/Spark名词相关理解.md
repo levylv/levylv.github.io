@@ -48,8 +48,8 @@ task则是机器能提供的操作单元，一个core对应一个task，一个ta
 
 Hadoop是MapReduce框架，任何一个MapReduce过程都分为Mapper(程序员编写), Shuffle和Reduce(程序员编写)过程。最影响性能的就是shuffle，因为涉及到key值排序，网络传输等。
 
-![image-20200605112750651](https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9nktybqj30k508xq5u.jpg)
+![image-20200605112750651](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125453.jpg)
 
 对于spark而言，只有两类操作，包括transform操作(从一个RDD到另一个RDD)和action操作(RDD变为结果值返回)，任何操作都是由partition构成，以典型的shuffle算子为例，其实也类似与mapper(mapper数即为partition数)和reduce(reduce数即为partiton数)过程。但是更吊的是，在mapper task里直接进行了partition，后续reduce只要按照索引从每个mapper里取对应索引的partition就好了。
 
-![image-20200605115037216](https://tva1.sinaimg.cn/large/007S8ZIlly1gfh9s51wzjj30lq07i0u3.jpg)
+![image-20200605115037216](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125455.jpg)

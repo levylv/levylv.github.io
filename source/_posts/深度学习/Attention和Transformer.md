@@ -26,7 +26,7 @@ Attention是目前最热的深度学习方向，最开始从NLP领域的机器�
 - 训练：decoder的输入是当前单词的embedding
 - 预测：decoder的输入是上个rnn的输出
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rorn4x1j21340l2myx.jpg" alt="image-20210202171847909" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130343.jpg" alt="image-20210202171847909" style="zoom:50%;" />
 
 对于这种Seq2Seq的方式，很明显最大的问题就是将encoder压缩在了最后一个rnn输出上，RNN机制实际中存在长程梯度消失的问题，对于较长的句子，我们很难寄希望于将输入的序列转化为定长的向量而保存所有的有效信息，所以随着所需翻译句子的长度的增加，这种结构的效果会显著下降。
 
@@ -39,7 +39,7 @@ Attention是目前最热的深度学习方向，最开始从NLP领域的机器�
 - 不用将encoder的最后一层喂给decoder。
 - 在decoder的时候，除了当前的输入外，我们还会附加一个context_vector，这个vector利用上一层的隐层输出与encoder做attention得到，这样的话就充分得利用了encoder里每个词的信息。
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51roxlem4j215w0u0q5f.jpg" alt="image-20210202172909409" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130200.jpg" alt="image-20210202172909409" style="zoom:50%;" />
 
 参考[博客](https://www.cnblogs.com/ydcode/p/11038064.html)。
 
@@ -50,7 +50,7 @@ Attention是目前最热的深度学习方向，最开始从NLP领域的机器�
 - V是被检索向量的value，一般而言K和V都是被检索item生成的向量
 - 具体计算方式如下：本质上就是Q和K点积先生成Q在每个被检索item的权重，然后对每个被检索item的V进行加权求和，得到检索item最终的向量。
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rp2mnu7j21320gyjsk.jpg" alt="image-20210202175527001" style="zoom: 50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130202.jpg" alt="image-20210202175527001" style="zoom: 50%;" />
 
 对于encoder-decoder模型，K和V就是encoder每个rnn单元的隐层向量，Q就是decoder的前一个rnn单元的隐层向量。
 
@@ -66,29 +66,29 @@ Attention是目前最热的深度学习方向，最开始从NLP领域的机器�
 
 下图是transformer的架构，也是有encoder-decoder组成的，其中最重要的就是multi-head attention部分。
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpbn61pj20ke0s6768.jpg" alt="preview" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130215.jpg" alt="preview" style="zoom:50%;" />
 
 Multi-head attention的架构图如下，所谓的multi-head就是用了多个QKV，最后concatenate之后，再经过一个线性变换，最后生成和输入一样维度的向量，中间Q,K,V的向量维度是自定义的。
 
 - 一个multi-head attention单元，每个item的输入embed维度和输出embed维度是一样的，类似经过了一个变换单元。
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpfq7s8j213w0mctaz.jpg" alt="img" style="zoom: 50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130216.jpg" alt="img" style="zoom: 50%;" />
 
 - encoder的话就是就是经过了N个multi-head attention单元，输出每个item的隐层向量
 
 - decoder的话有所不同，首先是生成当前item的输入向量，这个也是经过multi-head attention单元，但是会有个mask，就是只用当前item之前的item做attention，最终生成当前item的输出向量后作为Q，而K和V则是encoder的输出，这样再经过一个multi-head attention单元，生成当前item的最终输出向量，可以看下面这个图片示意：
 
-  <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpj4z0pj213m0k60tg.jpg" alt="image-20210202210714371" style="zoom:50%;" />
+  <img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130218.jpg" alt="image-20210202210714371" style="zoom:50%;" />
 
 ## 五、Bert
 
 Bert就是transformer的encoder部分进行更多堆叠的结果，如下图所示。当输入有多少个embedding，那么输出也就有相同数量的embedding，可以采用和RNN采用相同的叫法，把输出叫做隐向量。在做具体NLP任务的时候，只需要从中取对应的隐向量作为输出即可。
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpmpavzj20as0eamxe.jpg" alt="img" style="zoom:75%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130219.jpg" alt="img" style="zoom:75%;" />
 
 bert本质上即使一个大型的预训练模型，然后拿预训练的词向量放到特定的nlp任务里做微调，就可以得到非常好的效果。和bert类似的还有GPT，ELMo，区别如下图：
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51rpq0qjsj213q09oq53.jpg" alt="image-20210202214339626" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130221.jpg" alt="image-20210202214339626" style="zoom:50%;" />
 
 
 

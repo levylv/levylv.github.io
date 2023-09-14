@@ -9,7 +9,7 @@ categories: ML框架
 
 #### Tensorflow和Cuda、Cudnn版本对应关系
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gh6yeb38cmj315y0u0h0c.jpg" alt="image-20200728202135462" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-124619.jpg" alt="image-20200728202135462" style="zoom:50%;" />
 
 所以Cuda 10.0以上版本，就需要tensorflow 1.13.1以上
 

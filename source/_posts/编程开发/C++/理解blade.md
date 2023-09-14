@@ -27,4 +27,5 @@ categories: [编程开发,C++]
     - export_incs：这个就是定义编译时候寻找头文件的目录，已经编译好的第三方库会有这个include目录放头文件。正常我们自定义工程是不需要加这个配置的，因为头文件是在整个自定义工程里有的。
     - build_dynamic：生成动态库
 
-![image-20210203173926774](https://tva1.sinaimg.cn/large/e6c9d24ely1h51rl55p9sj206z03amx4.jpg)
+![image-20210203173926774](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-122129.jpg)
+

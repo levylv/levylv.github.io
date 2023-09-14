@@ -12,11 +12,13 @@ categories: 搜推广
 
 - 计算复杂度：O(n^2 * k)，但可以通过目标函数转换变为O(n * k)
 
-  <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51s7wzr2jj20vi0o2jts.jpg" alt="image-20201020184158031" style="zoom:40%;" />
+
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130727.jpg" alt="image-20201020184158031" style="zoom:40%;" />
+
 
 #### FFM:
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h51s81aqi6j20z405waai.jpg" alt="image-20201020184225396" style="zoom:33%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130729.jpg" alt="image-20201020184225396" style="zoom:33%;" />
 
 - 参数复杂度：O(nkF)
 
@@ -32,7 +34,7 @@ FFM与DeepFFM的对应：
 
 - 无非就是embeding层从一个向量，变成了一个矩阵，m * F（域的个数）。两个域内积的时候注意是对应的。
 
-  <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t2v1247j214q0m8q6y.jpg" alt="image-20201224111301818" style="zoom:50%;" />
+  <img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130733.jpg" alt="image-20201224111301818" style="zoom:50%;" />
 
 
 
@@ -54,10 +56,9 @@ FFM与DeepFFM的对应：
 
 https://zhuanlan.zhihu.com/p/35484389
 
-![image-20200930165622880](https://tva1.sinaimg.cn/large/e6c9d24ely1h52t33n92ej212s0n4adv.jpg)
+![image-20200930165622880](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130722.jpg)
 
 
 
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h52t387vlhj20zs0u042t.jpg" alt="image-20200930165727535" style="zoom:50%;" />
-
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130737.jpg" alt="image-20200930165727535" style="zoom:50%;" />
 

@@ -20,10 +20,10 @@ L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}
 $$
 其实你仔细一看，发现对比正常loss function - $\sum p(x) log{\hat{p}(x)}\$，无非就是把真实label的概率换成$f(a, s)$罢了。这样的loss function其实本质上就是等价于 最大化评价指标$f(a, s)$，推到过程如下：
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e3apzp5j312u0ju0xf.jpg" alt="image-20201030152538474" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130151.jpg" alt="image-20201030152538474" style="zoom:50%;" />
 
 
 
 最后，衍生到NAS上，其实本质和Policy Network是一样的。NAS里我们想要得到一个神经网络结构的概率，然后评价指标，就是用这个结构得到其在验证集上的精度。
 
-<img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk7e5gww8wj312e05qdhk.jpg" alt="image-20201030152746965" style="zoom:50%;" />
+<img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130155.jpg" alt="image-20201030152746965" style="zoom:50%;" />

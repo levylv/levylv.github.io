@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wei Lyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="广告类型 原生广告  原生广告在视觉形式上与广告投放到的应用内容界面相契合，可为用户带来浑然一体的体验。这种类型的广告就是原生广告。（这个就是不容易让人发现它是一个广告）  搜索广告  搜索广告是以上下文查询词为粒度进行受众定向,并按照竞价方式售卖和CPC(即“按点击收费”)结算的广告产品。例如大家在百度上面搜索python，就会搜索出一堆培训机构放在前面，这就是搜索广告。  信息流广告  信息流">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算广告基础概念">
+<meta property="og:url" content="http://yoursite.com/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="Levy&#39;s Blog">
+<meta property="og:description" content="广告类型 原生广告  原生广告在视觉形式上与广告投放到的应用内容界面相契合，可为用户带来浑然一体的体验。这种类型的广告就是原生广告。（这个就是不容易让人发现它是一个广告）  搜索广告  搜索广告是以上下文查询词为粒度进行受众定向,并按照竞价方式售卖和CPC(即“按点击收费”)结算的广告产品。例如大家在百度上面搜索python，就会搜索出一堆培训机构放在前面，这就是搜索广告。  信息流广告  信息流">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-14T13:07:38.311Z">
+<meta property="article:author" content="Wei Lyu">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>计算广告基础概念 - Levy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0-rc2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算广告基础概念"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-10 00:00" pubdate>
+          2022年8月10日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计算广告基础概念</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="广告类型"><a href="#广告类型" class="headerlink" title="广告类型"></a>广告类型</h3><ul>
+<li>原生广告</li>
+</ul>
+<p>原生广告在视觉形式上与广告投放到的应用内容界面相契合，可为用户带来浑然一体的体验。这种类型的广告就是原生广告。（这个就是不容易让人发现它是一个广告）</p>
+<ul>
+<li>搜索广告</li>
+</ul>
+<p>搜索广告是以上下文查询词为粒度进行受众定向,并按照竞价方式售卖和CPC(即“按点击收费”)结算的广告产品。例如大家在百度上面搜索python，就会搜索出一堆培训机构放在前面，这就是搜索广告。</p>
+<ul>
+<li>信息流广告</li>
+</ul>
+<p><em>信息流广告</em>是位于社交媒体用户的好友动态、或者资讯媒体和视听媒体内容流中的<em>广告</em>。</p>
+<p>首先它是原生广告，也就是和内容放在一起很难区分。例如大家在刷朋友圈的时候会有一条朋友圈内容挺具有真情实感的，有文字感想还有配图，但是一看备注是拼多多。</p>
+<ul>
+<li>直播广告</li>
+</ul>
+<h3 id="定向过滤、频控流控、打散"><a href="#定向过滤、频控流控、打散" class="headerlink" title="定向过滤、频控流控、打散"></a>定向过滤、频控流控、打散</h3><h4 id="定向过滤"><a href="#定向过滤" class="headerlink" title="定向过滤"></a>定向过滤</h4><p>定向：在召回之前，每个广告都有自己的受众群体，例如这个广告只投男性之类的constraint。</p>
+<p>过略：例如用户已经安装了该app，那如果还投该app的下载广告就不合理。所以会设置一些过滤规则，这个也可以做在定向中，或者模型预估之后吧。</p>
+<h4 id="频控-流控"><a href="#频控-流控" class="headerlink" title="频控/流控"></a>频控/流控</h4><p>频控：用户历史看过哪些广告，那这些广告再次曝光的话需要控制下频率。</p>
+<p>流控：广告的投放速度控制，如果一直投某类广告，预算消耗过快也是广告主不想看见的。</p>
+<p>这两步可以做在定向中，也就是模型预估前，也可以做在模型预估之后，看架构能力吧。</p>
+<h4 id="打散"><a href="#打散" class="headerlink" title="打散"></a>打散</h4><p>最终投放的广告很有可能是类似的，所以需要将其打散到不同位置或者不同次曝光中。我理解一般是预估之后。</p>
+<h3 id="RTA-RTB"><a href="#RTA-RTB" class="headerlink" title="RTA/RTB"></a>RTA/RTB</h3><p>RTA就是在广告平台直投广告里，接入一个realtime api，在定向阶段，让广告主自己做定向。</p>
+<p>RTB就涉及到了adx和dsp，广告平台提供流量位和用户等信息，然后通过adx将这些信息发送到dsp(广告主平台)，他们基于这个流量，挑选出最好的广告创意(ctr和cvr预估)做出价，然后再发送给adx做竞价。现在oppo 信息流里就有adx广告</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/125464058">RTA 广告产品能力详解</a></li>
+<li><a href="http://www.woshipm.com/pd/1692791.html">广告投放平台DSP搭建：你需要了解的产品核心模块</a></li>
+</ul>
+<h3 id="竞价-定价模式"><a href="#竞价-定价模式" class="headerlink" title="竞价/定价模式"></a>竞价/定价模式</h3><p>分为两个阶段：竞价阶段+定价阶段。</p>
+<ul>
+<li>竞价阶段：通过每个广告的bid，ctr，cvr，得到该广告的ecpm，按照ecpm排序进行竞价</li>
+<li>定价阶段：为了得到truthful bidding，用GSP和VCG的方式来进行定价，这里会把ecpm(预计千次投放收益)转换成auction price(千次投放计费)</li>
+</ul>
+<h3 id="几种方式"><a href="#几种方式" class="headerlink" title="几种方式"></a>几种方式</h3><h4 id="CPM"><a href="#CPM" class="headerlink" title="CPM"></a>CPM</h4><p>最简单的方式，按照投放计费：</p>
+<ul>
+<li>竞价：ecpm = bid * 1000，bid为单次投放出价</li>
+<li>定价：auction_price = f(ecpm)，price = auction_price  / 1000，price为单次投放计费</li>
+</ul>
+<h4 id="CPC"><a href="#CPC" class="headerlink" title="CPC"></a>CPC</h4><p>按照点击计费:</p>
+<ul>
+<li>竞价：ecpm = click_bid <em> ctr </em> 1000，click_bid为单次点击出价</li>
+<li>定价：auction_price = f(ecpm)，price = auction_price  / ctr / 1000，price为单次点击计费</li>
+</ul>
+<h4 id="CPA-oCPC-oCPM"><a href="#CPA-oCPC-oCPM" class="headerlink" title="CPA/oCPC/oCPM"></a>CPA/oCPC/oCPM</h4><p>按照转化(action)计费：</p>
+<ul>
+<li>竞价：ecpm = action_bid <em> ctr </em> cvr *1000，action_bid为单次转化出价</li>
+<li>定价：注意，这里三种方式有所区别<ul>
+<li>CPA：price = auction_price  / ctr / cvr / 1000，price为单次转化计费。这种方式的问题在于，广告主可能作弊，因为他们如果不回传转化，就能薅羊毛了。</li>
+<li>oCPC：price = auction_price  / ctr / 1000，price为单次点击计费。如果是一价计费，那么price = action_bid * cvr</li>
+<li>oCPM：price = auction_price / 1000，price为单次投放计费。</li>
+<li>从CPA -&gt; oCPC -&gt; oCPM，平台风险越来越低，广告主风险变高。</li>
+</ul>
+</li>
+</ul>
+<p>字节现状：CPC -&gt; oCPC -&gt;  CPA(中小广告主) + oCPM(其他）</p>
+<h3 id="如果ocpc模式下，预估cvr偏高会怎么样？"><a href="#如果ocpc模式下，预估cvr偏高会怎么样？" class="headerlink" title="如果ocpc模式下，预估cvr偏高会怎么样？"></a>如果ocpc模式下，预估cvr偏高会怎么样？</h3><p>最近发生了个事故，就是cvr预测失败，恒定返回0.5，达魁说这就会对广告主造成损失。理由如下：</p>
+<ul>
+<li>本身来讲，cvr和ctr预测不好，只会影响广告排序，不会直接造成损失。</li>
+<li>同样不会影响流失训练，无非负例变多，但会影响online auc，因为预估得不准了嘛</li>
+<li>ocpc计费价格，在一价模式下，price = action_bid * cvr，如果cvr偏高，那么我们对单次点击的收费就会偏高，所以会对广告主多计费，但是广告主如果看后验cvr的话，发现转化没那么高，或者和以前相比，同样的预算，带来的实际收入却变低了，roi变低，那么广告主利益就受损，我们需要对广告主进行赔偿。</li>
+</ul>
+<h3 id="关于广告主价值和游戏ecpm"><a href="#关于广告主价值和游戏ecpm" class="headerlink" title="关于广告主价值和游戏ecpm"></a>关于广告主价值和游戏ecpm</h3><ul>
+<li>我们之前排序的时候，会计算广告的ecpm这个只是针对某个用户的，ctr*bid</li>
+<li>计算广告主价值（ad_estimated_ecpm）时，统计的是所有广告的，所以是会按照实际的点击次数/转化次数 <em> bid来算的（并不是针对某个用户的ctr </em> bid），只是说广告主价值还是预估的，并非实际消耗的，因为实际扣费会涉及到风控以及二价计费等。</li>
+<li>游戏归一化曝光价值也是如此(game_ecpm)，只是会用点击次数 * ltv / 曝光总数，就有点ctr的意思在里面。</li>
+<li>广告和游戏的arpu的话，就是实际产生的收入了。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%90%9C%E6%8E%A8%E5%B9%BF/" class="category-chain-item">搜推广</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算广告基础概念</div>
+      <div>http://yoursite.com/2022/08/10/搜推广/计算广告基础概念/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wei Lyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" title="理解召回和LTR">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">理解召回和LTR</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Attention%E5%92%8CTransformer/" title="Attention和Transformer">
+                        <span class="hidden-mobile">Attention和Transformer</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

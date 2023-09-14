@@ -12,4 +12,4 @@ categories: 机器学习
 
 - LightGBM则有对离散特征的单独处理，需要首先利用labelEncoder转换为数值，然后会利用[On Grouping for Maximum Homogeneity](http://link.zhihu.com/?target=https%3A//www.researchgate.net/publication/242580910_On_Grouping_for_Maximum_Homogeneity)提到的算法找到最优值，是从2^(n-1)-1个分区划分中选出最优optimal split，而不像OHE一样是n个划分，因此效果优于OHE。
 
-  ![image-20200605155935227](https://tva1.sinaimg.cn/large/007S8ZIlly1gfhgz8kjolj30hp0b7dhl.jpg)
+  ![image-20200605155935227](http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-125900.jpg)
