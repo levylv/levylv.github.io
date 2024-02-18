@@ -226,6 +226,189 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2024/02/18/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/%E7%90%86%E8%A7%A3%E6%AF%94%E7%89%B9%E5%B8%81%E7%99%BD%E7%9A%AE%E4%B9%A6/" target="_self">
+          理解比特币白皮书
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/18/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/%E7%90%86%E8%A7%A3%E6%AF%94%E7%89%B9%E5%B8%81%E7%99%BD%E7%9A%AE%E4%B9%A6/" target="_self">
+        <div>
+          看了中本聪2008年写的比特币白皮书，有种相见恨晚的感觉，理解BTC后发现这个东西确实存在极大的合理性和价值，去中心化的思想非常美妙。详细文档可看李笑来的github。 文中的具体细节不再赘述，主要记录一些我阅读过程中思考以及理解的要点。 数字货币的概念文中将一枚数字硬币定义为a chain of digital signatures，即一串数字签名，并且示意图如下：  上图可以这么理解，假如所有
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-18 00:00" pubdate>
+              2024-02-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/" class="category-chain-item">数字货币</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%AF%94%E7%89%B9%E5%B8%81/">#比特币</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/01/09/ML%E6%A1%86%E6%9E%B6/Tensorflow%20op%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/" target="_self">
+          Tensorflow op调用机制解析
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/09/ML%E6%A1%86%E6%9E%B6/Tensorflow%20op%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/" target="_self">
+        <div>
+          最近老是有需求去看tf一些op的源码实现，比如ftrl优化器源码实现，在看的过程中会发现涉及python和c++的调用逻辑，因为大部分op在tf底层其实使用c++实现的。因此，大致梳理了一下tf的op调用机制。 以FTRL优化器为例，探索这个调用链路。（本文中的Tf为1.12版本）  原始import如下  1from tensorflow.train import FtrlOptimizer 本
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-09 00:00" pubdate>
+              2024-01-09
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ML%E6%A1%86%E6%9E%B6/" class="category-chain-item">ML框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Tensorflow/">#Tensorflow</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/12/20/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+          tensorflow的自动求导机制
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/20/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+        <div>
+          参考资料:https://www.zhihu.com/question/54554389 自动求导分成两种模式，一种是 Forward Mode，另外一种是 Reverse Mode，目前基本机器学习库用的后一种。 Forward mode: 每一步都用到链式求导，每个节点都记录其对原始节点的导数。 Reverse mode: 每一步都只记录相邻节点之间的导数，然后最终计算loss到某个节点的导数
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-20 00:00" pubdate>
+              2023-12-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ML%E6%A1%86%E6%9E%B6/" class="category-chain-item">ML框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Tensorflow/">#Tensorflow</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2023/09/14/%E5%8D%9A%E5%AE%A2/hexo%E5%8D%87%E7%BA%A7%E5%8F%8A%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" target="_self">
           hexo升级及图床配置
         </a>
@@ -395,13 +578,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/" target="_self">
           update_ops和control_dependencies的理解
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/" target="_self">
         <div>
           control_dependencies作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。 常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下: 123456789101112131415161718192021import tensorflow
         </div>
@@ -597,168 +780,6 @@
       <span class="category-chain">
         
   <a href="/categories/%E6%90%9C%E6%8E%A8%E5%B9%BF/" class="category-chain-item">搜推广</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" target="_self">
-          理解召回和LTR
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" target="_self">
-        <div>
-          参考文章：万变不离其宗：用统一框架理解向量化召回 召回本质召回本质上和排序其实存在很大的区别：  召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。 召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。  召回的几种类型 i2i:拿用户喜欢的item找相似item。就比如
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-10 00:00" pubdate>
-              2022-08-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%90%9C%E6%8E%A8%E5%B9%BF/" class="category-chain-item">搜推广</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" target="_self">
-          计算广告基础概念
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" target="_self">
-        <div>
-          广告类型 原生广告  原生广告在视觉形式上与广告投放到的应用内容界面相契合，可为用户带来浑然一体的体验。这种类型的广告就是原生广告。（这个就是不容易让人发现它是一个广告）  搜索广告  搜索广告是以上下文查询词为粒度进行受众定向,并按照竞价方式售卖和CPC(即“按点击收费”)结算的广告产品。例如大家在百度上面搜索python，就会搜索出一堆培训机构放在前面，这就是搜索广告。  信息流广告  信息流
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-10 00:00" pubdate>
-              2022-08-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%90%9C%E6%8E%A8%E5%B9%BF/" class="category-chain-item">搜推广</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/08/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Attention%E5%92%8CTransformer/" target="_self">
-          Attention和Transformer
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Attention%E5%92%8CTransformer/" target="_self">
-        <div>
-          一、背景Attention是目前最热的深度学习方向，最开始从NLP领域的机器翻译方向发源，到如今百花齐放到各个领域，包括推荐搜索，计算广告等等，万物皆可embedding，万物皆可attention，因为attention的本质就是为了更好的做embedding。 本篇文章按照attention发展的顺序来阐述：  Seq2Seq模型 Attention机制 Transformer的Self-At
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-10 00:00" pubdate>
-              2022-08-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
   
 

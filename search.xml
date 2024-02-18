@@ -216,12 +216,12 @@
       </tags>
   </entry>
   <entry>
-    <title>update_ops和control_dependencies的理解</title>
-    <url>/2023/07/10/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="control-dependencies"><a href="#control-dependencies" class="headerlink" title="control_dependencies"></a>control_dependencies</h2><p>作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。</p>
-<p>常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br>a_1 = tf.Variable(<span class="hljs-number">1</span>)<br>b_1 = tf.Variable(<span class="hljs-number">2</span>)<br>update_op = tf.assign(a_1, <span class="hljs-number">10</span>)<br>add = tf.add(a_1, b_1)<br><br>a_2 = tf.Variable(<span class="hljs-number">1</span>)<br>b_2 = tf.Variable(<span class="hljs-number">2</span>)<br>update_op = tf.assign(a_2, <span class="hljs-number">10</span>)<br><span class="hljs-keyword">with</span> tf.control_dependencies([update_op]):<br>    add_with_dependencies = tf.add(a_2, b_2)<br><br><span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>    sess.run(tf.global_variables_initializer())<br>    ans_1, ans_2 = sess.run([add, add_with_dependencies])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Add: &quot;</span>, ans_1)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Add_with_dependency: &quot;</span>, ans_2)<br><br><span class="hljs-comment">## 输出：</span><br><span class="hljs-comment">## Add:  3</span><br><span class="hljs-comment">## Add_with_dependency:  12</span><br></code></pre></td></tr></table></figure>
-<h2 id="update-ops"><a href="#update-ops" class="headerlink" title="update_ops"></a>update_ops</h2><p>update_ops通常是针对需要保存训练过程中(不同batch)的变量，最常见的就是batch_normalization中的moving_mean和moving_std，源码里就是在每个batch里做assign，这些op则保存在update_ops中，很显然，update_ops会和上面提到的control_dependencies一起用，保证每个batch都会执行这些op。</p>
+    <title>tensorflow的自动求导机制</title>
+    <url>/2023/12/20/ML%E6%A1%86%E6%9E%B6/update_ops%E5%92%8Ccontrol_dependencies%E7%9A%84%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>参考资料:<a href="https://www.zhihu.com/question/54554389">https://www.zhihu.com/question/54554389</a></p>
+<p>自动求导分成两种模式，一种是 Forward Mode，另外一种是 Reverse Mode，目前基本机器学习库用的后一种。</p>
+<p>Forward mode: 每一步都用到链式求导，每个节点都记录其对原始节点的导数。</p>
+<p>Reverse mode: 每一步都只记录相邻节点之间的导数，然后最终计算loss到某个节点的导数时，只需将路径上的节点用链式法计算即可。</p>
 ]]></content>
       <categories>
         <category>ML框架</category>
@@ -881,7 +881,7 @@
       </categories>
   </entry>
   <entry>
-    <title>关于凸、P和NP</title>
+    <title></title>
     <url>/2019/08/27/%E6%95%B0%E5%AD%A6/%E5%85%B3%E4%BA%8E%E5%87%B8%E3%80%81P%E5%92%8CNP/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>
 <p>优化问题本质上分为凸和非凸两大类。</p>
@@ -3543,5 +3543,154 @@ dia-normal &quot;$@&quot;
         <category>编程开发</category>
         <category>Shell</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Tensorflow op调用机制解析</title>
+    <url>/2024/01/09/ML%E6%A1%86%E6%9E%B6/Tensorflow%20op%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>最近老是有需求去看tf一些op的源码实现，比如ftrl优化器源码实现，在看的过程中会发现涉及python和c++的调用逻辑，因为大部分op在tf底层其实使用c++实现的。因此，大致梳理了一下tf的op调用机制。</p>
+<p>以FTRL优化器为例，探索这个调用链路。（本文中的Tf为1.12版本）</p>
+<ol>
+<li>原始import如下</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> tensorflow.train <span class="hljs-keyword">import</span> FtrlOptimizer<br></code></pre></td></tr></table></figure>
+<p>本质上FtrlOptimizer所在包为<code>tensorflow.python.training.ftrl</code>，仔细看该py文件里的代码，发现其继承了Optimizer类，但是重写了若干方法，这些核心方法是优化器的具体实现，但是代码里是一个调用函数:</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-113955.png" alt="image-20240109193947724" style="zoom:80%;" /></p>
+<ol>
+<li>training_ops</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> tensorflow.python.training <span class="hljs-keyword">import</span> training_ops<br></code></pre></td></tr></table></figure>
+<p>该目录下存在<code>training_ops.py</code>文件，其代码如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> tensorflow.python.training.gen_training_ops <span class="hljs-keyword">import</span> *<br></code></pre></td></tr></table></figure>
+<p>因此apply_ftrl其实来自gen_training_ops模块，而我们发现在该目录下并没有<code>gen_training_ops.py</code>文件，这里就涉及了bazel这个工具了</p>
+<ul>
+<li>Tensorflow采用了bazel(google自研，比makefile高效)来编译c++代码，具体bazel的原理可参考该<a href="https://blog.csdn.net/elaine_bao/article/details/78668657">博客</a> 。核心在于各个目录下的BUILD文件。</li>
+</ul>
+<p>像<code>gen_training_ops.py</code>这个文件，就是在training目录下的BUILD里定义的，在安装编译TF后才会生成的。BUILD如下所示，是一个自动生成python代码的方法tf_gen_op_wrapper_private_py。</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-121717.png" alt="image-20240109201713354"></p>
+<p>详细看其生成的代码：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-124652.png" alt="image-20240109204650786" style="zoom:67%;" /></p>
+<p>我们可以发现，其c++源码文件为<code>training_ops.cc</code>，因此我们搜索该文件后，可以发现存在两个文件：</p>
+<ul>
+<li><p><code>tensorflow.core.ops.training_ops.cc</code>：该文件没有源码细节，只是做了op注册，后文会提到为什么要注册op。</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-123808.png" alt="image-20240109203802741" style="zoom:80%;" /></p>
+</li>
+<li><p><code>tensorflow.core.kernels.training_ops.cc</code>：该文件则是真正的源码。</p>
+</li>
+</ul>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-123846.png" alt="image-20240109203843919" style="zoom:80%;" /></p>
+<p>由上，我们已经了解了如何去寻找真正的op源码，但是对于调用链路仍就有些困惑，即python是如何可以调用c++编译的动态库（关于动态库和静态库的解释，可以参考<a href="https://www.zhihu.com/question/20484931">资料</a>），下文继续探索。</p>
+<p>仔细看<code>gen_training_ops.py</code>文件，发现其调用的方法为<code>_op_def_lib._apply_op_helper(&#39;方法名&#39;, args)</code></p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-124737.png" alt="image-20240109204736609" style="zoom:80%;" /></p>
+<p>继续追溯，其来源于<code>op_def_lib = _op_def_library.OpDefLibrary()</code>，再追溯，来自于<code>op_def_library.py</code>文件，<code>_apply_op_helper</code>方法核心代码为</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-125005.png" alt="image-20240109205003728"></p>
+<p>其中g是tf的Graph，也就是通过这个create_op方法来为Graph生成op进行调用。再继续追溯，其方法来自</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">g = ops._get_graph_from_inputs(_Flatten(keywords.values()))<br></code></pre></td></tr></table></figure>
+<p> 来源为<code>tensorflow.framework.ops.py</code>文件，其中<code>_get_graph_from_inputs</code>返回的是一个Graph，而Graph类也在该文件，找到create_op方法：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-125728.png" alt="image-20240109205727323" style="zoom:80%;" /></p>
+<p>Operation同样在该文件，核心代码:</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-125929.png" alt="image-20240109205927426"></p>
+<p><code>_create_c_op</code>同样在该文件，核心代码:</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-130043.png" alt="image-20240109210042379"></p>
+<p>再追溯c_api模块，我们发现其来自<code>tensorflow.python.pywrap_tensorflow.py</code></p>
+<ol>
+<li>pywrap_tensorflow</li>
+</ol>
+<p>顾名思义，这个文件其实是python调用c++库的封装，打开文件，发现注释写着</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&quot;&quot;&quot;A wrapper for TensorFlow SWIG-generated bindings.&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>因此，其实这里tf采用了SWIG组件来实现python对c++动态库的链接，此外，在最新版本里，已经用了pybind11组件，关于这些组件的解释可以看<a href="https://www.zhihu.com/question/62208230">资料</a>,各组件的对比:</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-131231.png" alt="image-20240109211228949" style="zoom:67%;" /></p>
+<p>对于SWIG的细节，这里就不再追溯了。调用链路大致可以理解为，通过SWIG来调用编译生成的<code>TF_NewOperation</code>进行Graph中的Node对象创建，而Node对象的创建需要上文提到的op注册:</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-01-09-131516.png" alt="image-20240109211514766" style="zoom:80%;" /></p>
+<p>这里的细节也可以看<a href="https://blog.csdn.net/gaofeipaopaotang/article/details/80598840">资料</a></p>
+]]></content>
+      <categories>
+        <category>ML框架</category>
+      </categories>
+      <tags>
+        <tag>Tensorflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>update_ops和control_dependencies的理解</title>
+    <url>/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="control-dependencies"><a href="#control-dependencies" class="headerlink" title="control_dependencies"></a>control_dependencies</h2><p>作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。</p>
+<p>常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br>a_1 = tf.Variable(<span class="hljs-number">1</span>)<br>b_1 = tf.Variable(<span class="hljs-number">2</span>)<br>update_op = tf.assign(a_1, <span class="hljs-number">10</span>)<br>add = tf.add(a_1, b_1)<br><br>a_2 = tf.Variable(<span class="hljs-number">1</span>)<br>b_2 = tf.Variable(<span class="hljs-number">2</span>)<br>update_op = tf.assign(a_2, <span class="hljs-number">10</span>)<br><span class="hljs-keyword">with</span> tf.control_dependencies([update_op]):<br>    add_with_dependencies = tf.add(a_2, b_2)<br><br><span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br>    sess.run(tf.global_variables_initializer())<br>    ans_1, ans_2 = sess.run([add, add_with_dependencies])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Add: &quot;</span>, ans_1)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Add_with_dependency: &quot;</span>, ans_2)<br><br><span class="hljs-comment">## 输出：</span><br><span class="hljs-comment">## Add:  3</span><br><span class="hljs-comment">## Add_with_dependency:  12</span><br></code></pre></td></tr></table></figure>
+<h2 id="update-ops"><a href="#update-ops" class="headerlink" title="update_ops"></a>update_ops</h2><p>update_ops通常是针对需要保存训练过程中(不同batch)的变量，最常见的就是batch_normalization中的moving_mean和moving_std，源码里就是在每个batch里做assign，这些op则保存在update_ops中，很显然，update_ops会和上面提到的control_dependencies一起用，保证每个batch都会执行这些op。</p>
+]]></content>
+      <categories>
+        <category>ML框架</category>
+      </categories>
+      <tags>
+        <tag>Tensorflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>理解比特币白皮书</title>
+    <url>/2024/02/18/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/%E7%90%86%E8%A7%A3%E6%AF%94%E7%89%B9%E5%B8%81%E7%99%BD%E7%9A%AE%E4%B9%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>看了中本聪2008年写的比特币白皮书，有种相见恨晚的感觉，理解BTC后发现这个东西确实存在极大的合理性和价值，去中心化的思想非常美妙。详细文档可看<a href="https://github.com/xiaolai/bitcoin-whitepaper-chinese-translation/blob/master/Bitcoin-Whitepaper-EN-CN.pdf">李笑来的github</a>。</p>
+<p>文中的具体细节不再赘述，主要记录一些我阅读过程中思考以及理解的要点。</p>
+<h4 id="数字货币的概念"><a href="#数字货币的概念" class="headerlink" title="数字货币的概念"></a>数字货币的概念</h4><p>文中将一枚数字硬币定义为a chain of digital signatures，即一串数字签名，并且示意图如下：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-02-18-071335.png" alt="image-20240218151333419" style="zoom: 67%;" /></p>
+<p>上图可以这么理解，假如所有者1持有一枚数字货币(即所有者1签署私钥后的数字签名)，他向所有者2发起一笔交易，也就是将该枚数字货币传递给所有者2，该过程其实就是在所有者1的数字签名后加上两个信息：</p>
+<ul>
+<li>该枚货币的上一次交易hash。每一枚数字货币都有一个block(区块，这也是为啥被称为区块链)，block记录该枚货币的历史交易信息，这个block的概念很像数据结构中的链表，也是去中心化的核心，下文会讲。</li>
+<li>所有者2的公钥。这样所有者2就可以验证该枚货币的所属权，再利用自己的私钥进行签署加密。</li>
+</ul>
+<p>这个过程总结一下，其实就是一枚货币在一个block上反复传递，通过在数字签名上增加信息来更改所有者。而一个block的初始(第一笔交易)是一个特殊交易，他会生成一个新的数字硬币，该枚硬币属于区块的生成者，也就是所谓的矿工。</p>
+<p>显然在这个过程中，我们无法确保double-spend(双重支付)问题，即所有者1将他持有的这枚货币给多个人，因为收款人无法确认自己收到的货币是否在之前已经被使用。于是，中本聪就提出了下文的区块链机制。</p>
+<h4 id="区块链机制"><a href="#区块链机制" class="headerlink" title="区块链机制"></a>区块链机制</h4><p>整个区块链网络的运行机制如下:</p>
+<blockquote>
+<p>A. 所有新的交易向所有节点广播。</p>
+</blockquote>
+<p>   节点就是旷工，负责做计算和存储。</p>
+<blockquote>
+<p>B. 每个节点将新交易打包到一个区块</p>
+</blockquote>
+<p>   节点收到交易信息后，基于交易的货币会分发到对应的区块。</p>
+<blockquote>
+<p>C. 每个节点开始为此区块找一个具备难度的工作证明</p>
+</blockquote>
+<p>  工作证明(proof of work)是一个很有意思的想法，目的是通过增加计算量的方法降低信息的传输速率，从而提高作弊节点(攻击者)的计算成本。具体过程为: 不断在区块之中增加一个随机数(Nonce)，直到一个满足条件的数值被找到。这个条件就是，这个区块的哈希以指定数量的 0 开头。一旦 CPU的耗费算力所获的的结果满足工作证明，那么这个区块将不再能被更改，除非重新完成之前的所有工作量。随着新的区块不断被添加进来，改变当前区块即意味着说要重新完成所有其后区块的工作。可以发现该过程的计算很复杂，但是其他节点验证结果只需要一次运算即可。</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-02-18-074216.png" alt="image-20240218154213581" style="zoom: 67%;" /></p>
+<p>   工作证明同时解决了如何决定谁能代表大多数做决定的问题。如果所谓的“大多数”是基于“一个IP地址 票”的方式决定的话，那么任何一个可以搞定很多IP 地址的人就可以被认为是“大多数”。工作证明本质上来看，是“一个CPU一票”。所谓的“大多数决定”是由最⻓链所代表的，因为被投入最多工作的链就是它。如果 大多数 CPU 算力被诚实的节点所控制，那么诚实链成⻓最为迅速，其速度会远超其他竞争链。为了更改一 个已经产生的区块，攻击者将不得不重新完成那个区块以及所有其后区块的的工作证明，而后还要追上并超过诚实节点的工作。后文展示为什么一个被拖延了的攻击者能够追上的可能性将随着区块的不断增加而指数级降低。</p>
+<p>   其他资料中显示最开始的时候，BTC网络一次hash零运算需要花费十分钟，也就是每十分钟产生一枚数字货币。但是该运算时间可以通过控制0开头的数量来控制，BTC网络预计总共产生2100w枚BTC，截止到目前1960w枚(2024-02-18)。</p>
+<blockquote>
+<p>D. 当某个区块找到其工作证明，它就要将此区块广播给所有节点</p>
+</blockquote>
+<p>   当某个节点运算成功后，会把区块结果传递给所有节点。</p>
+<blockquote>
+<p>E. 众多其他节点当且只当以下条件满足才会接受这个区块:其中所有的交易都是有效的，且未被双重支付</p>
+</blockquote>
+<p>   其他节点验证所接受的区块，验证两个部分：</p>
+<ul>
+<li><p>区块中的所有结果，hash运算是正确的</p>
+</li>
+<li><p>通过数字硬币的每笔交易时间戳来判定，当且只有最早的一笔交易有效，来保证未被双重支付。</p>
+</li>
+</ul>
+<blockquote>
+<p>F. 众多节点向网络表示自己接受这个区块的方法是，在创建下一个区块的时候，把被接受区块的哈希当作新区块之前的哈希</p>
+</blockquote>
+<p>  其他节点接受了区块后，就会将被接受的区块hash当做下一个区块前的hash，也就是说这个过程中的区块链是不断增长的。</p>
+<p>在整个过程中，还有个很重要的机制是：节点始终认为最⻓链是正确的那个，且会不断向其添加新数据。若是有两个节点同时向网络广播了两个不同 版本的“下一个区块”，有些节点会先接收到其中一个，而另外一些节点会先接收到另外一个。这种情况下，节点将在它们先接收到的那个区块上继续工作，但也会把另外一个分支保存下来，以防后者成为最⻓链。当 下一个工作证明被找到，而其中的一个分支成为更⻓的链之后，这个暂时的分歧会被打消，在另外一个分支 上工作的节点们会切换到更⻓的链上。</p>
+<h4 id="攻击成本计算"><a href="#攻击成本计算" class="headerlink" title="攻击成本计算"></a>攻击成本计算</h4><p>这一部分涉及一些数学概念，例如泊松分布等，具体计算公式不再赘述，我大致梳理下原理：</p>
+<ul>
+<li>将网络中的诚实节点构成的链称为诚实链，攻击节点构成的链称为攻击链，因为网络机制中节点始终会认为最长链是正确的，所以如果攻击链产生的区块长度大于了诚实链，诚实链才会被攻击链取代，整个网络就被攻击成功了。如果攻击链的区块长度小于诚实链，那么网络就是安全的，用户在确认支付时候，始终是来自最长链上的信息。</li>
+<li>只有当攻击者的节点数量大于等于整个网络节点量的51%时，攻击才有可能成功，因为攻击节点占大多数的话，攻击链的工作证明就会越快，攻击链找到下一个区块的概率就会高于诚实链找到下一个区块的概率，才有可能让攻击链的长度大于诚实链。显然，这种情况是基本不可能发生的，攻击成本实在太高了，并且随着btc网络规模的扩大，攻击成本越加扩大，并且假设攻击者真能做到这个规模，还不如直接挖矿。</li>
+</ul>
+<h4 id="BTC价值总结"><a href="#BTC价值总结" class="headerlink" title="BTC价值总结"></a>BTC价值总结</h4><p>总结有几大优势：</p>
+<ul>
+<li>一个不收第三方机构监管，无视国界的金融工具。这个特性注定了其价值，因为在货币失去金本位之后，任务事物都可以成为货币，支撑货币的就是公信力，每个国家的货币支撑就来源于政府公信力，而数字货币则无需任何国家干预，成为了一个无国界的自由货币。</li>
+<li>去中心化的机制保证了没有人可以控制BTC，并且保证了交易的安全可靠性。</li>
+<li>稀缺性导致了没有通货膨胀的可能性，BTC的总量限制为2100w枚，因此其实预见到BTC的价值只会越来越高。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数字货币</category>
+      </categories>
+      <tags>
+        <tag>比特币</tag>
+      </tags>
   </entry>
 </search>
