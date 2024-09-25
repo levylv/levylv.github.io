@@ -1,5 +1,5 @@
 ---
-title: 关于凸、P和NP
+274485804title: 关于凸、P和NP
 date: 2019-08-27 19:28:44 
 categories: 数学
 ---
