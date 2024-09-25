@@ -517,15 +517,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
-          关于stop_gradient和trainable的理解
+        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/" target="_self">
+          update_ops和control_dependencies的理解
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/" target="_self">
         <div>
-          两个方法的分别意义：  stop_gradient参考资料  而trainable则是在初始化变量时，手动设置为True or Flase，意图为是否加入到trainable_variable中(计算梯度时的变量集合)。   两个方法都可以起到停止梯度更新的作用，但stop_gradient更加灵活一点，可以直接截断路径上的前面所有变量的梯度。
+          control_dependencies作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。 常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下: 123456789101112131415161718192021import tensorflow
         </div>
       </a>
 
@@ -578,15 +578,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/" target="_self">
-          update_ops和control_dependencies的理解
+        <a href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
+          关于stop_gradient和trainable的理解
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/tensorflow%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
         <div>
-          control_dependencies作用是保证在执行之后的op时，确认某些op已经执行完毕，相加于强加了依赖。 常见的场景为: 当用了tf.assign之类的op，并不会实际执行，需用手动sess.run该op才行，为了方便起见，就可以引入control_dependdencies，例子如下: 123456789101112131415161718192021import tensorflow
+          两个方法的分别意义：  stop_gradient参考资料  而trainable则是在初始化变量时，手动设置为True or Flase，意图为是否加入到trainable_variable中(计算梯度时的变量集合)。   两个方法都可以起到停止梯度更新的作用，但stop_gradient更加灵活一点，可以直接截断路径上的前面所有变量的梯度。
         </div>
       </a>
 

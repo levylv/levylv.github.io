@@ -396,7 +396,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/" target="_self">
         <div>
-          类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 1234567891011121314class A(object):    a = 1    b = 2    def __init__(self):        print self.a  # 1        self.a = 3t = A()print t.a  # 3pr
+          注意事项类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 12345678910class A(object):    a = 1   # 类变量print(A.a)  # 1t = A()print(t.a) # 1, 访问的是类变量t.a = 4  # 生成一个实例变量，而非修改类变量print(t.a)  # 4print(A
         </div>
       </a>
 

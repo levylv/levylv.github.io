@@ -16,15 +16,15 @@
   <meta name="author" content="Wei Lyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 1234567891011121314class A(object):    a &#x3D; 1    b &#x3D; 2    def __init__(self):        print self.a  # 1        self.a &#x3D; 3t &#x3D; A()print t.a  # 3pr">
+    <meta name="description" content="注意事项类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 12345678910class A(object):    a &#x3D; 1   # 类变量print(A.a)  # 1t &#x3D; A()print(t.a) # 1, 访问的是类变量t.a &#x3D; 4  # 生成一个实例变量，而非修改类变量print(t.a)  # 4print(A">
 <meta property="og:type" content="article">
 <meta property="og:title" content="类变量和实例变量">
 <meta property="og:url" content="http://yoursite.com/2021/06/25/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E7%B1%BB%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
-<meta property="og:description" content="类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 1234567891011121314class A(object):    a &#x3D; 1    b &#x3D; 2    def __init__(self):        print self.a  # 1        self.a &#x3D; 3t &#x3D; A()print t.a  # 3pr">
+<meta property="og:description" content="注意事项类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。 12345678910class A(object):    a &#x3D; 1   # 类变量print(A.a)  # 1t &#x3D; A()print(t.a) # 1, 访问的是类变量t.a &#x3D; 4  # 生成一个实例变量，而非修改类变量print(t.a)  # 4print(A">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-25T11:54:27.130Z">
+<meta property="article:modified_time" content="2024-03-21T06:53:23.400Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          185 字
+          1.2k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          2 分钟
+          11 分钟
         
       </span>
     
@@ -272,8 +272,18 @@
             
               <div class="markdown-body">
                 
-                <p>类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    a = <span class="hljs-number">1</span><br>    b = <span class="hljs-number">2</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span> self.a  <span class="hljs-comment"># 1</span><br>        self.a = <span class="hljs-number">3</span><br><br>t = A()<br><span class="hljs-built_in">print</span> t.a  <span class="hljs-comment"># 3</span><br><span class="hljs-built_in">print</span> A.a  <span class="hljs-comment"># 1</span><br><br>t.a = <span class="hljs-number">4</span><br><span class="hljs-built_in">print</span> t.a  <span class="hljs-comment"># 4 </span><br><span class="hljs-built_in">print</span> A.a  <span class="hljs-comment"># 1</span><br></code></pre></td></tr></table></figure>
+                <h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>类和实例都可以访问 类变量，但是实例只能访问，无法修改，一旦修改了，则会生成一个同名的实例变量，而非本身的类变量。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>(object):<br>    a = <span class="hljs-number">1</span>   <span class="hljs-meta"># 类变量</span><br><br><span class="hljs-keyword">print</span>(A.a)  <span class="hljs-meta"># 1</span><br>t = A()<br><span class="hljs-keyword">print</span>(t.a) <span class="hljs-meta"># 1, 访问的是类变量</span><br><br>t.a = <span class="hljs-number">4</span>  <span class="hljs-meta"># 生成一个实例变量，而非修改类变量</span><br><span class="hljs-keyword">print</span>(t.a)  <span class="hljs-meta"># 4</span><br><span class="hljs-keyword">print</span>(A.a)  <span class="hljs-meta"># 1</span><br></code></pre></td></tr></table></figure>
+<h1 id="和JAVA的区别"><a href="#和JAVA的区别" class="headerlink" title="和JAVA的区别"></a>和JAVA的区别</h1><p>对于实例变量，python和java没有区别，子类可以继承和修改，生成的都是新的变量，不影响父类。</p>
+<p>对于类变量，python和java是不一样的：</p>
+<ul>
+<li><p>python: 子类均可以继承和修改，一旦进行修改，实际子类会生成该类变量的副本，从那刻起，该对象读取和写入的都是自身持有的类变量的副本。所以这个角度看，类变量基本是和实例变量一样的，感觉写代码的时候用类变量或者实例变量都可以。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Parent</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    a = <span class="hljs-number">1</span>   <span class="hljs-comment"># 类变量</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.a = <span class="hljs-number">2</span>  <span class="hljs-comment"># 实例变量</span><br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Child</span>(<span class="hljs-title class_ inherited__">Parent</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(Child, self).__init__()<br><br>p = Parent()<br><span class="hljs-built_in">print</span>(Parent.a)  <span class="hljs-comment"># 1, 类变量</span><br><span class="hljs-built_in">print</span>(p.a)   <span class="hljs-comment"># 2， 实例变量</span><br><br>c = Child()<br><span class="hljs-built_in">print</span>(Child.a)  <span class="hljs-comment"># 1, 父类的类变量</span><br><span class="hljs-built_in">print</span>(c.a)  <span class="hljs-comment"># 2, 父类的类变量</span><br><br>Child.a = <span class="hljs-number">11</span>  <span class="hljs-comment"># 生成子类的类变量</span><br>c.a = <span class="hljs-number">22</span>   <span class="hljs-comment"># 生成子类的实例变量</span><br><span class="hljs-built_in">print</span>(Parent.a) <span class="hljs-comment"># 1, 父类类变量不变</span><br><span class="hljs-built_in">print</span>(p.a)  <span class="hljs-comment"># 2， 父类实例变量不变</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Java: 类变量只可以被子类访问和修改，无法继承，也就是说子类是没有自己的类变量副本，即使修改了影响也是父类的类变量。所以在java中，类变量和成员变量是有明显不同的，类方法和成员方法也是类似道理，所以成员方法有多态，类方法是没有多态的(对象是谁的，就访问谁的类方法)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Parent</span> &#123;<br>    <span class="hljs-keyword">public</span>  <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Child</span>  <span class="hljs-keyword">extends</span>  <span class="hljs-title class_">Parent</span> &#123;<br>&#125;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">test</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Parent</span> <span class="hljs-variable">p</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Parent</span>();<br>        System.out.println(p.a);   <span class="hljs-comment">// 1, 父类类变量</span><br>        System.out.println(Parent.a);  <span class="hljs-comment">//1, 父类类变量</span><br><br>        <span class="hljs-type">Child</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Child</span>();<br>        c.a = <span class="hljs-number">2</span>;  <span class="hljs-comment">// 通过子类修改父类的类变量</span><br>        System.out.println(Parent.a);  <span class="hljs-comment">// 2, 父类类变量被修改</span><br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
 
                 
               </div>
