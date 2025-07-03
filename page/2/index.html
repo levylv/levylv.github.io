@@ -226,6 +226,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/Online%20Learning%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E5%99%A8/" target="_self">
+          Online Learning中的优化器
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/Online%20Learning%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E5%99%A8/" target="_self">
+        <div>
+          今天详细看了下推荐广告系统的online_learning，顾名思义，online_learning就是在线输入样本，更新模型，尽可能做到分钟级/小时级的模型更新，其实关键就是几个问题：  模型怎么学习？ 怎么降低模型复杂度，保证inference的低延时？  参考博文 : FTRL 不太简短之介绍 模型怎么学习？这个其实很简单，其实要求我们可以基于在线输入的样本，进行权重参数更新，基于类似随机梯
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-10 00:00" pubdate>
+              2022-08-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%90%9C%E6%8E%A8%E5%B9%BF/" class="category-chain-item">搜推广</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E6%B5%85%E8%B0%88FM%E5%92%8CFFM/" target="_self">
           浅谈FM和FFM
         </a>
@@ -719,60 +773,6 @@
       <span class="category-chain">
         
   <a href="/categories/%E6%95%B0%E5%AD%A6/" class="category-chain-item">数学</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2021/01/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN%E7%9A%84BPTT/" target="_self">
-          RNN的BPTT
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2021/01/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN%E7%9A%84BPTT/" target="_self">
-        <div>
-          RNN采用的梯度更新策略是BPTT，梯度分为两部分：  竖直方向的输出层权重：这个和传统反向传播没什么区别，因为这一层的权重只与当前loss有关 竖直方向的输入层和水平权重：这个就稍微复杂点，因为rnn的总loss是所有时刻loss相加的，同时每个时刻的loss又会影响到这里所说的所有权重，所以操作是： 计算某个时刻Et的误差项，通过反向传播来计算，最后计算梯度。 汇总所有的时刻计算的梯度。
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-08 00:00" pubdate>
-              2021-01-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
   
 

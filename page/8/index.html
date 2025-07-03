@@ -226,6 +226,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2019/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Dead%20ReLu%E9%97%AE%E9%A2%98/" target="_self">
+          Dead ReLu问题
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2019/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Dead%20ReLu%E9%97%AE%E9%A2%98/" target="_self">
+        <div>
+          原因很简单，是因为函数的负数区间值为0，导数为0，导致权重不更新。 但实际上，真要出现永久dead还是很严苛的：  所用训练样本x在该神经元的输入值都是 &lt; 0 一般都是网络第一层，前面没有隐藏层。因为如果有隐藏层，隐藏层不死的话，隐藏层输出值还是会变，同样的x, 输入到该层还是有可能被激活。  BP经典公式： 该神经元某条链路w导数 = 前面的导数累计  该神经元导数值  该链路输入值x
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-05-16 19:28" pubdate>
+              2019-05-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2019/05/06/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%BC%95%E7%94%A8,%20%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/" target="_self">
           引用，浅拷贝和深拷贝
         </a>
@@ -723,67 +777,6 @@
       <a class="index-excerpt index-excerpt__noimg" href="/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E5%B8%83%E4%B8%8D%E5%9D%87%E5%8C%80%E7%9A%84%E9%97%AE%E9%A2%98/" target="_self">
         <div>
           之前city_id作为特征后导致模型预测结果差异很大这一点，一直让我耿耿于怀，仔细思考后，其实可以这样解释：  首先特征属性不对，我应该将其设为离散特征，做OHE处理，再放入模型训练。  特征值分布不均匀，事实上不会影响该特征值的选择，假如该特征值确实区分了样本，即使树的左右子节点样本数量相差很大，也是照样划分啊！  之前的结果很大一部分原因，还是类别分布不均匀导致的！杭州的值普遍大且样本多，宁波
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2018-12-06 19:28" pubdate>
-              2018-12-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">#特征工程</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" target="_self">
-          关于特征工程
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2018/12/06/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8E%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" target="_self">
-        <div>
-          特征工程和模型选择是提升算法的两类途径。  特征工程：数据清洗，(降维)，特征选择，特征组合。 特征组合变换好坏都有，一方面能提高模型的表达能力，另一方面有可能引起过拟合，增加冗余特征，降低模型解释力。 特征变换还可以是将连续特征转换为离散特征。   模型的选择和特征工程是耦合的。因为不同模型对特征工程的需求不一样。 树模型不需要归一化处理，不需要特征选择，因为这些模型都能做到。 神经网络则不需要
         </div>
       </a>
 

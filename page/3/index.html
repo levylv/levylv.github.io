@@ -226,6 +226,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2021/01/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN%E7%9A%84BPTT/" target="_self">
+          RNN的BPTT
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/01/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN%E7%9A%84BPTT/" target="_self">
+        <div>
+          RNN采用的梯度更新策略是BPTT，梯度分为两部分：  竖直方向的输出层权重：这个和传统反向传播没什么区别，因为这一层的权重只与当前loss有关 竖直方向的输入层和水平权重：这个就稍微复杂点，因为rnn的总loss是所有时刻loss相加的，同时每个时刻的loss又会影响到这里所说的所有权重，所以操作是： 计算某个时刻Et的误差项，通过反向传播来计算，最后计算梯度。 汇总所有的时刻计算的梯度。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-08 00:00" pubdate>
+              2021-01-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2020/12/16/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
           关于线程/进程的理解
         </a>
@@ -627,13 +681,6 @@
   <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
   
-    <span>></span>
-    
-  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/AutoML/" class="category-chain-item">AutoML</a>
-  
-  
-
-  
 
       </span>
     
@@ -642,6 +689,13 @@
 
           </div>
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/AutoML/">#AutoML</a>
+            
+          </div>
         
       </div>
     </article>
@@ -654,7 +708,7 @@
       <h2 class="index-header">
         
         <a href="/2020/10/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8Epolicy%20network/" target="_self">
-          关于Policy Network
+          
         </a>
       </h2>
 
@@ -687,13 +741,6 @@
         
   <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="category-chain-item">强化学习</a>
-  
-  
-
   
 
       </span>
@@ -764,67 +811,6 @@
               <a href="/tags/Tensorflow/">#Tensorflow</a>
             
           </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/10/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%85%B3%E4%BA%8Epython2%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" target="_self">
-          关于python2的编码问题
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/10/22/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%85%B3%E4%BA%8Epython2%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" target="_self">
-        <div>
-          基本知识首先我们要弄明白Unicode这个概念，我以前一直理解有问题，以为是类似于ascii、utf-8的一种编码方式而已，然而我错了，可以看这篇文章：字符编码笔记：ASCII，Unicode 和 UTF-8，总结一下就是：  Unicode不是一种编码方式，而是定义了统一的字符集，包含了世界上的所有字符。它相当于维护了一个映射code point，一个二进制表示对应一个字符。虽然从这个理解上，也
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-10-22 00:00" pubdate>
-              2020-10-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/" class="category-chain-item">编程开发</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/" class="category-chain-item">Python</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
         
       </div>
     </article>
