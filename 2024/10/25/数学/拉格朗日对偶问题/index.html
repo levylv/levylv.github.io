@@ -16,23 +16,29 @@
   <meta name="author" content="Wei Lyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="拉格朗日对偶问题的上界一定小于原问题的下界：    拉格朗日强对偶条件：  对于凸问题，不等式约束严格可行，存在&lt;0，   对于凸问题，KKT条件满足，则全局最优点，KKT条件是充分必要条件；对于优化问题，KKT是必要条件。">
+    <meta name="description" content="参考资料：拉格朗日对偶 拉格朗日函数的定义：  拉格朗日对偶的定义：  拉格朗日对偶函数一定是一个凹函数，因为仿射函数的下界一定是凹的。  明确拉格朗日对偶的作用：  原优化问题比较难求解的情况下(存在约束)，就可以将其转化为拉格朗日对偶问题，对偶问题一定是一个凸问题。但值得注意的是，对偶问题得到的求解是原问题的下界(弱对偶)。    那什么情况下是强对偶，也就是对偶问题的最优解即为原问题的最优解">
 <meta property="og:type" content="article">
-<meta property="og:title" content="拉格朗日对偶">
-<meta property="og:url" content="http://yoursite.com/2019/08/26/%E6%95%B0%E5%AD%A6/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%AF%B9%E5%81%B6/index.html">
+<meta property="og:title" content="拉格朗日对偶问题">
+<meta property="og:url" content="http://yoursite.com/2024/10/25/%E6%95%B0%E5%AD%A6/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
-<meta property="og:description" content="拉格朗日对偶问题的上界一定小于原问题的下界：    拉格朗日强对偶条件：  对于凸问题，不等式约束严格可行，存在&lt;0，   对于凸问题，KKT条件满足，则全局最优点，KKT条件是充分必要条件；对于优化问题，KKT是必要条件。">
+<meta property="og:description" content="参考资料：拉格朗日对偶 拉格朗日函数的定义：  拉格朗日对偶的定义：  拉格朗日对偶函数一定是一个凹函数，因为仿射函数的下界一定是凹的。  明确拉格朗日对偶的作用：  原优化问题比较难求解的情况下(存在约束)，就可以将其转化为拉格朗日对偶问题，对偶问题一定是一个凸问题。但值得注意的是，对偶问题得到的求解是原问题的下界(弱对偶)。    那什么情况下是强对偶，也就是对偶问题的最优解即为原问题的最优解">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063603.png">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063640.png">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063720.png">
 <meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130342.jpg">
-<meta property="article:published_time" content="2019-08-26T11:28:44.000Z">
-<meta property="article:modified_time" content="2024-09-25T06:29:33.464Z">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-061732.png">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-062031.png">
+<meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063927.png">
+<meta property="article:published_time" content="2024-10-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-25T06:40:36.301Z">
 <meta property="article:author" content="Wei Lyu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130342.jpg">
+<meta name="twitter:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063603.png">
   
   
   
-  <title>拉格朗日对偶 - Levy&#39;s Blog</title>
+  <title>拉格朗日对偶问题 - Levy&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="拉格朗日对偶"></span>
+            <span id="subtitle" data-typed-text="拉格朗日对偶问题"></span>
           
         </div>
 
@@ -209,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2019-08-26 19:28" pubdate>
-          2019年8月26日 晚上
+        <time datetime="2024-10-25 00:00" pubdate>
+          2024年10月25日 凌晨
         </time>
       </span>
     
@@ -221,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          106 字
+          391 字
         
       </span>
     
@@ -232,7 +238,7 @@
         
         
         
-          1 分钟
+          4 分钟
         
       </span>
     
@@ -269,22 +275,35 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">拉格朗日对偶</h1>
+            <h1 id="seo-header">拉格朗日对偶问题</h1>
             
             
               <div class="markdown-body">
                 
-                <ul>
-<li>拉格朗日对偶问题的上界一定小于原问题的下界：</li>
-</ul>
+                <p>参考资料：<a href="https://thesouther.github.io/myNotes/Basis/LagrangianDual.html">拉格朗日对偶</a></p>
+<p>拉格朗日函数的定义：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063603.png" srcset="/img/loading.gif" lazyload alt="image-20241025143601273"></p>
+<p>拉格朗日对偶的定义：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063640.png" srcset="/img/loading.gif" lazyload alt="image-20241025143639156"></p>
+<p>拉格朗日对偶函数一定是一个凹函数，因为仿射函数的下界一定是凹的。</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063720.png" srcset="/img/loading.gif" lazyload alt="image-20241025143718755"></p>
+<p>明确拉格朗日对偶的作用：</p>
+<ul>
+<li><p>原优化问题比较难求解的情况下(存在约束)，就可以将其转化为拉格朗日对偶问题，对偶问题一定是一个凸问题。但值得注意的是，对偶问题得到的求解是原问题的下界(弱对偶)。</p>
 <p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130342.jpg" srcset="/img/loading.gif" lazyload alt="image-20200605162458767"></p>
-<ul>
-<li>拉格朗日强对偶条件：</li>
+</li>
 </ul>
-<p>对于凸问题，不等式约束严格可行，存在&lt;0， </p>
+<p>那什么情况下是强对偶，也就是对偶问题的最优解即为原问题的最优解？很遗憾, 没有通用的判断条件判断一个问题是否具有强对偶性, 但是很多成果给出了除凸性条件之外的强对偶性成立的条件.</p>
+<p>一个比较典型的强对偶的充分条件就是：</p>
 <ul>
-<li>对于凸问题，KKT条件满足，则全局最优点，KKT条件是充分必要条件；对于优化问题，KKT是必要条件。</li>
+<li><p>原问题为凸问题，并且满足slater条件，那么就强对偶就成立。事实上，大部分情况都满足这个条件。</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-061732.png" srcset="/img/loading.gif" lazyload alt="image-20241025141729521"></p>
+</li>
 </ul>
+<p>KKT则是强对偶的必要条件，也就是满足了强对偶，就一定满足KKT条件，我们就可以以此来求解原问题的最优解。KKT条件如下：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-062031.png" srcset="/img/loading.gif" lazyload alt="image-20241025142029956"></p>
+<p>有了KKT条件后，我们一般的求解流程就是：</p>
+<p><img src="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2024-10-25-063927.png" srcset="/img/loading.gif" lazyload alt="image-20241025143926279"></p>
 
                 
               </div>
@@ -323,8 +342,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>拉格朗日对偶</div>
-      <div>http://yoursite.com/2019/08/26/数学/拉格朗日对偶/</div>
+      <div>拉格朗日对偶问题</div>
+      <div>http://yoursite.com/2024/10/25/数学/拉格朗日对偶问题/</div>
     </div>
     <div class="license-meta">
       
@@ -336,7 +355,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2019年8月26日</div>
+          <div>2024年10月25日</div>
         </div>
       
       
@@ -368,18 +387,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2019/08/26/%E6%95%B0%E5%AD%A6/%E5%8F%AF%E5%AF%BC%E5%92%8C%E5%8F%AF%E5%BE%AE/" title="可导和可微">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">可导和可微</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2019/08/10/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%B5%81%E7%A8%8B/" title="前端学习流程">
-                        <span class="hidden-mobile">前端学习流程</span>
+                      <a href="/2024/02/18/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/%E7%90%86%E8%A7%A3%E6%AF%94%E7%89%B9%E5%B8%81%E7%99%BD%E7%9A%AE%E4%B9%A6/" title="理解比特币白皮书">
+                        <span class="hidden-mobile">理解比特币白皮书</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

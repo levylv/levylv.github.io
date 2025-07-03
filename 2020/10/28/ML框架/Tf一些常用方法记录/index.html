@@ -24,7 +24,7 @@
 <meta property="og:description" content="tf.stacktf.stack(values, axis&#x3D;0, name&#x3D;”stack”): 12345x &#x3D; tf.constant([1, 4])y &#x3D; tf.constant([2, 5])z &#x3D; tf.constant([3, 6])tf.stack([x, y, z])  # [[1, 4], [2, 5], [3, 6]] (Pack along first dim.)tf.stac">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-25T06:29:33.457Z">
+<meta property="article:modified_time" content="2025-05-19T07:52:21.088Z">
 <meta property="article:author" content="Wei Lyu">
 <meta property="article:tag" content="Tensorflow">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.5k 字
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          12 分钟
+          13 分钟
         
       </span>
     
@@ -290,6 +290,10 @@
 <p>对于params,就是你的输入，axis就是你进行操作的维度，默认为0(对于tf.gather,只能对于给定的axis操作),indices就是你想获取的axis维度上的值，来看一个例子，可以更佳清楚的了解函数是如何使用的：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">temp = tf.<span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>)*<span class="hljs-number">10</span> + tf.constant(<span class="hljs-number">1</span>,shape=[<span class="hljs-number">10</span>])<br><br>temp2 = tf.gather(temp,[<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>])<br><br><span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:<br><br><span class="hljs-built_in">print</span> sess.run(temp)<br><br><span class="hljs-built_in">print</span> sess.run(temp2)<br><br>输出<br><br>[ <span class="hljs-number">1</span> <span class="hljs-number">11</span> <span class="hljs-number">21</span> <span class="hljs-number">31</span> <span class="hljs-number">41</span> <span class="hljs-number">51</span> <span class="hljs-number">61</span> <span class="hljs-number">71</span> <span class="hljs-number">81</span> <span class="hljs-number">91</span>]<br><br>[<span class="hljs-number">11</span> <span class="hljs-number">51</span> <span class="hljs-number">91</span>]<br></code></pre></td></tr></table></figure>
 <p>tf.gather只能对低维度进行操作，gather_nd可以进行高维度的操作。和gather相比，没有了axis参数，如果indices的维度和params的维度等价，他是直接获取一个具体值(之后组合成向量)。</p>
+<ul>
+<li><strong>tf.gather</strong><br>输出形状为：<br><code>params.shape[:axis] + indices.shape + params.shape[axis+1:]</code></li>
+<li><strong>tf.gather_nd</strong><br>输出形状为：<br><code>indices.shape[:-1] + params.shape[len(indices.shape[-1]):]</code></li>
+</ul>
 <h3 id="tf-expand-dims和tf-squeeze"><a href="#tf-expand-dims和tf-squeeze" class="headerlink" title="tf.expand_dims和tf.squeeze"></a>tf.expand_dims和tf.squeeze</h3><ul>
 <li>tf.expand_dims(input, axis=None)，就是在对应的axis上加个1的维度，这样可以让tensorflow的元素乘和元素加运算可以用上broadcast机制。</li>
 <li><p>broadcast机制：满足下面两个条件即可进行元素复制。</p>

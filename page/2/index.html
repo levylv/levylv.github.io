@@ -226,15 +226,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" target="_self">
-          理解召回和LTR
+        <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E6%B5%85%E8%B0%88FM%E5%92%8CFFM/" target="_self">
+          浅谈FM和FFM
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E6%B5%85%E8%B0%88FM%E5%92%8CFFM/" target="_self">
         <div>
-          参考文章：万变不离其宗：用统一框架理解向量化召回 召回本质召回本质上和排序其实存在很大的区别：  召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。 召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。  召回的几种类型 i2i:拿用户喜欢的item找相似item。就比如
+          梳理一下FM和FFMFM： 参数复杂度：O(n*k)  计算复杂度：O(n^2  k)，但可以通过目标函数转换变为O(n  k)    FFM:  参数复杂度：O(nkF)  计算复杂度：O(n^2  k)，无法简化。*注意：每个特征都有自己所在的域，特征1和特征2交叉时，特征1的域向量选择特征2所在域F2，特征2的域向量选择特征1所在域F1。其实FFM就是把一个one-hot 变量中FM对应的向
         </div>
       </a>
 
@@ -289,6 +289,60 @@
       <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" target="_self">
         <div>
           广告类型 原生广告  原生广告在视觉形式上与广告投放到的应用内容界面相契合，可为用户带来浑然一体的体验。这种类型的广告就是原生广告。（这个就是不容易让人发现它是一个广告）  搜索广告  搜索广告是以上下文查询词为粒度进行受众定向,并按照竞价方式售卖和CPC(即“按点击收费”)结算的广告产品。例如大家在百度上面搜索python，就会搜索出一堆培训机构放在前面，这就是搜索广告。  信息流广告  信息流
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-10 00:00" pubdate>
+              2022-08-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%90%9C%E6%8E%A8%E5%B9%BF/" class="category-chain-item">搜推广</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" target="_self">
+          理解召回和LTR
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/10/%E6%90%9C%E6%8E%A8%E5%B9%BF/%E7%90%86%E8%A7%A3%E5%8F%AC%E5%9B%9E%E5%92%8CLTR/" target="_self">
+        <div>
+          参考文章：万变不离其宗：用统一框架理解向量化召回 召回本质召回本质上和排序其实存在很大的区别：  召回模型特征是解耦的，排序模型的特征是交叉的，这个是性能上的考虑。 召回是样本的艺术，排序是特征的艺术。召回的负样本如果用的是曝光未点击，和排序类似的话，就有问题，这样召回的训练和预估的数据分布不一致了。因此召回的负样本是随机采样。  召回的几种类型 i2i:拿用户喜欢的item找相似item。就比如
         </div>
       </a>
 
@@ -729,74 +783,6 @@
 
           </div>
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/12/16/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
-          关于线程/进程的理解
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/12/16/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/" target="_self">
-        <div>
-          最近对线程有了一些的新的理解，再整理一下知识点：  线程的执行单位是core，一个cpu可以有多个core，所以为啥现在计算就主打多核cpu.. 但实际上即使是一个core，也可以实现并发，因为线程之间可以随时切换，因为有thread context这个信息，下面会提。 我们实现一个服务/进程，有多时候都会用多线程来并发处理，那么来看下线程的共享资源单位： 代码区：毫无疑问，就是二进制的代码文件
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-12-16 00:00" pubdate>
-              2020-12-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-chain-item">大数据</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/" class="category-chain-item">Spark</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
-            
-          </div>
         
       </div>
     </article>
