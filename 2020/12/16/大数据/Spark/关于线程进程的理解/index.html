@@ -19,7 +19,7 @@
     <meta name="description" content="最近对线程有了一些的新的理解，再整理一下知识点：  线程的执行单位是core，一个cpu可以有多个core，所以为啥现在计算就主打多核cpu.. 但实际上即使是一个core，也可以实现并发，因为线程之间可以随时切换，因为有thread context这个信息，下面会提。 我们实现一个服务&#x2F;进程，有多时候都会用多线程来并发处理，那么来看下线程的共享资源单位： 代码区：毫无疑问，就是二进制的代码文件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于线程&#x2F;进程的理解">
-<meta property="og:url" content="http://yoursite.com/2020/12/16/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:url" content="http://levylv.github.io/2020/12/16/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%85%B3%E4%BA%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="最近对线程有了一些的新的理解，再整理一下知识点：  线程的执行单位是core，一个cpu可以有多个core，所以为啥现在计算就主打多核cpu.. 但实际上即使是一个core，也可以实现并发，因为线程之间可以随时切换，因为有thread context这个信息，下面会提。 我们实现一个服务&#x2F;进程，有多时候都会用多线程来并发处理，那么来看下线程的共享资源单位： 代码区：毫无疑问，就是二进制的代码文件">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -344,7 +344,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>关于线程/进程的理解</div>
-      <div>http://yoursite.com/2020/12/16/大数据/Spark/关于线程进程的理解/</div>
+      <div>http://levylv.github.io/2020/12/16/大数据/Spark/关于线程进程的理解/</div>
     </div>
     <div class="license-meta">
       

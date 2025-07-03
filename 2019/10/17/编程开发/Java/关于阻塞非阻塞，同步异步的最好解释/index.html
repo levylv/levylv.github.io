@@ -19,7 +19,7 @@
     <meta name="description" content="还是不同层次的问题……一个网络包从应用程序A发到另一台电脑上的应用程序B，需要经历：  从A的业务代码到A的软件框架 从A的软件框架到计算机的操作系统内核 从A所在计算机的内核到网卡 从网卡经过网线发到交换机等设备，层层转发，到达B所在计算机的网卡 从B所在计算机的网卡到B所在计算机的内核 从B所在计算机的内核到B的程序的用户空间 从B的软件框架到B的业务代码  这个层级关系就像是过程调用一样，前">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于阻塞非阻塞，同步异步的最好解释">
-<meta property="og:url" content="http://yoursite.com/2019/10/17/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%85%B3%E4%BA%8E%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E%EF%BC%8C%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E7%9A%84%E6%9C%80%E5%A5%BD%E8%A7%A3%E9%87%8A/index.html">
+<meta property="og:url" content="http://levylv.github.io/2019/10/17/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%85%B3%E4%BA%8E%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E%EF%BC%8C%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E7%9A%84%E6%9C%80%E5%A5%BD%E8%A7%A3%E9%87%8A/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="还是不同层次的问题……一个网络包从应用程序A发到另一台电脑上的应用程序B，需要经历：  从A的业务代码到A的软件框架 从A的软件框架到计算机的操作系统内核 从A所在计算机的内核到网卡 从网卡经过网线发到交换机等设备，层层转发，到达B所在计算机的网卡 从B所在计算机的网卡到B所在计算机的内核 从B所在计算机的内核到B的程序的用户空间 从B的软件框架到B的业务代码  这个层级关系就像是过程调用一样，前">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -351,7 +351,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>关于阻塞非阻塞，同步异步的最好解释</div>
-      <div>http://yoursite.com/2019/10/17/编程开发/Java/关于阻塞非阻塞，同步异步的最好解释/</div>
+      <div>http://levylv.github.io/2019/10/17/编程开发/Java/关于阻塞非阻塞，同步异步的最好解释/</div>
     </div>
     <div class="license-meta">
       

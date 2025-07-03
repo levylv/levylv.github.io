@@ -19,7 +19,7 @@
     <meta name="description" content="晚上在写一个简单的cnn时遇到了一个编译错误，代码检查了半天没找到问题。。最后鬼使神差地把全局变量初始化语句改了一下，竟然编译通过了。。研究了一下原因，应该是默认graph的问题。于是，再加上之前的默认session，我把tensorflow中默认graph和默认session几个注意点总结一下。 默认Session问题 session创建后，如果没有指定graph，则该session会调用默认的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tensorflow中有关Graph和Session的几个问题">
-<meta property="og:url" content="http://yoursite.com/2017/07/15/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%AD%E6%9C%89%E5%85%B3Graph%E5%92%8CSession%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:url" content="http://levylv.github.io/2017/07/15/ML%E6%A1%86%E6%9E%B6/Tf%E4%B8%AD%E6%9C%89%E5%85%B3Graph%E5%92%8CSession%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="晚上在写一个简单的cnn时遇到了一个编译错误，代码检查了半天没找到问题。。最后鬼使神差地把全局变量初始化语句改了一下，竟然编译通过了。。研究了一下原因，应该是默认graph的问题。于是，再加上之前的默认session，我把tensorflow中默认graph和默认session几个注意点总结一下。 默认Session问题 session创建后，如果没有指定graph，则该session会调用默认的">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -331,7 +331,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Tensorflow中有关Graph和Session的几个问题</div>
-      <div>http://yoursite.com/2017/07/15/ML框架/Tf中有关Graph和Session的几个问题/</div>
+      <div>http://levylv.github.io/2017/07/15/ML框架/Tf中有关Graph和Session的几个问题/</div>
     </div>
     <div class="license-meta">
       

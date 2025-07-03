@@ -19,7 +19,7 @@
     <meta name="description" content="原因很简单，是因为函数的负数区间值为0，导数为0，导致权重不更新。 但实际上，真要出现永久dead还是很严苛的：  所用训练样本x在该神经元的输入值都是 &lt; 0 一般都是网络第一层，前面没有隐藏层。因为如果有隐藏层，隐藏层不死的话，隐藏层输出值还是会变，同样的x, 输入到该层还是有可能被激活。  BP经典公式： 该神经元某条链路w导数 &#x3D; 前面的导数累计  该神经元导数值  该链路输入值x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dead ReLu问题">
-<meta property="og:url" content="http://yoursite.com/2019/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Dead%20ReLu%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:url" content="http://levylv.github.io/2019/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Dead%20ReLu%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="原因很简单，是因为函数的负数区间值为0，导数为0，导致权重不更新。 但实际上，真要出现永久dead还是很严苛的：  所用训练样本x在该神经元的输入值都是 &lt; 0 一般都是网络第一层，前面没有隐藏层。因为如果有隐藏层，隐藏层不死的话，隐藏层输出值还是会变，同样的x, 输入到该层还是有可能被激活。  BP经典公式： 该神经元某条链路w导数 &#x3D; 前面的导数累计  该神经元导数值  该链路输入值x">
 <meta property="og:locale" content="zh_CN">
@@ -68,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -319,7 +319,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Dead ReLu问题</div>
-      <div>http://yoursite.com/2019/05/16/深度学习/Dead ReLu问题/</div>
+      <div>http://levylv.github.io/2019/05/16/深度学习/Dead ReLu问题/</div>
     </div>
     <div class="license-meta">
       

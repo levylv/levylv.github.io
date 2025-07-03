@@ -19,7 +19,7 @@
     <meta name="description" content="最近在看NAS（neural architecture search）的论文，里面讲到了强化学习的policy network，然后我就研究了下这个东西，发现是个蛮有意思的概念，确实和nas有共同之处。有意思的点主要其实是在loss function的设计上，下面详细讲下我的理解。 正常来讲，我们做一个Neural Network来解决Classification or Regression ta">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Levy&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/2020/10/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8Epolicy%20network/index.html">
+<meta property="og:url" content="http://levylv.github.io/2020/10/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%85%B3%E4%BA%8Epolicy%20network/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="最近在看NAS（neural architecture search）的论文，里面讲到了强化学习的policy network，然后我就研究了下这个东西，发现是个蛮有意思的概念，确实和nas有共同之处。有意思的点主要其实是在loss function的设计上，下面详细讲下我的理解。 正常来讲，我们做一个Neural Network来解决Classification or Regression ta">
 <meta property="og:locale" content="zh_CN">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -322,7 +322,7 @@ L(\theta) = \sum f(a, s) log{\pi(a|s, \theta)}</script><p>其实你仔细一看�
   <div class="license-box my-3">
     <div class="license-title">
       <div></div>
-      <div>http://yoursite.com/2020/10/30/深度学习/关于policy network/</div>
+      <div>http://levylv.github.io/2020/10/30/深度学习/关于policy network/</div>
     </div>
     <div class="license-meta">
       

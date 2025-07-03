@@ -19,7 +19,7 @@
     <meta name="description" content="在spark中，  worker就是集群里可执行的机器，一个worker可以有多个executor。 一个executor就是CPU，一个CPU可以有多个核。 一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。  关于CPU和核：  CPU有单核CPU和多核CPU。 一般来讲几个物理核就是几个线程，但是通过超线程技术，一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多进程，多线程以及spark的executor等概念">
-<meta property="og:url" content="http://yoursite.com/2018/11/07/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A5%E5%8F%8Aspark%E7%9A%84executor%E7%AD%89%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:url" content="http://levylv.github.io/2018/11/07/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/%E5%A4%9A%E8%BF%9B%E7%A8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A5%E5%8F%8Aspark%E7%9A%84executor%E7%AD%89%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="在spark中，  worker就是集群里可执行的机器，一个worker可以有多个executor。 一个executor就是CPU，一个CPU可以有多个核。 一个core(核)对应一个线程，也就是一个task，一个核同时只能执行一个task。注意，这个的core不是指物理核，是虚拟核。  关于CPU和核：  CPU有单核CPU和多核CPU。 一般来讲几个物理核就是几个线程，但是通过超线程技术，一">
 <meta property="og:locale" content="zh_CN">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -354,7 +354,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>多进程，多线程以及spark的executor等概念</div>
-      <div>http://yoursite.com/2018/11/07/大数据/Spark/多进程，多线程以及spark的executor等概念/</div>
+      <div>http://levylv.github.io/2018/11/07/大数据/Spark/多进程，多线程以及spark的executor等概念/</div>
     </div>
     <div class="license-meta">
       

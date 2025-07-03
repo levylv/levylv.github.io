@@ -19,7 +19,7 @@
     <meta name="description" content="最近研究黑盒优化问题的时候，发现有方法就是借鉴强化学习的思路: 通过reward的反馈，来优化一个不相干的网络(参数与目标无法直接梯度求导)，这个思路在很多地方被反复用到，就像梯度下降一样是个比较经典的想法。因此重新看了一遍强化学习的知识，这一遍看完终于基本梳理清楚了其中的公式推导原理及流程，特此记录。 参考资料: 动手学习强化学习 基本概念强化学习在本质上是一个马尔科夫决策过程(MDP)，由元组">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习基本知识点整理">
-<meta property="og:url" content="http://yoursite.com/2023/08/17/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/index.html">
+<meta property="og:url" content="http://levylv.github.io/2023/08/17/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="最近研究黑盒优化问题的时候，发现有方法就是借鉴强化学习的思路: 通过reward的反馈，来优化一个不相干的网络(参数与目标无法直接梯度求导)，这个思路在很多地方被反复用到，就像梯度下降一样是个比较经典的想法。因此重新看了一遍强化学习的知识，这一遍看完终于基本梳理清楚了其中的公式推导原理及流程，特此记录。 参考资料: 动手学习强化学习 基本概念强化学习在本质上是一个马尔科夫决策过程(MDP)，由元组">
 <meta property="og:locale" content="zh_CN">
@@ -88,7 +88,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -416,7 +416,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>强化学习基本知识点整理</div>
-      <div>http://yoursite.com/2023/08/17/强化学习/强化学习基本知识点整理/</div>
+      <div>http://levylv.github.io/2023/08/17/强化学习/强化学习基本知识点整理/</div>
     </div>
     <div class="license-meta">
       

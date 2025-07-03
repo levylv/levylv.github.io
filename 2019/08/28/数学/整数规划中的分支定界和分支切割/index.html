@@ -19,13 +19,13 @@
     <meta name="description" content="branch and bound： 分支定界  branch and cut：分支切割    例如一个问题：   branch and cut： 在每个node上寻找切割不等式，最后的得到的最优解很可能大于上界，该node就被切割掉了。 如何选址cut不等式就是一门学问了。。有实数切割UserCut，也有整数切割LazyCut">
 <meta property="og:type" content="article">
 <meta property="og:title" content="整数规划中的分支定界和分支切割">
-<meta property="og:url" content="http://yoursite.com/2019/08/28/%E6%95%B0%E5%AD%A6/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%E4%B8%AD%E7%9A%84%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E5%92%8C%E5%88%86%E6%94%AF%E5%88%87%E5%89%B2/index.html">
+<meta property="og:url" content="http://levylv.github.io/2019/08/28/%E6%95%B0%E5%AD%A6/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%E4%B8%AD%E7%9A%84%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E5%92%8C%E5%88%86%E6%94%AF%E5%88%87%E5%89%B2/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="branch and bound： 分支定界  branch and cut：分支切割    例如一个问题：   branch and cut： 在每个node上寻找切割不等式，最后的得到的最优解很可能大于上界，该node就被切割掉了。 如何选址cut不等式就是一门学问了。。有实数切割UserCut，也有整数切割LazyCut">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130402.jpg">
 <meta property="og:image" content="http://levy-hexo.oss-cn-hangzhou.aliyuncs.com/images/2023-09-14-130413.jpg">
-<meta property="og:image" content="http://yoursite.com/Users/didi/Library/Application%20Support/typora-user-images/image-20200605161826739.png">
+<meta property="og:image" content="http://levylv.github.io/Users/didi/Library/Application%20Support/typora-user-images/image-20200605161826739.png">
 <meta property="article:published_time" content="2019-08-28T11:28:44.000Z">
 <meta property="article:modified_time" content="2024-09-25T06:29:33.464Z">
 <meta property="article:author" content="Wei Lyu">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -327,7 +327,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>整数规划中的分支定界和分支切割</div>
-      <div>http://yoursite.com/2019/08/28/数学/整数规划中的分支定界和分支切割/</div>
+      <div>http://levylv.github.io/2019/08/28/数学/整数规划中的分支定界和分支切割/</div>
     </div>
     <div class="license-meta">
       

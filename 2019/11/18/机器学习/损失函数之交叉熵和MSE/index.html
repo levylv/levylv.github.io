@@ -19,7 +19,7 @@
     <meta name="description" content="一般神经网络都是用交叉熵，回归问题用MSE，分类问题用交叉熵。 网友分析了一下，发现MSE对梯度有个不友好的地方，有时候误差越大，梯度越小，而交叉熵是正比的。  MSE : $A^2 * (1-A)$ cross entropy : A 另外，一般推动神经网络BP算法的时候，用的都是MSE，如果用cross entry和softmax的话，会比较复杂一点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="损失函数之交叉熵和MSE">
-<meta property="og:url" content="http://yoursite.com/2019/11/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B9%8B%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8CMSE/index.html">
+<meta property="og:url" content="http://levylv.github.io/2019/11/18/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B9%8B%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8CMSE/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="一般神经网络都是用交叉熵，回归问题用MSE，分类问题用交叉熵。 网友分析了一下，发现MSE对梯度有个不友好的地方，有时候误差越大，梯度越小，而交叉熵是正比的。  MSE : $A^2 * (1-A)$ cross entropy : A 另外，一般推动神经网络BP算法的时候，用的都是MSE，如果用cross entry和softmax的话，会比较复杂一点。">
 <meta property="og:locale" content="zh_CN">
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -319,7 +319,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>损失函数之交叉熵和MSE</div>
-      <div>http://yoursite.com/2019/11/18/机器学习/损失函数之交叉熵和MSE/</div>
+      <div>http://levylv.github.io/2019/11/18/机器学习/损失函数之交叉熵和MSE/</div>
     </div>
     <div class="license-meta">
       

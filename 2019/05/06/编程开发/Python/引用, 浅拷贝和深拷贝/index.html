@@ -19,7 +19,7 @@
     <meta name="description" content="引用变量名是别名，没有开辟新的内存，指向同一块内存 浅拷贝：一般出现在array-like对象中，如list等。 虽然开辟了一块新的内存，但是对象中的每一个元素都是指向原对象的每个元素的地址。例如： a &#x3D; [1,2,[1,2,3]] b &#x3D;copy.copy(a) id(a[2]) &#x3D;&#x3D; id(b[2]) 对于元素为不可变对象时，倒无所谓，如果元素为可变对象，那么a变b也变。 切片就是浅拷贝！！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="引用，浅拷贝和深拷贝">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%BC%95%E7%94%A8,%20%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/index.html">
+<meta property="og:url" content="http://levylv.github.io/2019/05/06/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Python/%E5%BC%95%E7%94%A8,%20%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="引用变量名是别名，没有开辟新的内存，指向同一块内存 浅拷贝：一般出现在array-like对象中，如list等。 虽然开辟了一块新的内存，但是对象中的每一个元素都是指向原对象的每个元素的地址。例如： a &#x3D; [1,2,[1,2,3]] b &#x3D;copy.copy(a) id(a[2]) &#x3D;&#x3D; id(b[2]) 对于元素为不可变对象时，倒无所谓，如果元素为可变对象，那么a变b也变。 切片就是浅拷贝！！">
 <meta property="og:locale" content="zh_CN">
@@ -68,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -333,7 +333,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>引用，浅拷贝和深拷贝</div>
-      <div>http://yoursite.com/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/</div>
+      <div>http://levylv.github.io/2019/05/06/编程开发/Python/引用, 浅拷贝和深拷贝/</div>
     </div>
     <div class="license-meta">
       

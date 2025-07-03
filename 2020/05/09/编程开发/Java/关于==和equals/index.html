@@ -19,7 +19,7 @@
     <meta name="description" content="在大部分的封装类中，都重写了Object类的这个方法，所以两者还是会有区别的。  总的来说，&#x3D;&#x3D;是一个关系运算符，如果比较的两端都为基本类型，则判断两者的值是否相等,（判断过程中还有不同基本类型的转化，这里不做讨论），如果比较的两端都为引用类型的话，则比较两者所指向对象的地址是否相同；  对于equals方法，首先，能调用这个方法肯定是一个对象，然后，如果这个对象所在的类重写了equals方法，则">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于JAVA的&#x3D;&#x3D;和equals">
-<meta property="og:url" content="http://yoursite.com/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%85%B3%E4%BA%8E==%E5%92%8Cequals/index.html">
+<meta property="og:url" content="http://levylv.github.io/2020/05/09/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/Java/%E5%85%B3%E4%BA%8E==%E5%92%8Cequals/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="在大部分的封装类中，都重写了Object类的这个方法，所以两者还是会有区别的。  总的来说，&#x3D;&#x3D;是一个关系运算符，如果比较的两端都为基本类型，则判断两者的值是否相等,（判断过程中还有不同基本类型的转化，这里不做讨论），如果比较的两端都为引用类型的话，则比较两者所指向对象的地址是否相同；  对于equals方法，首先，能调用这个方法肯定是一个对象，然后，如果这个对象所在的类重写了equals方法，则">
 <meta property="og:locale" content="zh_CN">
@@ -68,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -325,7 +325,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>关于JAVA的==和equals</div>
-      <div>http://yoursite.com/2020/05/09/编程开发/Java/关于==和equals/</div>
+      <div>http://levylv.github.io/2020/05/09/编程开发/Java/关于==和equals/</div>
     </div>
     <div class="license-meta">
       

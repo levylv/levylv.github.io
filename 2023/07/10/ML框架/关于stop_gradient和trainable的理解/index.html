@@ -19,7 +19,7 @@
     <meta name="description" content="两个方法的分别意义：  stop_gradient参考资料  而trainable则是在初始化变量时，手动设置为True or Flase，意图为是否加入到trainable_variable中(计算梯度时的变量集合)。   两个方法都可以起到停止梯度更新的作用，但stop_gradient更加灵活一点，可以直接截断路径上的前面所有变量的梯度。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于stop_gradient和trainable的理解">
-<meta property="og:url" content="http://yoursite.com/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:url" content="http://levylv.github.io/2023/07/10/ML%E6%A1%86%E6%9E%B6/%E5%85%B3%E4%BA%8Estop_gradient%E5%92%8Ctrainable%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="两个方法的分别意义：  stop_gradient参考资料  而trainable则是在初始化变量时，手动设置为True or Flase，意图为是否加入到trainable_variable中(计算梯度时的变量集合)。   两个方法都可以起到停止梯度更新的作用，但stop_gradient更加灵活一点，可以直接截断路径上的前面所有变量的梯度。">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -327,7 +327,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>关于stop_gradient和trainable的理解</div>
-      <div>http://yoursite.com/2023/07/10/ML框架/关于stop_gradient和trainable的理解/</div>
+      <div>http://levylv.github.io/2023/07/10/ML框架/关于stop_gradient和trainable的理解/</div>
     </div>
     <div class="license-meta">
       

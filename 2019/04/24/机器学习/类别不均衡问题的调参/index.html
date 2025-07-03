@@ -19,7 +19,7 @@
     <meta name="description" content="对于类别不均衡问题，处理方法有：  正样本过采样  负样本降采样  调整阈值   主要是这三种，实际算法处理过程往往是这样的：  先对负样本进行降采样or正样本过采样来提取训练样本，以保证模型的AUC尽量高。  过采样or降采样之后模型输出的概率已经失去原本的意义，所以在测试集上如果看其他评价指标如交叉熵，那loss是很大的，当然不影响AUC。所以，我们需要对输出概率再做调整，恢复到真正实际的概率">
 <meta property="og:type" content="article">
 <meta property="og:title" content="类别不均衡问题的调参">
-<meta property="og:url" content="http://yoursite.com/2019/04/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%9D%87%E8%A1%A1%E9%97%AE%E9%A2%98%E7%9A%84%E8%B0%83%E5%8F%82/index.html">
+<meta property="og:url" content="http://levylv.github.io/2019/04/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%9D%87%E8%A1%A1%E9%97%AE%E9%A2%98%E7%9A%84%E8%B0%83%E5%8F%82/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="对于类别不均衡问题，处理方法有：  正样本过采样  负样本降采样  调整阈值   主要是这三种，实际算法处理过程往往是这样的：  先对负样本进行降采样or正样本过采样来提取训练样本，以保证模型的AUC尽量高。  过采样or降采样之后模型输出的概率已经失去原本的意义，所以在测试集上如果看其他评价指标如交叉熵，那loss是很大的，当然不影响AUC。所以，我们需要对输出概率再做调整，恢复到真正实际的概率">
 <meta property="og:locale" content="zh_CN">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -346,7 +346,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>类别不均衡问题的调参</div>
-      <div>http://yoursite.com/2019/04/24/机器学习/类别不均衡问题的调参/</div>
+      <div>http://levylv.github.io/2019/04/24/机器学习/类别不均衡问题的调参/</div>
     </div>
     <div class="license-meta">
       

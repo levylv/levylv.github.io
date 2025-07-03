@@ -19,7 +19,7 @@
     <meta name="description" content="最近老是有需求去看tf一些op的源码实现，比如ftrl优化器源码实现，在看的过程中会发现涉及python和c++的调用逻辑，因为大部分op在tf底层其实使用c++实现的。因此，大致梳理了一下tf的op调用机制。 以FTRL优化器为例，探索这个调用链路。（本文中的Tf为1.12版本）  原始import如下  1from tensorflow.train import FtrlOptimizer 本">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tensorflow op调用机制解析">
-<meta property="og:url" content="http://yoursite.com/2024/01/09/ML%E6%A1%86%E6%9E%B6/Tensorflow%20op%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:url" content="http://levylv.github.io/2024/01/09/ML%E6%A1%86%E6%9E%B6/Tensorflow%20op%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Levy&#39;s Blog">
 <meta property="og:description" content="最近老是有需求去看tf一些op的源码实现，比如ftrl优化器源码实现，在看的过程中会发现涉及python和c++的调用逻辑，因为大部分op在tf底层其实使用c++实现的。因此，大致梳理了一下tf的op调用机制。 以FTRL优化器为例，探索这个调用链路。（本文中的Tf为1.12版本）  原始import如下  1from tensorflow.train import FtrlOptimizer 本">
 <meta property="og:locale" content="zh_CN">
@@ -82,7 +82,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"yoursite.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"levylv.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -387,7 +387,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Tensorflow op调用机制解析</div>
-      <div>http://yoursite.com/2024/01/09/ML框架/Tensorflow op调用机制解析/</div>
+      <div>http://levylv.github.io/2024/01/09/ML框架/Tensorflow op调用机制解析/</div>
     </div>
     <div class="license-meta">
       
